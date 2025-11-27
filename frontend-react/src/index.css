@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-text font-sans antialiased;
+  }
+
+  ::selection {
+    @apply bg-primary/20 text-primary;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading tracking-tight;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-primary-600 shadow-sm hover:shadow-md;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-text border border-border hover:bg-gray-50 hover:border-gray-300 shadow-sm;
+  }
+
+  .btn-danger {
+    @apply bg-white text-danger border border-red-200 hover:bg-red-50 hover:border-red-300;
+  }
+
+  .card {
+    @apply bg-white rounded-xl border border-border shadow-card transition-all duration-300;
+  }
+
+  .card-hover {
+    @apply hover:shadow-card-hover hover:-translate-y-0.5;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-2.5 bg-white border border-border rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all duration-200 placeholder:text-text-light;
+  }
+
+  .table-header {
+    @apply px-6 py-4 text-xs font-semibold text-text-muted uppercase tracking-wider bg-gray-50/50 border-b border-border;
+  }
+
+  .table-cell {
+    @apply px-6 py-4 text-sm text-text border-b border-border/50;
+  }
+}
