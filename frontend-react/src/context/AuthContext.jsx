@@ -34,6 +34,9 @@ export const AuthProvider = ({ children }) => {
             setUser(data);
         } catch (error) {
             console.error(error);
+            if (error.response && error.response.status === 401) {
+                setToken(null);
+            }
         }
     };
 

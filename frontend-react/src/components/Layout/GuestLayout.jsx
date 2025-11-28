@@ -19,10 +19,8 @@ export default function GuestLayout() {
 
             <div className="w-full max-w-md bg-white rounded-2xl shadow-soft border border-border/50 p-8 relative z-10">
                 <div className="flex justify-center mb-6">
-                    <Logo />
+                    <Logo className="w-12 h-12" textClassName="text-3xl" />
                 </div>
-                <h1 className="text-2xl font-bold text-center text-gray-900 mb-1 tracking-tight">YourUtang</h1>
-                <p className="text-center text-gray-500 text-sm mb-2 font-medium tracking-wide">MANAGEMENT SYSTEM</p>
                 <Outlet />
             </div>
         </div>
