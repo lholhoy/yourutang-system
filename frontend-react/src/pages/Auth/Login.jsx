@@ -52,19 +52,22 @@ export default function Login() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className="input-field"
-                        placeholder="you@example.com"
                         required
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1.5">Password</label>
+                    <div className="flex justify-between items-center mb-1.5">
+                        <label className="block text-sm font-semibold text-gray-700">Password</label>
+                        <Link to="/forgot-password" className="text-xs font-medium text-primary hover:text-primary-700 hover:underline">
+                            Forgot Password?
+                        </Link>
+                    </div>
                     <div className="relative">
                         <input
                             type={showPassword ? "text" : "password"}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className="input-field pr-10"
-                            placeholder="••••••••"
                             required
                         />
                         <button

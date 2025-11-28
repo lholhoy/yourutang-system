@@ -1,31 +1,47 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import axiosClient from "../../api/axios";
+import { Loader2, Eye, EyeOff } from "lucide-react";
 import toast from "react-hot-toast";
 
-export default function Register() {
-    const { register } = useAuth();
+export default function ResetPassword() {
+    const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
+
+    const [email, setEmail] = useState(searchParams.get("email") || "");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
+    const [token] = useState(searchParams.get("token"));
+
     const [showPassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        if (!token) {
+            toast.error("Invalid reset link");
+            navigate("/login");
+        }
+    }, [token, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors(null);
         setIsLoading(true);
         try {
-            await register({ name, email, password, password_confirmation: passwordConfirmation });
-            toast.success("Account Created Successfully");
+            await axiosClient.post("/reset-password", {
+                token,
+                email,
+                password,
+                password_confirmation: passwordConfirmation,
+            });
+            toast.success("Password has been reset!");
             navigate("/login");
         } catch (e) {
             if (e.response && e.response.status === 422) {
                 setErrors(e.response.data.errors);
+            } else {
+                setErrors({ email: [e.response?.data?.message || "Something went wrong"] });
             }
         } finally {
             setIsLoading(false);
@@ -34,28 +50,22 @@ export default function Register() {
 
     return (
         <div>
-            <h2 className="text-center text-gray-500 mb-8 font-medium">Create your account</h2>
+            <h2 className="text-center text-gray-900 font-bold text-2xl mb-2">Set New Password</h2>
+            <p className="text-center text-gray-500 mb-8 text-sm">
+                Create a new secure password for your account.
+            </p>
+
             <form onSubmit={handleSubmit} className="space-y-5">
                 {errors && (
                     <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm border border-red-100">
-                        <p className="font-medium mb-1">Please fix the errors below:</p>
-                        <ul className="list-disc list-inside space-y-0.5">
-                            {Object.keys(errors).map((key) => (
-                                <li key={key}>{errors[key][0]}</li>
-                            ))}
-                        </ul>
+                        {Object.keys(errors).map((key) => (
+                            <p key={key}>{errors[key][0]}</p>
+                        ))}
                     </div>
                 )}
-                <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1.5">Full Name</label>
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="input-field"
-                        required
-                    />
-                </div>
+
+                <input type="hidden" value={token} />
+
                 <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email Address</label>
                     <input
@@ -64,10 +74,12 @@ export default function Register() {
                         onChange={(e) => setEmail(e.target.value)}
                         className="input-field"
                         required
+                        readOnly
                     />
                 </div>
+
                 <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1.5">Password</label>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1.5">New Password</label>
                     <div className="relative">
                         <input
                             type={showPassword ? "text" : "password"}
@@ -75,6 +87,7 @@ export default function Register() {
                             onChange={(e) => setPassword(e.target.value)}
                             className="input-field pr-10"
                             required
+                            autoFocus
                         />
                         <button
                             type="button"
@@ -85,6 +98,7 @@ export default function Register() {
                         </button>
                     </div>
                 </div>
+
                 <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-1.5">Confirm Password</label>
                     <input
@@ -95,21 +109,16 @@ export default function Register() {
                         required
                     />
                 </div>
+
                 <button
                     type="submit"
                     disabled={isLoading}
                     className="w-full btn btn-primary py-3 text-base shadow-lg shadow-primary/20"
                 >
                     {isLoading && <Loader2 className="animate-spin" size={20} />}
-                    Create Account
+                    Reset Password
                 </button>
             </form>
-            <p className="mt-8 text-center text-sm text-gray-600">
-                Already have an account?{" "}
-                <Link to="/login" className="text-primary font-semibold hover:text-primary-700 hover:underline transition-all">
-                    Sign in
-                </Link>
-            </p>
         </div>
     );
 }

@@ -32,6 +32,7 @@ export default function Dashboard() {
     const [upcomingDue, setUpcomingDue] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [verificationSuccess, setVerificationSuccess] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -52,6 +53,17 @@ export default function Dashboard() {
             }
         };
         fetchData();
+
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('verified') === '1') {
+            // Remove the query param without reloading
+            window.history.replaceState({}, document.title, window.location.pathname);
+            // Show success message (you might need to import toast if not already)
+            // Assuming toast is available or we can use a simple alert/state for now
+            // But let's use a state to show a nice banner
+            setVerificationSuccess(true);
+            setTimeout(() => setVerificationSuccess(false), 5000);
+        }
     }, []);
 
     if (loading) {

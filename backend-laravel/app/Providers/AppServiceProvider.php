@@ -22,5 +22,9 @@ class AppServiceProvider extends ServiceProvider
         \App\Models\Borrower::observe(\App\Observers\BorrowerObserver::class);
         \App\Models\Loan::observe(\App\Observers\LoanObserver::class);
         \App\Models\Payment::observe(\App\Observers\PaymentObserver::class);
+
+        \Illuminate\Auth\Notifications\ResetPassword::createUrlUsing(function (object $notifiable, string $token) {
+            return config('app.frontend_url', 'http://localhost:5173')."/password-reset/$token?email={$notifiable->getEmailForPasswordReset()}";
+        });
     }
 }
