@@ -16,7 +16,7 @@ export default function DefaultLayout() {
     }
 
     const navigation = [
-        { name: 'Dashboard', href: '/', icon: LayoutDashboard },
+        { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
         { name: 'Borrowers', href: '/borrowers', icon: Users },
         { name: 'Loans', href: '/loans', icon: Wallet },
         { name: 'History', href: '/history', icon: History },

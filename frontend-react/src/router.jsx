@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Outlet } from "react-router-dom";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
@@ -14,75 +14,85 @@ import LoanForm from "./pages/Loans/LoanForm";
 import Profile from "./pages/Profile";
 import HistoryLogs from "./pages/HistoryLogs";
 
+import LandingPage from "./pages/LandingPage";
+
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <DefaultLayout />,
+        element: <Outlet />,
         children: [
             {
-                path: "/",
-                element: <Dashboard />,
+                index: true,
+                element: <LandingPage />,
             },
             {
-                path: "/borrowers",
-                element: <BorrowerList />,
+                element: <DefaultLayout />,
+                children: [
+                    {
+                        path: "dashboard",
+                        element: <Dashboard />,
+                    },
+                    {
+                        path: "borrowers",
+                        element: <BorrowerList />,
+                    },
+                    {
+                        path: "borrowers/new",
+                        element: <BorrowerForm />,
+                    },
+                    {
+                        path: "borrowers/:id/edit",
+                        element: <BorrowerForm />,
+                    },
+                    {
+                        path: "borrowers/:id",
+                        element: <BorrowerDetails />,
+                    },
+                    {
+                        path: "loans",
+                        element: <LoanList />,
+                    },
+                    {
+                        path: "loans/new",
+                        element: <LoanForm />,
+                    },
+                    {
+                        path: "loans/:id/edit",
+                        element: <LoanForm />,
+                    },
+                    {
+                        path: "profile",
+                        element: <Profile />,
+                    },
+                    {
+                        path: "history",
+                        element: <HistoryLogs />,
+                    }
+                ],
             },
             {
-                path: "/borrowers/new",
-                element: <BorrowerForm />,
+                element: <GuestLayout />,
+                children: [
+                    {
+                        path: "login",
+                        element: <Login />,
+                    },
+                    {
+                        path: "register",
+                        element: <Register />,
+                    },
+                    {
+                        path: "forgot-password",
+                        element: <ForgotPassword />,
+                    },
+                    {
+                        path: "password-reset/:token",
+                        element: <ResetPassword />,
+                    },
+                ],
             },
-            {
-                path: "/borrowers/:id/edit",
-                element: <BorrowerForm />,
-            },
-            {
-                path: "/borrowers/:id",
-                element: <BorrowerDetails />,
-            },
-            {
-                path: "/loans",
-                element: <LoanList />,
-            },
-            {
-                path: "/loans/new",
-                element: <LoanForm />,
-            },
-            {
-                path: "/loans/:id/edit",
-                element: <LoanForm />,
-            },
-            {
-                path: "/profile",
-                element: <Profile />,
-            },
-            {
-                path: "/history",
-                element: <HistoryLogs />,
-            }
-        ],
-    },
-    {
-        path: "/",
-        element: <GuestLayout />,
-        children: [
-            {
-                path: "/login",
-                element: <Login />,
-            },
-            {
-                path: "/register",
-                element: <Register />,
-            },
-            {
-                path: "/forgot-password",
-                element: <ForgotPassword />,
-            },
-            {
-                path: "/password-reset/:token",
-                element: <ResetPassword />,
-            },
-        ],
-    },
+        ]
+    }
 ]);
 
 export default router;
