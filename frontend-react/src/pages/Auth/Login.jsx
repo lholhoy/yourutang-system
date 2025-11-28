@@ -46,29 +46,35 @@ export default function Login() {
                     </div>
                 )}
                 <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email Address</label>
+                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-1.5">Email Address</label>
                     <input
+                        id="email"
+                        name="email"
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className="input-field"
                         required
+                        autoComplete="email"
                     />
                 </div>
                 <div>
                     <div className="flex justify-between items-center mb-1.5">
-                        <label className="block text-sm font-semibold text-gray-700">Password</label>
+                        <label htmlFor="password" className="block text-sm font-semibold text-gray-700">Password</label>
                         <Link to="/forgot-password" className="text-xs font-medium text-primary hover:text-primary-700 hover:underline">
                             Forgot Password?
                         </Link>
                     </div>
                     <div className="relative">
                         <input
+                            id="password"
+                            name="password"
                             type={showPassword ? "text" : "password"}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className="input-field pr-10"
                             required
+                            autoComplete="current-password"
                         />
                         <button
                             type="button"

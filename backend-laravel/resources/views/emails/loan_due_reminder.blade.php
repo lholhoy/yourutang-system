@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Reminder</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px; }
+        .header { background-color: #0f766e; color: white; padding: 10px 20px; border-radius: 10px 10px 0 0; }
+        .content { padding: 20px; }
+        .footer { text-align: center; font-size: 12px; color: #777; margin-top: 20px; }
+        .button { display: inline-block; padding: 10px 20px; background-color: #0f766e; color: white; text-decoration: none; border-radius: 5px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Payment Reminder</h2>
+        </div>
+        <div class="content">
+            <p>Dear {{ $loan->borrower->name }},</p>
+            
+            <p>This is a friendly reminder regarding your loan with <strong>YourUtang</strong>.</p>
+            
+            <p><strong>Loan Details:</strong></p>
+            <ul>
+                <li><strong>Amount Due:</strong> ₱{{ number_format($loan->balance, 2) }}</li>
+                <li><strong>Due Date:</strong> {{ $loan->due_date ? \Carbon\Carbon::parse($loan->due_date)->format('F j, Y') : 'N/A' }}</li>
+            </ul>
+
+            <p>Please ensure your payment is made by the due date to avoid any penalties.</p>
+            
+            <p>If you have already made this payment, please disregard this message.</p>
+            
+            <p>Thank you,<br>YourUtang Team</p>
+        </div>
+        <div class="footer">
+            <p>&copy; {{ date('Y') }} YourUtang Management System. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

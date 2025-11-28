@@ -13,6 +13,10 @@ class Borrower extends Model
         'user_id',
         'name',
         'contact',
+        'email',
+        'address',
+        'id_type',
+        'id_number',
         'notes',
     ];
 

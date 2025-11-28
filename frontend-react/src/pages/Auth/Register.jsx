@@ -47,34 +47,43 @@ export default function Register() {
                     </div>
                 )}
                 <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1.5">Full Name</label>
+                    <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-1.5">Full Name</label>
                     <input
+                        id="name"
+                        name="name"
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         className="input-field"
                         required
+                        autoComplete="name"
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email Address</label>
+                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-1.5">Email Address</label>
                     <input
+                        id="email"
+                        name="email"
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className="input-field"
                         required
+                        autoComplete="email"
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1.5">Password</label>
+                    <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-1.5">Password</label>
                     <div className="relative">
                         <input
+                            id="password"
+                            name="password"
                             type={showPassword ? "text" : "password"}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className="input-field pr-10"
                             required
+                            autoComplete="new-password"
                         />
                         <button
                             type="button"
@@ -86,13 +95,16 @@ export default function Register() {
                     </div>
                 </div>
                 <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1.5">Confirm Password</label>
+                    <label htmlFor="password_confirmation" className="block text-sm font-semibold text-gray-700 mb-1.5">Confirm Password</label>
                     <input
+                        id="password_confirmation"
+                        name="password_confirmation"
                         type={showPassword ? "text" : "password"}
                         value={passwordConfirmation}
                         onChange={(e) => setPasswordConfirmation(e.target.value)}
                         className="input-field"
                         required
+                        autoComplete="new-password"
                     />
                 </div>
                 <button

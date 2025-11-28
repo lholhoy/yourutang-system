@@ -20,6 +20,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('borrowers', BorrowerController::class);
     Route::get('/loans/upcoming-due', [LoanController::class, 'getUpcomingDue']);
     Route::apiResource('loans', LoanController::class);
+    Route::post('/loans/{id}/remind', [LoanController::class, 'sendReminder']);
     
     // Payments
     Route::get('/loans/{loan}/payments', [App\Http\Controllers\Api\PaymentController::class, 'index']);
@@ -31,6 +32,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Export
     Route::get('/export/borrowers', [App\Http\Controllers\Api\ExportController::class, 'exportBorrowers']);
     Route::get('/export/statement/{borrower}', [App\Http\Controllers\Api\ExportController::class, 'generateStatement']);
+    Route::get('/export/contract/{loan}', [App\Http\Controllers\Api\ExportController::class, 'generateContract']);
     
     // History
     Route::get('/history', [App\Http\Controllers\Api\HistoryLogController::class, 'index']);

@@ -13,6 +13,10 @@ export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
     const [formData, setFormData] = useState({
         name: "",
         contact: "",
+        email: "",
+        address: "",
+        id_type: "",
+        id_number: "",
         notes: "",
     });
     const [loading, setLoading] = useState(false);
@@ -24,6 +28,10 @@ export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
             setFormData({
                 name: initialData.name,
                 contact: initialData.contact || "",
+                email: initialData.email || "",
+                address: initialData.address || "",
+                id_type: initialData.id_type || "",
+                id_number: initialData.id_number || "",
                 notes: initialData.notes || "",
             });
         } else if (borrowerId) {
@@ -37,6 +45,10 @@ export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
             setFormData({
                 name: response.data.name,
                 contact: response.data.contact || "",
+                email: response.data.email || "",
+                address: response.data.address || "",
+                id_type: response.data.id_type || "",
+                id_number: response.data.id_number || "",
                 notes: response.data.notes || "",
             });
         } catch (error) {
@@ -125,18 +137,83 @@ export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
                         {errors?.name && <p className="text-red-500 text-xs mt-1">{errors.name[0]}</p>}
                     </div>
 
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                                Contact Number
+                            </label>
+                            <input
+                                type="text"
+                                value={formData.contact}
+                                onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
+                                className="input-field"
+                                placeholder="Phone number"
+                            />
+                            {errors?.contact && <p className="text-red-500 text-xs mt-1">{errors.contact[0]}</p>}
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                                Email Address
+                            </label>
+                            <input
+                                type="email"
+                                value={formData.email}
+                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                className="input-field"
+                                placeholder="email@example.com"
+                            />
+                            {errors?.email && <p className="text-red-500 text-xs mt-1">{errors.email[0]}</p>}
+                        </div>
+                    </div>
+
                     <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-                            Contact Information
+                            Address
                         </label>
                         <input
                             type="text"
-                            value={formData.contact}
-                            onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
+                            value={formData.address}
+                            onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                             className="input-field"
-                            placeholder="Phone number, email, or address"
+                            placeholder="Full address"
                         />
-                        {errors?.contact && <p className="text-red-500 text-xs mt-1">{errors.contact[0]}</p>}
+                        {errors?.address && <p className="text-red-500 text-xs mt-1">{errors.address[0]}</p>}
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                                ID Type
+                            </label>
+                            <select
+                                value={formData.id_type}
+                                onChange={(e) => setFormData({ ...formData, id_type: e.target.value })}
+                                className="input-field"
+                            >
+                                <option value="">Select ID Type</option>
+                                <option value="Passport">Passport</option>
+                                <option value="Driver's License">Driver's License</option>
+                                <option value="National ID">National ID</option>
+                                <option value="SSS/GSIS">SSS/GSIS</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            {errors?.id_type && <p className="text-red-500 text-xs mt-1">{errors.id_type[0]}</p>}
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                                ID Number
+                            </label>
+                            <input
+                                type="text"
+                                value={formData.id_number}
+                                onChange={(e) => setFormData({ ...formData, id_number: e.target.value })}
+                                className="input-field"
+                                placeholder="ID Number"
+                            />
+                            {errors?.id_number && <p className="text-red-500 text-xs mt-1">{errors.id_number[0]}</p>}
+                        </div>
                     </div>
 
                     <div>

@@ -124,4 +124,22 @@ class LoanController extends Controller
 
         return response()->json(['message' => 'Loan deleted successfully']);
     }
+
+    public function sendReminder($id)
+    {
+        $loan = Loan::whereHas('borrower', function ($q) {
+            $q->where('user_id', Auth::id());
+        })->with('borrower')->findOrFail($id);
+
+        if (!$loan->borrower->email) {
+            return response()->json(['message' => 'Borrower has no email address'], 422);
+        }
+
+        try {
+            \Illuminate\Support\Facades\Mail::to($loan->borrower->email)->send(new \App\Mail\LoanDueReminder($loan));
+            return response()->json(['message' => 'Reminder sent successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to send email: ' . $e->getMessage()], 500);
+        }
+    }
 }

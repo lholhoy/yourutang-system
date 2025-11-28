@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axiosClient from "../../api/axios";
-import { ArrowLeft, Pencil, Trash2, Loader2, Plus, Banknote, CheckCircle, AlertCircle } from "lucide-react";
+import { ArrowLeft, Pencil, Trash2, Loader2, Plus, Banknote, CheckCircle, AlertCircle, Bell, FileText } from "lucide-react";
 
 import Modal from "../../components/Modal";
 import LoanForm from "../Loans/LoanForm";
@@ -16,6 +16,7 @@ export default function BorrowerDetails() {
     const [isLoanModalOpen, setIsLoanModalOpen] = useState(false);
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
     const [selectedLoan, setSelectedLoan] = useState(null);
+    const [sendingReminder, setSendingReminder] = useState(null);
 
     useEffect(() => {
         fetchBorrower();
@@ -54,6 +55,20 @@ export default function BorrowerDetails() {
         } catch (error) {
             console.error("Error deleting loan:", error);
             alert("Failed to delete loan");
+        }
+    };
+
+    const handleSendReminder = async (loanId) => {
+        if (!window.confirm("Send payment reminder email to borrower?")) return;
+        setSendingReminder(loanId);
+        try {
+            await axiosClient.post(`/loans/${loanId}/remind`);
+            alert("Reminder sent successfully!");
+        } catch (error) {
+            console.error("Error sending reminder:", error);
+            alert(error.response?.data?.message || "Failed to send reminder");
+        } finally {
+            setSendingReminder(null);
         }
     };
 
@@ -157,7 +172,29 @@ export default function BorrowerDetails() {
                     </Link>
                     <div>
                         <h1 className="text-3xl font-bold text-gray-900 tracking-tight">{borrower.name}</h1>
-                        <p className="text-gray-500 font-medium">{borrower.contact || "No contact info"}</p>
+                        <div className="flex flex-col gap-1 text-sm text-gray-500 mt-1">
+                            {borrower.contact && (
+                                <p className="flex items-center gap-2">
+                                    <span className="font-medium text-gray-700">Contact:</span> {borrower.contact}
+                                </p>
+                            )}
+                            {borrower.email && (
+                                <p className="flex items-center gap-2">
+                                    <span className="font-medium text-gray-700">Email:</span> {borrower.email}
+                                </p>
+                            )}
+                            {borrower.address && (
+                                <p className="flex items-center gap-2">
+                                    <span className="font-medium text-gray-700">Address:</span> {borrower.address}
+                                </p>
+                            )}
+                            {(borrower.id_type || borrower.id_number) && (
+                                <p className="flex items-center gap-2">
+                                    <span className="font-medium text-gray-700">ID:</span>
+                                    {borrower.id_type} {borrower.id_number ? `(${borrower.id_number})` : ""}
+                                </p>
+                            )}
+                        </div>
                     </div>
                 </div>
                 <div className="flex gap-3">
@@ -264,13 +301,36 @@ export default function BorrowerDetails() {
                                         <td className="table-cell text-center">
                                             <div className="flex items-center justify-center gap-2">
                                                 {loan.status !== 'paid' && (
-                                                    <button
-                                                        onClick={() => openPaymentModal(loan)}
-                                                        className="p-1.5 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
-                                                        title="Add Payment"
-                                                    >
-                                                        <Banknote size={16} />
-                                                    </button>
+                                                    <>
+                                                        <button
+                                                            onClick={() => openPaymentModal(loan)}
+                                                            className="p-1.5 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                                                            title="Add Payment"
+                                                        >
+                                                            <Banknote size={16} />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => handleSendReminder(loan.id)}
+                                                            disabled={sendingReminder === loan.id}
+                                                            className="p-1.5 text-orange-600 hover:bg-orange-50 rounded-lg transition-colors disabled:opacity-50"
+                                                            title="Send Reminder Email"
+                                                        >
+                                                            {sendingReminder === loan.id ? (
+                                                                <Loader2 size={16} className="animate-spin" />
+                                                            ) : (
+                                                                <Bell size={16} />
+                                                            )}
+                                                        </button>
+                                                        <a
+                                                            href={`http://localhost:8000/api/export/contract/${loan.id}`}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                                            title="Download Contract"
+                                                        >
+                                                            <FileText size={16} />
+                                                        </a>
+                                                    </>
                                                 )}
                                                 <Link
                                                     to={`/loans/${loan.id}/edit`}
