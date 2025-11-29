@@ -1,20 +1,28 @@
 import { X, Calendar, Calculator } from "lucide-react";
 
-export default function AmortizationModal({ isOpen, onClose, amount, interestRate, termMonths, startDate }) {
+export default function AmortizationModal({ isOpen, onClose, amount, interestRate, interestType, termMonths, startDate }) {
     if (!isOpen) return null;
 
     const calculateSchedule = () => {
         const schedule = [];
         let balance = parseFloat(amount) || 0;
-        const rate = (parseFloat(interestRate) || 0) / 100;
+        let rate = parseFloat(interestRate) || 0;
         const term = parseInt(termMonths) || 1;
         const start = new Date(startDate);
 
         if (term <= 0 || balance <= 0) return [];
 
+        // Convert rate to monthly equivalent if daily
+        // Daily rate * 30 days = Monthly rate approx
+        if (interestType === 'daily') {
+            rate = rate * 30;
+        }
+
+        const monthlyRate = rate / 100;
+
         // Flat Rate Calculation
         const monthlyPrincipal = balance / term;
-        const monthlyInterest = balance * rate;
+        const monthlyInterest = balance * monthlyRate;
         const monthlyPayment = monthlyPrincipal + monthlyInterest;
 
         for (let i = 1; i <= term; i++) {
@@ -48,7 +56,9 @@ export default function AmortizationModal({ isOpen, onClose, amount, interestRat
                         </div>
                         <div>
                             <h2 className="text-xl font-bold text-gray-900">Amortization Schedule</h2>
-                            <p className="text-sm text-gray-500">Estimated repayment plan</p>
+                            <p className="text-sm text-gray-500">
+                                Estimated repayment plan ({interestType === 'daily' ? 'Daily Interest' : 'Monthly Interest'})
+                            </p>
                         </div>
                     </div>
                     <button

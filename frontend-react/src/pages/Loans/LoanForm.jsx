@@ -18,7 +18,9 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
         date_borrowed: new Date().toISOString().split('T')[0],
         description: "",
         interest_rate: 0,
+        interest_type: "monthly",
         term_months: 1,
+        due_date: "",
     });
     const [borrowers, setBorrowers] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -38,6 +40,10 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
                         amount: initialData.amount,
                         date_borrowed: initialData.date_borrowed,
                         description: initialData.description || "",
+                        interest_rate: initialData.interest_rate || 0,
+                        interest_type: initialData.interest_type || "monthly",
+                        term_months: initialData.term_months || 1,
+                        due_date: initialData.due_date || "",
                     });
                 } else if (loanId && !initialData) {
                     const loanRes = await axiosClient.get(`/loans/${loanId}`);
@@ -47,7 +53,9 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
                         date_borrowed: loanRes.data.date_borrowed,
                         description: loanRes.data.description || "",
                         interest_rate: loanRes.data.interest_rate || 0,
+                        interest_type: loanRes.data.interest_type || "monthly",
                         term_months: loanRes.data.term_months || 1,
+                        due_date: loanRes.data.due_date || "",
                     });
                 }
             } catch (error) {
@@ -177,16 +185,26 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
 
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-                                Interest Rate (% per month)
+                                Interest Rate
                             </label>
-                            <input
-                                type="number"
-                                step="0.01"
-                                value={formData.interest_rate}
-                                onChange={(e) => setFormData({ ...formData, interest_rate: e.target.value })}
-                                className="input-field"
-                                placeholder="0"
-                            />
+                            <div className="flex gap-2">
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    value={formData.interest_rate}
+                                    onChange={(e) => setFormData({ ...formData, interest_rate: e.target.value })}
+                                    className="input-field"
+                                    placeholder="0"
+                                />
+                                <select
+                                    value={formData.interest_type}
+                                    onChange={(e) => setFormData({ ...formData, interest_type: e.target.value })}
+                                    className="input-field w-32"
+                                >
+                                    <option value="monthly">% / Month</option>
+                                    <option value="daily">% / Day</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div>
@@ -198,7 +216,17 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
                                     type="number"
                                     min="1"
                                     value={formData.term_months}
-                                    onChange={(e) => setFormData({ ...formData, term_months: e.target.value })}
+                                    onChange={(e) => {
+                                        const term = e.target.value;
+                                        // Auto-calculate due date
+                                        const date = new Date(formData.date_borrowed);
+                                        date.setMonth(date.getMonth() + parseInt(term || 0));
+                                        setFormData({
+                                            ...formData,
+                                            term_months: term,
+                                            due_date: date.toISOString().split('T')[0]
+                                        });
+                                    }}
                                     className="input-field"
                                     placeholder="1"
                                 />
@@ -211,6 +239,18 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
                                     <Calculator size={18} />
                                 </button>
                             </div>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                                Due Date
+                            </label>
+                            <input
+                                type="date"
+                                value={formData.due_date}
+                                onChange={(e) => setFormData({ ...formData, due_date: e.target.value })}
+                                className="input-field"
+                            />
                         </div>
                     </div>
 
@@ -263,6 +303,7 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
                 onClose={() => setIsAmortizationOpen(false)}
                 amount={formData.amount}
                 interestRate={formData.interest_rate}
+                interestType={formData.interest_type}
                 termMonths={formData.term_months}
                 startDate={formData.date_borrowed}
             />

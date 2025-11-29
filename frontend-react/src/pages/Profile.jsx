@@ -81,7 +81,8 @@ export default function Profile() {
             setMessage("Photo uploaded successfully!");
         } catch (error) {
             console.error("Error uploading photo:", error);
-            alert("Failed to upload photo");
+            const msg = error.response?.data?.message || "Failed to upload photo";
+            alert(msg);
         } finally {
             setPhotoLoading(false);
         }

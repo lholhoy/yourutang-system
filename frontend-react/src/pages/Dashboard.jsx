@@ -34,11 +34,13 @@ export default function Dashboard() {
     const [error, setError] = useState(null);
     const [verificationSuccess, setVerificationSuccess] = useState(false);
 
+    const [filter, setFilter] = useState("this_year");
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const [analyticsRes, logsRes, dueRes] = await Promise.all([
-                    axiosClient.get("/analytics"),
+                    axiosClient.get("/analytics", { params: { filter } }),
                     axiosClient.get("/activity-logs"),
                     axiosClient.get("/loans/upcoming-due")
                 ]);
@@ -56,15 +58,11 @@ export default function Dashboard() {
 
         const params = new URLSearchParams(window.location.search);
         if (params.get('verified') === '1') {
-            // Remove the query param without reloading
             window.history.replaceState({}, document.title, window.location.pathname);
-            // Show success message (you might need to import toast if not already)
-            // Assuming toast is available or we can use a simple alert/state for now
-            // But let's use a state to show a nice banner
             setVerificationSuccess(true);
             setTimeout(() => setVerificationSuccess(false), 5000);
         }
-    }, []);
+    }, [filter]);
 
     if (loading) {
         return (
@@ -141,11 +139,11 @@ export default function Dashboard() {
     if (!data) return null;
 
     const chartData = {
-        labels: data.monthly_loans?.map((item) => item.month) || [],
+        labels: data.monthly_loans?.map((item) => item.label) || [],
         datasets: [
             {
-                label: "Monthly Loans",
-                data: data.monthly_loans?.map((item) => item.total) || [],
+                label: "Loans",
+                data: data.monthly_loans?.map((item) => Number(item.total)) || [],
                 fill: true,
                 borderColor: "#0F9E99",
                 backgroundColor: "rgba(15, 158, 153, 0.1)",
@@ -278,9 +276,14 @@ export default function Dashboard() {
                 <div className="lg:col-span-2 card p-6">
                     <div className="flex items-center justify-between mb-6">
                         <h2 className="text-lg font-bold text-gray-900">Loan Trends</h2>
-                        <select className="text-sm border-gray-200 rounded-lg text-gray-500 focus:ring-primary focus:border-primary">
-                            <option>This Year</option>
-                            <option>Last Year</option>
+                        <select
+                            value={filter}
+                            onChange={(e) => setFilter(e.target.value)}
+                            className="text-sm border-gray-200 rounded-lg text-gray-500 focus:ring-primary focus:border-primary"
+                        >
+                            <option value="this_year">This Year</option>
+                            <option value="last_year">Last Year</option>
+                            <option value="this_month">This Month</option>
                         </select>
                     </div>
                     <div className="h-80">

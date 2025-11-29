@@ -48,6 +48,7 @@ export default function LoanList() {
 
     const handleLoanAdded = () => {
         setIsLoanModalOpen(false);
+        setSelectedLoan(null);
         fetchLoans();
     };
 
@@ -120,7 +121,10 @@ export default function LoanList() {
                     <p className="text-gray-500 mt-1">Manage all loan records.</p>
                 </div>
                 <button
-                    onClick={() => setIsLoanModalOpen(true)}
+                    onClick={() => {
+                        setSelectedLoan(null);
+                        setIsLoanModalOpen(true);
+                    }}
                     className="btn btn-primary shadow-lg shadow-primary/20"
                 >
                     <span>Add Loan</span>
@@ -212,13 +216,16 @@ export default function LoanList() {
                                                     <Banknote size={18} />
                                                 </button>
                                             )}
-                                            <Link
-                                                to={`/loans/${loan.id}/edit`}
+                                            <button
+                                                onClick={() => {
+                                                    setSelectedLoan(loan);
+                                                    setIsLoanModalOpen(true);
+                                                }}
                                                 className="p-1.5 text-primary hover:bg-primary/5 rounded-lg transition-colors"
                                                 title="Edit"
                                             >
                                                 <Pencil size={18} />
-                                            </Link>
+                                            </button>
                                             <button
                                                 onClick={() => handleDelete(loan.id)}
                                                 className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
@@ -248,15 +255,22 @@ export default function LoanList() {
                 </div>
             </div>
 
-            {/* Add Loan Modal */}
+            {/* Add/Edit Loan Modal */}
             <Modal
                 isOpen={isLoanModalOpen}
-                onClose={() => setIsLoanModalOpen(false)}
-                title="Add New Loan"
+                onClose={() => {
+                    setIsLoanModalOpen(false);
+                    setSelectedLoan(null);
+                }}
+                title={selectedLoan ? "Edit Loan" : "Add New Loan"}
             >
                 <LoanForm
+                    initialData={selectedLoan}
                     onSuccess={handleLoanAdded}
-                    onCancel={() => setIsLoanModalOpen(false)}
+                    onCancel={() => {
+                        setIsLoanModalOpen(false);
+                        setSelectedLoan(null);
+                    }}
                 />
             </Modal>
 

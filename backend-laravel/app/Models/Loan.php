@@ -15,6 +15,7 @@ class Loan extends Model
         'date_borrowed',
         'description',
         'interest_rate',
+        'interest_type',
         'term_months',
         'due_date',
     ];

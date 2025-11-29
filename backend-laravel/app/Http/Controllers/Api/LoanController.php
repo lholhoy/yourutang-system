@@ -59,14 +59,16 @@ class LoanController extends Controller
             'date_borrowed' => 'required|date',
             'description' => 'nullable|string',
             'interest_rate' => 'nullable|numeric|min:0',
+            'interest_type' => 'nullable|in:monthly,daily',
             'term_months' => 'nullable|integer|min:1',
+            'due_date' => 'nullable|date|after_or_equal:date_borrowed',
         ]);
 
         // Verify borrower belongs to user
         $borrower = Borrower::where('user_id', Auth::id())->findOrFail($validated['borrower_id']);
 
-        // Calculate due date if term is provided
-        if (!empty($validated['term_months']) && !empty($validated['date_borrowed'])) {
+        // Calculate due date if term is provided AND due_date is missing
+        if (empty($validated['due_date']) && !empty($validated['term_months']) && !empty($validated['date_borrowed'])) {
             $validated['due_date'] = \Carbon\Carbon::parse($validated['date_borrowed'])
                 ->addMonths($validated['term_months']);
         }
@@ -96,11 +98,13 @@ class LoanController extends Controller
             'date_borrowed' => 'date',
             'description' => 'nullable|string',
             'interest_rate' => 'nullable|numeric|min:0',
+            'interest_type' => 'nullable|in:monthly,daily',
             'term_months' => 'nullable|integer|min:1',
+            'due_date' => 'nullable|date|after_or_equal:date_borrowed',
         ]);
 
-        // Recalculate due date if term or date changed
-        if (isset($validated['term_months']) || isset($validated['date_borrowed'])) {
+        // Recalculate due date if term or date changed AND due_date is NOT explicitly provided in this update
+        if (!isset($validated['due_date']) && (isset($validated['term_months']) || isset($validated['date_borrowed']))) {
             $term = $validated['term_months'] ?? $loan->term_months;
             $date = $validated['date_borrowed'] ?? $loan->date_borrowed;
             

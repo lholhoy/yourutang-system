@@ -20,11 +20,33 @@ class AnalyticsController extends Controller
         $totalOutstanding = Loan::whereHas('borrower', fn($q) => $q->where('user_id', $userId))->sum('amount') -
             \App\Models\Payment::whereHas('loan.borrower', fn($q) => $q->where('user_id', $userId))->sum('amount');
 
-        $monthlyLoans = Loan::whereHas('borrower', fn($q) => $q->where('user_id', $userId))
-            ->selectRaw('SUM(amount) as total, DATE_FORMAT(date_borrowed, "%Y-%m") as month')
-            ->groupBy('month')
-            ->orderBy('month')
-            ->get();
+        $filter = $request->query('filter', 'this_year');
+        $query = Loan::whereHas('borrower', fn($q) => $q->where('user_id', $userId));
+
+        if ($filter === 'this_month') {
+            $query->whereYear('date_borrowed', date('Y'))
+                  ->whereMonth('date_borrowed', date('m'));
+            
+            $monthlyLoans = $query->selectRaw('SUM(amount) as total, DATE_FORMAT(date_borrowed, "%Y-%m-%d") as label')
+                ->groupBy('label')
+                ->orderBy('label')
+                ->get();
+        } elseif ($filter === 'last_year') {
+            $query->whereYear('date_borrowed', date('Y') - 1);
+            
+            $monthlyLoans = $query->selectRaw('SUM(amount) as total, DATE_FORMAT(date_borrowed, "%Y-%m") as label')
+                ->groupBy('label')
+                ->orderBy('label')
+                ->get();
+        } else {
+            // Default: this_year
+            $query->whereYear('date_borrowed', date('Y'));
+            
+            $monthlyLoans = $query->selectRaw('SUM(amount) as total, DATE_FORMAT(date_borrowed, "%Y-%m") as label')
+                ->groupBy('label')
+                ->orderBy('label')
+                ->get();
+        }
 
         $topBorrowers = Borrower::where('user_id', $userId)
             ->withSum('loans', 'amount')

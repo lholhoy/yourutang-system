@@ -12,6 +12,7 @@ export default function BorrowerList() {
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedBorrower, setSelectedBorrower] = useState(null);
 
     useEffect(() => {
         fetchBorrowers();
@@ -41,6 +42,7 @@ export default function BorrowerList() {
 
     const handleBorrowerAdded = () => {
         setIsModalOpen(false);
+        setSelectedBorrower(null);
         fetchBorrowers(); // Refresh list
     };
 
@@ -119,7 +121,10 @@ export default function BorrowerList() {
                         <span>Export CSV</span>
                     </button>
                     <button
-                        onClick={() => setIsModalOpen(true)}
+                        onClick={() => {
+                            setSelectedBorrower(null);
+                            setIsModalOpen(true);
+                        }}
                         className="btn btn-primary shadow-lg shadow-primary/20"
                     >
                         <span>Add Borrower</span>
@@ -157,13 +162,16 @@ export default function BorrowerList() {
                                 </div>
                             </div>
                             <div className="flex gap-1">
-                                <Link
-                                    to={`/borrowers/${borrower.id}/edit`}
+                                <button
+                                    onClick={() => {
+                                        setSelectedBorrower(borrower);
+                                        setIsModalOpen(true);
+                                    }}
                                     className="p-2 text-primary hover:bg-primary/5 rounded-lg transition-colors"
                                     title="Edit"
                                 >
                                     <Pencil size={18} />
-                                </Link>
+                                </button>
                                 <button
                                     onClick={() => handleDelete(borrower.id)}
                                     className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
@@ -211,12 +219,19 @@ export default function BorrowerList() {
             {/* Modal */}
             <Modal
                 isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                title="Add New Borrower"
+                onClose={() => {
+                    setIsModalOpen(false);
+                    setSelectedBorrower(null);
+                }}
+                title={selectedBorrower ? "Edit Borrower" : "Add New Borrower"}
             >
                 <BorrowerForm
+                    initialData={selectedBorrower}
                     onSuccess={handleBorrowerAdded}
-                    onCancel={() => setIsModalOpen(false)}
+                    onCancel={() => {
+                        setIsModalOpen(false);
+                        setSelectedBorrower(null);
+                    }}
                 />
             </Modal>
         </div>
