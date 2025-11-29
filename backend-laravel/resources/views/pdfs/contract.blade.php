@@ -46,7 +46,7 @@
             <ul>
                 <li><strong>Principal Amount:</strong> ₱{{ number_format($loan->amount, 2) }}</li>
                 @if($loan->interest_rate)
-                <li><strong>Interest Rate:</strong> {{ $loan->interest_rate }}% per month</li>
+                <li><strong>Interest Rate:</strong> {{ $loan->interest_rate }}% {{ $loan->interest_type === 'daily' ? 'per day' : 'per month' }}</li>
                 @endif
                 @if($loan->term_months)
                 <li><strong>Term:</strong> {{ $loan->term_months }} months</li>

@@ -95,7 +95,7 @@ class ExportController extends Controller
     {
         $loan->load(['borrower.user']);
         
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdfs.contract', compact('loan'));
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.contract', compact('loan'));
         
         return $pdf->download("contract_{$loan->id}_{$loan->borrower->name}.pdf");
     }

@@ -148,6 +148,11 @@ export default function Dashboard() {
                 borderColor: "#0F9E99",
                 backgroundColor: "rgba(15, 158, 153, 0.1)",
                 tension: 0.4,
+                borderWidth: 3,
+                pointRadius: 4,
+                pointBackgroundColor: "#fff",
+                pointBorderColor: "#0F9E99",
+                pointBorderWidth: 2,
             },
         ],
     };
