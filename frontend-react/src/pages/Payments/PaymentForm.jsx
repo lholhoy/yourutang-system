@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axiosClient from "../../api/axios";
-import { Loader2, Save, DollarSign, Calendar } from "lucide-react";
+import { Loader2, Save, PhilippinePeso, Calendar } from "lucide-react";
 
 export default function PaymentForm({ loan, onSuccess, onCancel }) {
     const [formData, setFormData] = useState({
@@ -50,7 +50,7 @@ export default function PaymentForm({ loan, onSuccess, onCancel }) {
                     Payment Amount (₱) <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                    <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <PhilippinePeso className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <input
                         type="number"
                         step="0.01"
