@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Borrower;
 use App\Models\Loan;
 use Illuminate\Http\Response;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ExportController extends Controller
 {
@@ -86,7 +87,7 @@ class ExportController extends Controller
     {
         $borrower->load(['loans.payments']);
         
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.statement', compact('borrower'));
+        $pdf = Pdf::loadView('pdf.statement', compact('borrower'));
         
         return $pdf->download("statement_{$borrower->id}_{$borrower->name}.pdf");
     }
@@ -95,7 +96,7 @@ class ExportController extends Controller
     {
         $loan->load(['borrower.user']);
         
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.contract', compact('loan'));
+        $pdf = Pdf::loadView('pdfs.contract', compact('loan'));
         
         return $pdf->download("contract_{$loan->id}_{$loan->borrower->name}.pdf");
     }

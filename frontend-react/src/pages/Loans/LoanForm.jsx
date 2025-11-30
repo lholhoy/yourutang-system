@@ -74,11 +74,15 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
         setErrors(null);
 
         try {
+            const payload = { ...formData };
+            if (!payload.due_date) payload.due_date = null;
+            if (!payload.interest_rate) payload.interest_rate = 0;
+
             if (isEditing) {
                 const targetId = loanId || initialData.id;
-                await axiosClient.put(`/loans/${targetId}`, formData);
+                await axiosClient.put(`/loans/${targetId}`, payload);
             } else {
-                await axiosClient.post("/loans", formData);
+                await axiosClient.post("/loans", payload);
             }
 
             if (onSuccess) {

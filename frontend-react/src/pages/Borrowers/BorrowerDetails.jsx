@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axiosClient from "../../api/axios";
-import { ArrowLeft, Pencil, Trash2, Loader2, Plus, Banknote, CheckCircle, AlertCircle, Bell, FileText } from "lucide-react";
+import { ArrowLeft, Pencil, Trash2, Plus, Banknote, CheckCircle, AlertCircle, FileText } from "lucide-react";
 
 import Modal from "../../components/Modal";
 import LoanForm from "../Loans/LoanForm";
@@ -16,7 +16,6 @@ export default function BorrowerDetails() {
     const [isLoanModalOpen, setIsLoanModalOpen] = useState(false);
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
     const [selectedLoan, setSelectedLoan] = useState(null);
-    const [sendingReminder, setSendingReminder] = useState(null);
 
     useEffect(() => {
         fetchBorrower();
@@ -55,20 +54,6 @@ export default function BorrowerDetails() {
         } catch (error) {
             console.error("Error deleting loan:", error);
             alert("Failed to delete loan");
-        }
-    };
-
-    const handleSendReminder = async (loanId) => {
-        if (!window.confirm("Send payment reminder email to borrower?")) return;
-        setSendingReminder(loanId);
-        try {
-            await axiosClient.post(`/loans/${loanId}/remind`);
-            alert("Reminder sent successfully!");
-        } catch (error) {
-            console.error("Error sending reminder:", error);
-            alert(error.response?.data?.message || "Failed to send reminder");
-        } finally {
-            setSendingReminder(null);
         }
     };
 
@@ -308,18 +293,6 @@ export default function BorrowerDetails() {
                                                             title="Add Payment"
                                                         >
                                                             <Banknote size={16} />
-                                                        </button>
-                                                        <button
-                                                            onClick={() => handleSendReminder(loan.id)}
-                                                            disabled={sendingReminder === loan.id}
-                                                            className="p-1.5 text-orange-600 hover:bg-orange-50 rounded-lg transition-colors disabled:opacity-50"
-                                                            title="Send Reminder Email"
-                                                        >
-                                                            {sendingReminder === loan.id ? (
-                                                                <Loader2 size={16} className="animate-spin" />
-                                                            ) : (
-                                                                <Bell size={16} />
-                                                            )}
                                                         </button>
                                                         <a
                                                             href={`http://localhost:8000/api/export/contract/${loan.id}`}
