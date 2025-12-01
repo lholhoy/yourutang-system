@@ -182,10 +182,10 @@ export default function BorrowerDetails() {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-3 self-end lg:self-start w-full sm:w-auto">
+                <div className="flex flex-col sm:flex-row gap-3 self-end lg:self-start w-auto">
                     <button
                         onClick={() => setIsEditModalOpen(true)}
-                        className="btn btn-secondary flex items-center justify-center gap-2 w-full sm:w-auto"
+                        className="btn btn-secondary flex items-center justify-center gap-2 w-auto"
                     >
                         <Pencil size={18} />
                         <span>Edit Profile</span>
@@ -194,7 +194,7 @@ export default function BorrowerDetails() {
                         href={`http://localhost:8000/api/export/statement/${id}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn btn-primary shadow-lg shadow-primary/20 flex items-center justify-center gap-2 w-full sm:w-auto"
+                        className="btn btn-primary shadow-lg shadow-primary/20 flex items-center justify-center gap-2 w-auto"
                     >
                         <Banknote size={18} />
                         <span>Statement</span>
@@ -378,12 +378,12 @@ export default function BorrowerDetails() {
                                 </div>
 
                                 {/* Actions */}
-                                <div className="flex gap-2 pt-2 border-t border-border/50">
+                                <div className="flex gap-2 pt-2 border-t border-border/50 overflow-x-auto">
                                     {loan.status !== 'paid' && (
                                         <>
                                             <button
                                                 onClick={() => openPaymentModal(loan)}
-                                                className="flex-1 btn btn-secondary py-2 px-2 text-xs flex items-center justify-center gap-1.5"
+                                                className="btn btn-secondary py-2 px-3 text-xs flex items-center justify-center gap-1.5 whitespace-nowrap"
                                             >
                                                 <Banknote size={14} /> Pay
                                             </button>
@@ -391,7 +391,7 @@ export default function BorrowerDetails() {
                                                 href={`http://localhost:8000/api/export/contract/${loan.id}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="flex-1 btn btn-secondary py-2 px-2 text-xs flex items-center justify-center gap-1.5"
+                                                className="btn btn-secondary py-2 px-3 text-xs flex items-center justify-center gap-1.5 whitespace-nowrap"
                                             >
                                                 <FileText size={14} /> Contract
                                             </a>
@@ -399,13 +399,13 @@ export default function BorrowerDetails() {
                                     )}
                                     <Link
                                         to={`/loans/${loan.id}/edit`}
-                                        className="flex-1 btn btn-secondary py-2 px-2 text-xs flex items-center justify-center gap-1.5"
+                                        className="btn btn-secondary py-2 px-3 text-xs flex items-center justify-center gap-1.5 whitespace-nowrap"
                                     >
                                         <Pencil size={14} /> Edit
                                     </Link>
                                     <button
                                         onClick={() => handleDeleteLoan(loan.id)}
-                                        className="flex-1 btn btn-danger py-2 px-2 text-xs flex items-center justify-center gap-1.5"
+                                        className="btn btn-danger py-2 px-3 text-xs flex items-center justify-center gap-1.5 whitespace-nowrap"
                                     >
                                         <Trash2 size={14} /> Delete
                                     </button>

@@ -217,48 +217,48 @@ export default function Dashboard() {
 
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white rounded-2xl p-4 sm:p-6 border border-border/50 shadow-soft hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110 opacity-50" />
+                <div className="bg-white rounded-2xl p-5 border border-border/50 shadow-soft hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-full -mr-10 -mt-10 transition-transform group-hover:scale-110 opacity-50" />
                     <div className="relative z-10">
-                        <div className="flex items-center justify-between mb-4">
-                            <div className="bg-blue-50 p-3 rounded-xl text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                                <Users className="w-6 h-6" />
+                        <div className="flex items-center justify-between mb-3">
+                            <div className="bg-blue-50 p-2.5 rounded-xl text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                                <Users className="w-5 h-5" />
                             </div>
-                            <span className="flex items-center gap-1 text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                            <span className="flex items-center gap-1 text-xs font-semibold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
                                 <ArrowUpRight className="w-3 h-3" /> +2.5%
                             </span>
                         </div>
                         <p className="text-sm font-medium text-gray-500">Total Borrowers</p>
-                        <h3 className="text-3xl font-bold text-gray-900 mt-1">{data.total_borrowers}</h3>
+                        <h3 className="text-2xl font-bold text-gray-900 mt-1">{data.total_borrowers}</h3>
                     </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-4 sm:p-6 border border-border/50 shadow-soft hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110 opacity-50" />
+                <div className="bg-white rounded-2xl p-5 border border-border/50 shadow-soft hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-50 rounded-full -mr-10 -mt-10 transition-transform group-hover:scale-110 opacity-50" />
                     <div className="relative z-10">
-                        <div className="flex items-center justify-between mb-4">
-                            <div className="bg-emerald-50 p-3 rounded-xl text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                                <Wallet className="w-6 h-6" />
+                        <div className="flex items-center justify-between mb-3">
+                            <div className="bg-emerald-50 p-2.5 rounded-xl text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                                <Wallet className="w-5 h-5" />
                             </div>
-                            <span className="flex items-center gap-1 text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                            <span className="flex items-center gap-1 text-xs font-semibold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
                                 <ArrowUpRight className="w-3 h-3" /> +12%
                             </span>
                         </div>
                         <p className="text-sm font-medium text-gray-500">Total Loans</p>
-                        <h3 className="text-3xl font-bold text-gray-900 mt-1">{data.total_loans}</h3>
+                        <h3 className="text-2xl font-bold text-gray-900 mt-1">{data.total_loans}</h3>
                     </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-4 sm:p-6 border border-border/50 shadow-soft hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-purple-50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110 opacity-50" />
+                <div className="bg-white rounded-2xl p-5 border border-border/50 shadow-soft hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-purple-50 rounded-full -mr-10 -mt-10 transition-transform group-hover:scale-110 opacity-50" />
                     <div className="relative z-10">
-                        <div className="flex items-center justify-between mb-4">
-                            <div className="bg-purple-50 p-3 rounded-xl text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
-                                <TrendingUp className="w-6 h-6" />
+                        <div className="flex items-center justify-between mb-3">
+                            <div className="bg-purple-50 p-2.5 rounded-xl text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                                <TrendingUp className="w-5 h-5" />
                             </div>
                         </div>
                         <p className="text-sm font-medium text-gray-500">Outstanding Balance</p>
-                        <h3 className="text-3xl font-bold text-gray-900 mt-1">₱{Number(data.total_outstanding).toLocaleString()}</h3>
+                        <h3 className="text-2xl font-bold text-gray-900 mt-1">₱{Number(data.total_outstanding).toLocaleString()}</h3>
                     </div>
                 </div>
             </div>

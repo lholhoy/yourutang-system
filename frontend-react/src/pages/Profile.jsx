@@ -230,7 +230,7 @@ export default function Profile() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="btn btn-primary w-full sm:w-auto px-8 py-2.5 shadow-lg shadow-primary/20"
+                                className="btn btn-primary w-auto px-8 py-2.5 shadow-lg shadow-primary/20"
                             >
                                 {loading ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
                                 Save Changes

@@ -398,14 +398,14 @@ export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
                             <button
                                 type="button"
                                 onClick={onCancel}
-                                className="btn btn-secondary w-full sm:w-auto px-6"
+                                className="btn btn-secondary w-auto px-6"
                             >
                                 Cancel
                             </button>
                         ) : (
                             <Link
                                 to="/borrowers"
-                                className="btn btn-secondary w-full sm:w-auto px-6"
+                                className="btn btn-secondary w-auto px-6"
                             >
                                 Cancel
                             </Link>
@@ -413,7 +413,7 @@ export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="btn btn-primary w-full sm:w-auto px-6 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all transform hover:-translate-y-0.5"
+                            className="btn btn-primary w-auto px-6 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all transform hover:-translate-y-0.5"
                         >
                             {loading && <Loader2 className="animate-spin" size={18} />}
                             {!loading && <Save size={18} />}

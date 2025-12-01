@@ -67,15 +67,7 @@ export default function LandingPage() {
                     </div>
 
                     {/* Social Proof / Trust */}
-                    <div className="mt-16 pt-8 border-t border-gray-100 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500">
-                        <p className="text-sm text-gray-400 font-medium mb-4 uppercase tracking-wider">Trusted by modern lenders</p>
-                        <div className="flex justify-center items-center gap-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-                            {/* Placeholders for partner logos or just icons for now */}
-                            <div className="flex items-center gap-2 font-bold text-xl text-gray-400"><Shield className="w-6 h-6" /> SecureLend</div>
-                            <div className="flex items-center gap-2 font-bold text-xl text-gray-400"><Wallet className="w-6 h-6" /> FastCash</div>
-                            <div className="flex items-center gap-2 font-bold text-xl text-gray-400"><TrendingUp className="w-6 h-6" /> GrowthFin</div>
-                        </div>
-                    </div>
+
                 </div>
             </section>
 
@@ -145,8 +137,7 @@ export default function LandingPage() {
                                 {[
                                     "Secure Authentication & Session Management",
                                     "Daily Database Backups",
-                                    "Encrypted Data Transmission (SSL/TLS)",
-                                    "Role-Based Access Control"
+                                    "Encrypted Data Transmission (SSL/TLS)"
                                 ].map((item, i) => (
                                     <li key={i} className="flex items-center gap-3 text-gray-200">
                                         <div className="p-1 rounded-full bg-green-500/20 text-green-400">

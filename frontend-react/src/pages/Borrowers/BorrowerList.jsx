@@ -105,10 +105,10 @@ export default function BorrowerList() {
                     <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Borrowers</h1>
                     <p className="text-gray-500 mt-1">Manage your borrowers and their loan history.</p>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                <div className="flex flex-col sm:flex-row gap-3 w-auto">
                     <button
                         onClick={handleExport}
-                        className="btn btn-secondary flex items-center justify-center gap-2 w-full sm:w-auto"
+                        className="btn btn-secondary flex items-center justify-center gap-2 w-auto"
                     >
                         <Download size={18} />
                         <span>Export CSV</span>
@@ -118,7 +118,7 @@ export default function BorrowerList() {
                             setSelectedBorrower(null);
                             setIsModalOpen(true);
                         }}
-                        className="btn btn-primary shadow-lg shadow-primary/20 flex items-center justify-center gap-2 hover:translate-y-0.5 transition-transform w-full sm:w-auto"
+                        className="btn btn-primary shadow-lg shadow-primary/20 flex items-center justify-center gap-2 hover:translate-y-0.5 transition-transform w-auto"
                     >
                         <Plus size={18} />
                         <span>Add Borrower</span>

@@ -111,7 +111,7 @@ export default function LoanList() {
                         setSelectedLoan(null);
                         setIsLoanModalOpen(true);
                     }}
-                    className="btn btn-primary shadow-lg shadow-primary/20 flex items-center justify-center gap-2 hover:translate-y-0.5 transition-transform w-full sm:w-auto"
+                    className="btn btn-primary shadow-lg shadow-primary/20 flex items-center justify-center gap-2 hover:translate-y-0.5 transition-transform w-auto"
                 >
                     <Plus size={18} />
                     <span>Add Loan</span>
