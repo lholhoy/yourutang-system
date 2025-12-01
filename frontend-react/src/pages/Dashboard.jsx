@@ -217,7 +217,7 @@ export default function Dashboard() {
 
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white rounded-2xl p-6 border border-border/50 shadow-soft hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
+                <div className="bg-white rounded-2xl p-4 sm:p-6 border border-border/50 shadow-soft hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110 opacity-50" />
                     <div className="relative z-10">
                         <div className="flex items-center justify-between mb-4">
@@ -233,7 +233,7 @@ export default function Dashboard() {
                     </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 border border-border/50 shadow-soft hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
+                <div className="bg-white rounded-2xl p-4 sm:p-6 border border-border/50 shadow-soft hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110 opacity-50" />
                     <div className="relative z-10">
                         <div className="flex items-center justify-between mb-4">
@@ -249,7 +249,7 @@ export default function Dashboard() {
                     </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 border border-border/50 shadow-soft hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
+                <div className="bg-white rounded-2xl p-4 sm:p-6 border border-border/50 shadow-soft hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-purple-50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110 opacity-50" />
                     <div className="relative z-10">
                         <div className="flex items-center justify-between mb-4">
@@ -265,7 +265,7 @@ export default function Dashboard() {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Chart */}
-                <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-border/50 shadow-soft">
+                <div className="lg:col-span-2 bg-white rounded-2xl p-4 sm:p-6 border border-border/50 shadow-soft">
                     <div className="flex items-center justify-between mb-6">
                         <div>
                             <h2 className="text-lg font-bold text-gray-900">Loan Performance</h2>
@@ -287,7 +287,7 @@ export default function Dashboard() {
                 </div>
 
                 {/* Top Borrowers */}
-                <div className="bg-white rounded-2xl p-6 border border-border/50 shadow-soft flex flex-col h-[450px]">
+                <div className="bg-white rounded-2xl p-4 sm:p-6 border border-border/50 shadow-soft flex flex-col h-[450px]">
                     <h2 className="text-lg font-bold text-gray-900 mb-1">Top Borrowers</h2>
                     <p className="text-sm text-gray-500 mb-6">Highest outstanding balances</p>
 
@@ -296,9 +296,9 @@ export default function Dashboard() {
                             <div key={borrower.id} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-xl transition-all group cursor-pointer border border-transparent hover:border-gray-100">
                                 <div className="flex items-center gap-3">
                                     <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shadow-sm transition-transform group-hover:scale-105 ${index === 0 ? 'bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-700' :
-                                            index === 1 ? 'bg-gradient-to-br from-gray-100 to-gray-200 text-gray-700' :
-                                                index === 2 ? 'bg-gradient-to-br from-orange-100 to-orange-200 text-orange-700' :
-                                                    'bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600'
+                                        index === 1 ? 'bg-gradient-to-br from-gray-100 to-gray-200 text-gray-700' :
+                                            index === 2 ? 'bg-gradient-to-br from-orange-100 to-orange-200 text-orange-700' :
+                                                'bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600'
                                         }`}>
                                         {borrower.name.charAt(0)}
                                     </div>
@@ -327,7 +327,7 @@ export default function Dashboard() {
                 </div>
 
                 {/* Recent Activity */}
-                <div className="lg:col-span-3 bg-white rounded-2xl p-6 border border-border/50 shadow-soft">
+                <div className="lg:col-span-3 bg-white rounded-2xl p-4 sm:p-6 border border-border/50 shadow-soft">
                     <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-3">
                             <div className="bg-orange-50 p-2 rounded-lg text-orange-600">

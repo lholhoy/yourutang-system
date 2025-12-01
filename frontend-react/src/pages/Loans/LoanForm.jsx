@@ -138,7 +138,7 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
                 {/* Header Gradient Line */}
                 <div className="h-1.5 bg-gradient-to-r from-primary to-primary-600 w-full"></div>
 
-                <form onSubmit={handleSubmit} className="p-8 space-y-8">
+                <form onSubmit={handleSubmit} className={isModal ? "space-y-6" : "p-6 sm:p-8 space-y-8"}>
                     {/* Borrower Selection */}
                     <div className="space-y-6">
                         <div className="flex items-center gap-3 pb-2 border-b border-border/50">
@@ -243,7 +243,7 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
                                 <label className="block text-sm font-medium text-gray-700 mb-1.5">
                                     Interest Rate
                                 </label>
-                                <div className="flex gap-2">
+                                <div className="flex flex-col sm:flex-row gap-2">
                                     <div className="relative flex-1">
                                         <input
                                             type="number"
@@ -257,7 +257,7 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
                                     <select
                                         value={formData.interest_type}
                                         onChange={(e) => setFormData({ ...formData, interest_type: e.target.value })}
-                                        className="input-field w-32 appearance-none bg-gray-50"
+                                        className="input-field w-full sm:w-32 appearance-none bg-gray-50"
                                     >
                                         <option value="monthly">% / Month</option>
                                         <option value="daily">% / Day</option>
@@ -269,60 +269,64 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
                                 <label className="block text-sm font-medium text-gray-700 mb-1.5">
                                     Loan Term
                                 </label>
-                                <div className="flex gap-2">
-                                    <input
-                                        type="number"
-                                        min="1"
-                                        value={formData.term_months}
-                                        onChange={(e) => {
-                                            const term = e.target.value;
-                                            // Auto-calculate due date
-                                            const date = new Date(formData.date_borrowed);
-                                            if (formData.term_unit === 'weeks') {
-                                                date.setDate(date.getDate() + (parseInt(term || 0) * 7));
-                                            } else {
-                                                date.setMonth(date.getMonth() + parseInt(term || 0));
-                                            }
-                                            setFormData({
-                                                ...formData,
-                                                term_months: term,
-                                                due_date: date.toISOString().split('T')[0]
-                                            });
-                                        }}
-                                        className="input-field"
-                                        placeholder="1"
-                                    />
-                                    <select
-                                        value={formData.term_unit}
-                                        onChange={(e) => {
-                                            const unit = e.target.value;
-                                            // Recalculate due date based on new unit
-                                            const term = formData.term_months;
-                                            const date = new Date(formData.date_borrowed);
-                                            if (unit === 'weeks') {
-                                                date.setDate(date.getDate() + (parseInt(term || 0) * 7));
-                                            } else {
-                                                date.setMonth(date.getMonth() + parseInt(term || 0));
-                                            }
-                                            setFormData({
-                                                ...formData,
-                                                term_unit: unit,
-                                                due_date: date.toISOString().split('T')[0]
-                                            });
-                                        }}
-                                        className="input-field w-32 appearance-none bg-gray-50"
-                                    >
-                                        <option value="months">Months</option>
-                                        <option value="weeks">Weeks</option>
-                                    </select>
-                                    <button
-                                        type="button"
-                                        onClick={() => setIsAmortizationOpen(true)}
-                                        className="btn btn-secondary px-3 text-primary hover:text-primary-700 hover:bg-primary-50 border-primary/20"
-                                        title="View Amortization Schedule"
-                                    >
-                                        <Calculator size={18} />
-                                    </button>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <div className="relative flex-1">
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            value={formData.term_months}
+                                            onChange={(e) => {
+                                                const term = e.target.value;
+                                                // Auto-calculate due date
+                                                const date = new Date(formData.date_borrowed);
+                                                if (formData.term_unit === 'weeks') {
+                                                    date.setDate(date.getDate() + (parseInt(term || 0) * 7));
+                                                } else {
+                                                    date.setMonth(date.getMonth() + parseInt(term || 0));
+                                                }
+                                                setFormData({
+                                                    ...formData,
+                                                    term_months: term,
+                                                    due_date: date.toISOString().split('T')[0]
+                                                });
+                                            }}
+                                            className="input-field"
+                                            placeholder="1"
+                                        />
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <select
+                                            value={formData.term_unit}
+                                            onChange={(e) => {
+                                                const unit = e.target.value;
+                                                // Recalculate due date based on new unit
+                                                const term = formData.term_months;
+                                                const date = new Date(formData.date_borrowed);
+                                                if (unit === 'weeks') {
+                                                    date.setDate(date.getDate() + (parseInt(term || 0) * 7));
+                                                } else {
+                                                    date.setMonth(date.getMonth() + parseInt(term || 0));
+                                                }
+                                                setFormData({
+                                                    ...formData,
+                                                    term_unit: unit,
+                                                    due_date: date.toISOString().split('T')[0]
+                                                });
+                                            }}
+                                            className="input-field flex-1 sm:w-32 appearance-none bg-gray-50"
+                                        >
+                                            <option value="months">Months</option>
+                                            <option value="weeks">Weeks</option>
+                                        </select>
+                                        <button
+                                            type="button"
+                                            onClick={() => setIsAmortizationOpen(true)}
+                                            className="btn btn-secondary px-3 text-primary hover:text-primary-700 hover:bg-primary-50 border-primary/20"
+                                            title="View Amortization Schedule"
+                                        >
+                                            <Calculator size={18} />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -367,19 +371,19 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex justify-end gap-3 pt-6 border-t border-border">
+                    <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pt-6 border-t border-border">
                         {onCancel ? (
                             <button
                                 type="button"
                                 onClick={onCancel}
-                                className="btn btn-secondary px-6"
+                                className="btn btn-secondary w-full sm:w-auto px-6"
                             >
                                 Cancel
                             </button>
                         ) : (
                             <Link
                                 to="/loans"
-                                className="btn btn-secondary px-6"
+                                className="btn btn-secondary w-full sm:w-auto px-6"
                             >
                                 Cancel
                             </Link>
@@ -387,7 +391,7 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
                         <button
                             type="submit"
                             disabled={loading}
-                            className="btn btn-primary px-6 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all transform hover:-translate-y-0.5"
+                            className="btn btn-primary w-full sm:w-auto px-6 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all transform hover:-translate-y-0.5"
                         >
                             {loading && <Loader2 className="animate-spin" size={18} />}
                             {!loading && <Save size={18} />}

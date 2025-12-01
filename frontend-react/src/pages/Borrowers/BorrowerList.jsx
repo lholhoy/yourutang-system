@@ -105,10 +105,10 @@ export default function BorrowerList() {
                     <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Borrowers</h1>
                     <p className="text-gray-500 mt-1">Manage your borrowers and their loan history.</p>
                 </div>
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                     <button
                         onClick={handleExport}
-                        className="btn btn-secondary flex items-center gap-2"
+                        className="btn btn-secondary flex items-center justify-center gap-2 w-full sm:w-auto"
                     >
                         <Download size={18} />
                         <span>Export CSV</span>
@@ -118,7 +118,7 @@ export default function BorrowerList() {
                             setSelectedBorrower(null);
                             setIsModalOpen(true);
                         }}
-                        className="btn btn-primary shadow-lg shadow-primary/20 flex items-center gap-2 hover:translate-y-0.5 transition-transform"
+                        className="btn btn-primary shadow-lg shadow-primary/20 flex items-center justify-center gap-2 hover:translate-y-0.5 transition-transform w-full sm:w-auto"
                     >
                         <Plus size={18} />
                         <span>Add Borrower</span>
@@ -164,16 +164,16 @@ export default function BorrowerList() {
                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/50 to-primary-600/50 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
 
                         <div className="flex items-start justify-between mb-6">
-                            <div className="flex items-center gap-4">
-                                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center text-gray-700 font-bold text-xl shadow-inner border border-white ring-1 ring-gray-100">
+                            <div className="flex items-center gap-4 min-w-0 flex-1">
+                                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center text-gray-700 font-bold text-xl shadow-inner border border-white ring-1 ring-gray-100 shrink-0">
                                     {borrower.name.charAt(0)}
                                 </div>
-                                <div>
-                                    <h3 className="font-bold text-gray-900 group-hover:text-primary transition-colors text-lg">{borrower.name}</h3>
-                                    <p className="text-sm text-gray-500 font-medium">{borrower.contact || "No contact"}</p>
+                                <div className="min-w-0 flex-1">
+                                    <h3 className="font-bold text-gray-900 group-hover:text-primary transition-colors text-lg truncate">{borrower.name}</h3>
+                                    <p className="text-sm text-gray-500 font-medium truncate">{borrower.contact || "No contact"}</p>
                                 </div>
                             </div>
-                            <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <div className="flex gap-1">
                                 <button
                                     onClick={() => {
                                         setSelectedBorrower(borrower);

@@ -41,7 +41,7 @@ export default function Login() {
             <div className="bg-white rounded-2xl shadow-soft border border-border overflow-hidden">
                 <div className="h-1.5 bg-gradient-to-r from-primary to-primary-600 w-full"></div>
 
-                <form onSubmit={handleSubmit} className="p-8 space-y-6">
+                <form onSubmit={handleSubmit} className="p-6 sm:p-8 space-y-6">
                     {errors && (
                         <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm border border-red-100 flex flex-col gap-1 animate-fadeIn">
                             {Object.keys(errors).map((key) => (
@@ -74,9 +74,9 @@ export default function Login() {
                     </div>
 
                     <div>
-                        <div className="flex justify-between items-center mb-1.5">
+                        <div className="flex flex-wrap justify-between items-center mb-1.5 gap-2">
                             <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-                            <Link to="/forgot-password" className="text-xs font-semibold text-primary hover:text-primary-700 hover:underline">
+                            <Link to="/forgot-password" className="text-xs font-semibold text-primary hover:text-primary-700 hover:underline whitespace-nowrap">
                                 Forgot Password?
                             </Link>
                         </div>

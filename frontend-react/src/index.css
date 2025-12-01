@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-background text-content font-sans antialiased;
+    @apply bg-background text-content font-sans antialiased overflow-x-hidden;
   }
 
   ::selection {

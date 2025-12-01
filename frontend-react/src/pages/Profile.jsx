@@ -226,11 +226,11 @@ export default function Profile() {
                             </div>
                         </div>
 
-                        <div className="flex justify-end pt-6 border-t border-border/50">
+                        <div className="flex flex-col sm:flex-row sm:justify-end pt-6 border-t border-border/50">
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="btn btn-primary px-8 py-2.5 shadow-lg shadow-primary/20"
+                                className="btn btn-primary w-full sm:w-auto px-8 py-2.5 shadow-lg shadow-primary/20"
                             >
                                 {loading ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
                                 Save Changes

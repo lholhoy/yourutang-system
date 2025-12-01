@@ -118,18 +118,18 @@ export default function PaymentForm({ loan, onSuccess, onCancel }) {
                     </div>
                 </div>
 
-                <div className="flex justify-end gap-3 pt-4 border-t border-border">
+                <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pt-4 border-t border-border">
                     <button
                         type="button"
                         onClick={onCancel}
-                        className="btn btn-secondary px-5"
+                        className="btn btn-secondary w-full sm:w-auto px-5"
                     >
                         Cancel
                     </button>
                     <button
                         type="submit"
                         disabled={loading}
-                        className="btn btn-primary px-5 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all transform hover:-translate-y-0.5"
+                        className="btn btn-primary w-full sm:w-auto px-5 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all transform hover:-translate-y-0.5"
                     >
                         {loading && <Loader2 className="animate-spin" size={18} />}
                         {!loading && <Save size={18} />}

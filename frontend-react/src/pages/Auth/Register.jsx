@@ -42,7 +42,7 @@ export default function Register() {
             <div className="bg-white rounded-2xl shadow-soft border border-border overflow-hidden">
                 <div className="h-1.5 bg-gradient-to-r from-primary to-primary-600 w-full"></div>
 
-                <form onSubmit={handleSubmit} className="p-8 space-y-6">
+                <form onSubmit={handleSubmit} className="p-6 sm:p-8 space-y-6">
                     {errors && (
                         <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm border border-red-100 animate-fadeIn">
                             <p className="font-medium mb-1">Please fix the errors below:</p>

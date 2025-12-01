@@ -178,7 +178,7 @@ export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
                 {/* Header Gradient Line */}
                 <div className="h-1.5 bg-gradient-to-r from-primary to-primary-600 w-full"></div>
 
-                <form onSubmit={handleSubmit} className="p-8 space-y-8">
+                <form onSubmit={handleSubmit} className={isModal ? "space-y-6" : "p-6 sm:p-8 space-y-8"}>
                     {/* Personal Information Section */}
                     <div className="space-y-6">
                         <div className="flex items-center gap-3 pb-2 border-b border-border/50">
@@ -393,19 +393,19 @@ export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex justify-end gap-3 pt-6 border-t border-border">
+                    <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pt-6 border-t border-border">
                         {onCancel ? (
                             <button
                                 type="button"
                                 onClick={onCancel}
-                                className="btn btn-secondary px-6"
+                                className="btn btn-secondary w-full sm:w-auto px-6"
                             >
                                 Cancel
                             </button>
                         ) : (
                             <Link
                                 to="/borrowers"
-                                className="btn btn-secondary px-6"
+                                className="btn btn-secondary w-full sm:w-auto px-6"
                             >
                                 Cancel
                             </Link>
@@ -413,7 +413,7 @@ export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="btn btn-primary px-6 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all transform hover:-translate-y-0.5"
+                            className="btn btn-primary w-full sm:w-auto px-6 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all transform hover:-translate-y-0.5"
                         >
                             {loading && <Loader2 className="animate-spin" size={18} />}
                             {!loading && <Save size={18} />}

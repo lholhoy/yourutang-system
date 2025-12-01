@@ -16,10 +16,13 @@ import HistoryLogs from "./pages/HistoryLogs";
 
 import LandingPage from "./pages/LandingPage";
 
+import ErrorPage from "./pages/ErrorPage";
+
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Outlet />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 index: true,
