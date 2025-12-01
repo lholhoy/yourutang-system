@@ -129,6 +129,25 @@ export default function Dashboard() {
                 pointRadius: 4,
                 pointHoverRadius: 6,
             },
+            {
+                label: "Interest",
+                data: data.monthly_interests?.map((item) => Number(item.total)) || [],
+                fill: true,
+                borderColor: "#F59E0B", // Amber-500
+                backgroundColor: (context) => {
+                    const ctx = context.chart.ctx;
+                    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                    gradient.addColorStop(0, "rgba(245, 158, 11, 0.2)");
+                    gradient.addColorStop(1, "rgba(245, 158, 11, 0)");
+                    return gradient;
+                },
+                tension: 0.4,
+                pointBackgroundColor: "#F59E0B",
+                pointBorderColor: "#fff",
+                pointBorderWidth: 2,
+                pointRadius: 4,
+                pointHoverRadius: 6,
+            },
         ],
     };
 
@@ -216,49 +235,112 @@ export default function Dashboard() {
             )}
 
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white rounded-2xl p-5 border border-border/50 shadow-soft hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-full -mr-10 -mt-10 transition-transform group-hover:scale-110 opacity-50" />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {/* Card 1: Total Borrowers */}
+                <div className="bg-white rounded-2xl p-4 border border-border/50 shadow-sm relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-blue-50 rounded-full -mr-8 -mt-8 opacity-50" />
                     <div className="relative z-10">
-                        <div className="flex items-center justify-between mb-3">
-                            <div className="bg-blue-50 p-2.5 rounded-xl text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                                <Users className="w-5 h-5" />
+                        <div className="flex flex-col h-full justify-between">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <h3 className="text-3xl font-bold text-gray-900 mb-1">{data.total_borrowers}</h3>
+                                    <p className="text-xs font-medium text-gray-500">Total Borrowers</p>
+                                </div>
+                                <div className="bg-blue-50 p-2 rounded-lg text-blue-600">
+                                    <Users className="w-4 h-4" />
+                                </div>
                             </div>
-                            <span className="flex items-center gap-1 text-xs font-semibold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
-                                <ArrowUpRight className="w-3 h-3" /> +2.5%
-                            </span>
+                            <div className="mt-4">
+                                <div className="flex items-center justify-between text-xs text-gray-500 mb-1.5">
+                                    <span>Growth</span>
+                                    <span className="text-emerald-600">+2.5%</span>
+                                </div>
+                                <div className="h-1.5 w-full bg-blue-50 rounded-full overflow-hidden">
+                                    <div className="h-full bg-blue-500 rounded-full" style={{ width: '30%' }}></div>
+                                </div>
+                            </div>
                         </div>
-                        <p className="text-sm font-medium text-gray-500">Total Borrowers</p>
-                        <h3 className="text-2xl font-bold text-gray-900 mt-1">{data.total_borrowers}</h3>
                     </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-5 border border-border/50 shadow-soft hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-50 rounded-full -mr-10 -mt-10 transition-transform group-hover:scale-110 opacity-50" />
+                {/* Card 2: Total Loans */}
+                <div className="bg-white rounded-2xl p-4 border border-border/50 shadow-sm relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-50 rounded-full -mr-8 -mt-8 opacity-50" />
                     <div className="relative z-10">
-                        <div className="flex items-center justify-between mb-3">
-                            <div className="bg-emerald-50 p-2.5 rounded-xl text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                                <Wallet className="w-5 h-5" />
+                        <div className="flex flex-col h-full justify-between">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <h3 className="text-3xl font-bold text-gray-900 mb-1">{data.total_loans}</h3>
+                                    <p className="text-xs font-medium text-gray-500">Total Loans</p>
+                                </div>
+                                <div className="bg-emerald-50 p-2 rounded-lg text-emerald-600">
+                                    <Wallet className="w-4 h-4" />
+                                </div>
                             </div>
-                            <span className="flex items-center gap-1 text-xs font-semibold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
-                                <ArrowUpRight className="w-3 h-3" /> +12%
-                            </span>
+                            <div className="mt-4">
+                                <div className="flex items-center justify-between text-xs text-gray-500 mb-1.5">
+                                    <span>Active</span>
+                                    <span className="text-emerald-600">70%</span>
+                                </div>
+                                <div className="h-1.5 w-full bg-emerald-50 rounded-full overflow-hidden">
+                                    <div className="h-full bg-emerald-500 rounded-full" style={{ width: '70%' }}></div>
+                                </div>
+                            </div>
                         </div>
-                        <p className="text-sm font-medium text-gray-500">Total Loans</p>
-                        <h3 className="text-2xl font-bold text-gray-900 mt-1">{data.total_loans}</h3>
                     </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-5 border border-border/50 shadow-soft hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-purple-50 rounded-full -mr-10 -mt-10 transition-transform group-hover:scale-110 opacity-50" />
+                {/* Card 3: Outstanding Balance */}
+                <div className="bg-white rounded-2xl p-4 border border-border/50 shadow-sm relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-purple-50 rounded-full -mr-8 -mt-8 opacity-50" />
                     <div className="relative z-10">
-                        <div className="flex items-center justify-between mb-3">
-                            <div className="bg-purple-50 p-2.5 rounded-xl text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
-                                <TrendingUp className="w-5 h-5" />
+                        <div className="flex flex-col h-full justify-between">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <h3 className="text-lg font-bold text-gray-900 mb-1 truncate">₱{Number(data.total_outstanding).toLocaleString()}</h3>
+                                    <p className="text-xs font-medium text-gray-500">Outstanding</p>
+                                </div>
+                                <div className="bg-purple-50 p-2 rounded-lg text-purple-600">
+                                    <TrendingUp className="w-4 h-4" />
+                                </div>
+                            </div>
+                            <div className="mt-4">
+                                <div className="flex items-center justify-between text-xs text-gray-500 mb-1.5">
+                                    <span>Collected</span>
+                                    <span className="text-purple-600">45%</span>
+                                </div>
+                                <div className="h-1.5 w-full bg-purple-50 rounded-full overflow-hidden">
+                                    <div className="h-full bg-purple-500 rounded-full" style={{ width: '45%' }}></div>
+                                </div>
                             </div>
                         </div>
-                        <p className="text-sm font-medium text-gray-500">Outstanding Balance</p>
-                        <h3 className="text-2xl font-bold text-gray-900 mt-1">₱{Number(data.total_outstanding).toLocaleString()}</h3>
+                    </div>
+                </div>
+
+                {/* Card 4: Upcoming Due */}
+                <div className="bg-white rounded-2xl p-4 border border-border/50 shadow-sm relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-amber-50 rounded-full -mr-8 -mt-8 opacity-50" />
+                    <div className="relative z-10">
+                        <div className="flex flex-col h-full justify-between">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <h3 className="text-3xl font-bold text-gray-900 mb-1">{upcomingDue.length}</h3>
+                                    <p className="text-xs font-medium text-gray-500">Upcoming Due</p>
+                                </div>
+                                <div className="bg-amber-50 p-2 rounded-lg text-amber-600">
+                                    <Calendar className="w-4 h-4" />
+                                </div>
+                            </div>
+                            <div className="mt-4">
+                                <div className="flex items-center justify-between text-xs text-gray-500 mb-1.5">
+                                    <span>Urgency</span>
+                                    <span className="text-amber-600">High</span>
+                                </div>
+                                <div className="h-1.5 w-full bg-amber-50 rounded-full overflow-hidden">
+                                    <div className="h-full bg-amber-500 rounded-full" style={{ width: '85%' }}></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -266,22 +348,33 @@ export default function Dashboard() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Chart */}
                 <div className="lg:col-span-2 bg-white rounded-2xl p-4 sm:p-6 border border-border/50 shadow-soft">
-                    <div className="flex items-center justify-between mb-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                         <div>
                             <h2 className="text-lg font-bold text-gray-900">Loan Performance</h2>
-                            <p className="text-sm text-gray-500">Monthly loan disbursement overview</p>
+                            <p className="text-sm text-gray-500 hidden sm:block">Loan disbursement overview</p>
                         </div>
-                        <select
-                            value={filter}
-                            onChange={(e) => setFilter(e.target.value)}
-                            className="text-sm border-gray-200 rounded-lg text-gray-600 focus:ring-primary focus:border-primary bg-gray-50 py-2 pl-3 pr-8 cursor-pointer hover:bg-gray-100 transition-colors"
-                        >
-                            <option value="this_year">This Year</option>
-                            <option value="last_year">Last Year</option>
-                            <option value="this_month">This Month</option>
-                        </select>
+                        <div className="flex bg-gray-100 p-1 rounded-xl self-start sm:self-auto">
+                            <button
+                                onClick={() => setFilter("this_year")}
+                                className={`px-4 py-1.5 text-xs font-semibold rounded-lg transition-all ${filter === "this_year" ? "bg-white text-gray-900 shadow-sm" : "text-gray-500 hover:text-gray-700"}`}
+                            >
+                                Yearly
+                            </button>
+                            <button
+                                onClick={() => setFilter("this_month")}
+                                className={`px-4 py-1.5 text-xs font-semibold rounded-lg transition-all ${filter === "this_month" ? "bg-white text-gray-900 shadow-sm" : "text-gray-500 hover:text-gray-700"}`}
+                            >
+                                Monthly
+                            </button>
+                            <button
+                                onClick={() => setFilter("last_year")}
+                                className={`px-4 py-1.5 text-xs font-semibold rounded-lg transition-all ${filter === "last_year" ? "bg-white text-gray-900 shadow-sm" : "text-gray-500 hover:text-gray-700"}`}
+                            >
+                                Last Year
+                            </button>
+                        </div>
                     </div>
-                    <div className="h-80 w-full">
+                    <div className="h-64 sm:h-80 w-full">
                         <Line options={chartOptions} data={chartData} />
                     </div>
                 </div>

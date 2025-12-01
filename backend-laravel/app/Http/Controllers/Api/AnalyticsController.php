@@ -23,7 +23,9 @@ class AnalyticsController extends Controller
         $filter = $request->query('filter', 'this_year');
         $query = Loan::whereHas('borrower', fn($q) => $q->where('user_id', $userId));
 
-        $monthlyLoans = [];
+        // Fetch loans for the period to calculate both Principal and Interest
+        $loans = $query->get();
+
         $months = [];
         
         if ($filter === 'this_month') {
@@ -36,13 +38,6 @@ class AnalyticsController extends Controller
                 $day = str_pad($i, 2, '0', STR_PAD_LEFT);
                 $months[$currentMonth . '-' . $day] = 0;
             }
-
-            $data = $query->whereYear('date_borrowed', date('Y'))
-                  ->whereMonth('date_borrowed', date('m'))
-                  ->selectRaw('SUM(amount) as total, DATE_FORMAT(date_borrowed, "%Y-%m-%d") as label')
-                  ->groupBy(DB::raw('DATE_FORMAT(date_borrowed, "%Y-%m-%d")'))
-                  ->pluck('total', 'label');
-            
         } elseif ($filter === 'last_year') {
             // Show monthly data for last year
             $lastYear = date('Y') - 1;
@@ -50,12 +45,6 @@ class AnalyticsController extends Controller
                 $month = str_pad($i, 2, '0', STR_PAD_LEFT);
                 $months[$lastYear . '-' . $month] = 0;
             }
-
-            $data = $query->whereYear('date_borrowed', $lastYear)
-                ->selectRaw('SUM(amount) as total, DATE_FORMAT(date_borrowed, "%Y-%m") as label')
-                ->groupBy(DB::raw('DATE_FORMAT(date_borrowed, "%Y-%m")'))
-                ->pluck('total', 'label');
-
         } else {
             // Default: this_year
             // Show monthly data for this year
@@ -64,18 +53,59 @@ class AnalyticsController extends Controller
                 $month = str_pad($i, 2, '0', STR_PAD_LEFT);
                 $months[$thisYear . '-' . $month] = 0;
             }
-
-            $data = $query->whereYear('date_borrowed', $thisYear)
-                ->selectRaw('SUM(amount) as total, DATE_FORMAT(date_borrowed, "%Y-%m") as label')
-                ->groupBy(DB::raw('DATE_FORMAT(date_borrowed, "%Y-%m")'))
-                ->pluck('total', 'label');
+        }
+        
+        // Initialize arrays
+        $loanData = [];
+        $interestData = [];
+        
+        foreach ($months as $key => $val) {
+            $loanData[$key] = 0;
+            $interestData[$key] = 0;
         }
 
-        // Merge data
+        foreach ($loans as $loan) {
+            // Determine the key (Day or Month) based on filter
+            $date = \Carbon\Carbon::parse($loan->date_borrowed);
+            
+            if ($filter === 'this_month') {
+                // Key format: YYYY-MM-DD
+                // Only include if it matches the current month/year (already filtered by query, but good to be safe)
+                $key = $date->format('Y-m-d');
+            } else {
+                // Key format: YYYY-MM
+                $key = $date->format('Y-m');
+            }
+
+            if (isset($loanData[$key])) {
+                // Principal
+                $loanData[$key] += $loan->amount;
+
+                // Interest Calculation
+                // Interest = Principal * (Rate/100) * Term (in months)
+                // If term_unit is weeks, convert to months (approx / 4)
+                $termInMonths = $loan->term_months;
+                if ($loan->term_unit === 'weeks') {
+                    $termInMonths = $loan->term_months / 4;
+                }
+                
+                $interest = $loan->amount * ($loan->interest_rate / 100) * $termInMonths;
+                $interestData[$key] += $interest;
+            }
+        }
+
+        // Format for Chart.js
+        $monthlyLoans = [];
+        $monthlyInterests = [];
+
         foreach ($months as $label => $value) {
             $monthlyLoans[] = [
                 'label' => $label,
-                'total' => isset($data[$label]) ? (float)$data[$label] : 0
+                'total' => $loanData[$label]
+            ];
+            $monthlyInterests[] = [
+                'label' => $label,
+                'total' => $interestData[$label]
             ];
         }
 
@@ -90,6 +120,7 @@ class AnalyticsController extends Controller
             'total_loans' => $totalLoans,
             'total_outstanding' => $totalOutstanding,
             'monthly_loans' => $monthlyLoans,
+            'monthly_interests' => $monthlyInterests,
             'top_borrowers' => $topBorrowers,
         ]);
     }
