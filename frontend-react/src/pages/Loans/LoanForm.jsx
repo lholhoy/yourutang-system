@@ -20,6 +20,7 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
         interest_rate: 0,
         interest_type: "monthly",
         term_months: 1,
+        term_unit: "months",
         due_date: "",
     });
     const [borrowers, setBorrowers] = useState([]);
@@ -43,6 +44,7 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
                         interest_rate: initialData.interest_rate || 0,
                         interest_type: initialData.interest_type || "monthly",
                         term_months: initialData.term_months || 1,
+                        term_unit: initialData.term_unit || "months",
                         due_date: initialData.due_date || "",
                     });
                 } else if (loanId && !initialData) {
@@ -55,6 +57,7 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
                         interest_rate: loanRes.data.interest_rate || 0,
                         interest_type: loanRes.data.interest_type || "monthly",
                         term_months: loanRes.data.term_months || 1,
+                        term_unit: loanRes.data.term_unit || "months",
                         due_date: loanRes.data.due_date || "",
                     });
                 }
@@ -213,7 +216,7 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
 
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-                                Term (Months)
+                                Term
                             </label>
                             <div className="flex gap-2">
                                 <input
@@ -224,7 +227,11 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
                                         const term = e.target.value;
                                         // Auto-calculate due date
                                         const date = new Date(formData.date_borrowed);
-                                        date.setMonth(date.getMonth() + parseInt(term || 0));
+                                        if (formData.term_unit === 'weeks') {
+                                            date.setDate(date.getDate() + (parseInt(term || 0) * 7));
+                                        } else {
+                                            date.setMonth(date.getMonth() + parseInt(term || 0));
+                                        }
                                         setFormData({
                                             ...formData,
                                             term_months: term,
@@ -234,6 +241,29 @@ export default function LoanForm({ onSuccess, onCancel, initialData, preselected
                                     className="input-field"
                                     placeholder="1"
                                 />
+                                <select
+                                    value={formData.term_unit}
+                                    onChange={(e) => {
+                                        const unit = e.target.value;
+                                        // Recalculate due date based on new unit
+                                        const term = formData.term_months;
+                                        const date = new Date(formData.date_borrowed);
+                                        if (unit === 'weeks') {
+                                            date.setDate(date.getDate() + (parseInt(term || 0) * 7));
+                                        } else {
+                                            date.setMonth(date.getMonth() + parseInt(term || 0));
+                                        }
+                                        setFormData({
+                                            ...formData,
+                                            term_unit: unit,
+                                            due_date: date.toISOString().split('T')[0]
+                                        });
+                                    }}
+                                    className="input-field w-32"
+                                >
+                                    <option value="months">Months</option>
+                                    <option value="weeks">Weeks</option>
+                                </select>
                                 <button
                                     type="button"
                                     onClick={() => setIsAmortizationOpen(true)}

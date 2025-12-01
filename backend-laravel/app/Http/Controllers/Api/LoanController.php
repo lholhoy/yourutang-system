@@ -61,6 +61,7 @@ class LoanController extends Controller
             'interest_rate' => 'nullable|numeric|min:0',
             'interest_type' => 'nullable|in:monthly,daily',
             'term_months' => 'nullable|integer|min:1',
+            'term_unit' => 'nullable|in:months,weeks',
             'due_date' => 'nullable|date|after_or_equal:date_borrowed',
         ]);
 
@@ -69,8 +70,14 @@ class LoanController extends Controller
 
         // Calculate due date if term is provided AND due_date is missing
         if (empty($validated['due_date']) && !empty($validated['term_months']) && !empty($validated['date_borrowed'])) {
-            $validated['due_date'] = \Carbon\Carbon::parse($validated['date_borrowed'])
-                ->addMonths($validated['term_months']);
+            $unit = $validated['term_unit'] ?? 'months';
+            $date = \Carbon\Carbon::parse($validated['date_borrowed']);
+            
+            if ($unit === 'weeks') {
+                $validated['due_date'] = $date->addWeeks($validated['term_months']);
+            } else {
+                $validated['due_date'] = $date->addMonths($validated['term_months']);
+            }
         }
 
         $loan = $borrower->loans()->create($validated);
@@ -100,16 +107,23 @@ class LoanController extends Controller
             'interest_rate' => 'nullable|numeric|min:0',
             'interest_type' => 'nullable|in:monthly,daily',
             'term_months' => 'nullable|integer|min:1',
+            'term_unit' => 'nullable|in:months,weeks',
             'due_date' => 'nullable|date|after_or_equal:date_borrowed',
         ]);
 
         // Recalculate due date if term or date changed AND due_date is NOT explicitly provided in this update
-        if (!isset($validated['due_date']) && (isset($validated['term_months']) || isset($validated['date_borrowed']))) {
+        if (!isset($validated['due_date']) && (isset($validated['term_months']) || isset($validated['date_borrowed']) || isset($validated['term_unit']))) {
             $term = $validated['term_months'] ?? $loan->term_months;
+            $unit = $validated['term_unit'] ?? $loan->term_unit ?? 'months';
             $date = $validated['date_borrowed'] ?? $loan->date_borrowed;
             
             if ($term && $date) {
-                $validated['due_date'] = \Carbon\Carbon::parse($date)->addMonths($term);
+                $parsedDate = \Carbon\Carbon::parse($date);
+                if ($unit === 'weeks') {
+                    $validated['due_date'] = $parsedDate->addWeeks($term);
+                } else {
+                    $validated['due_date'] = $parsedDate->addMonths($term);
+                }
             }
         }
 
