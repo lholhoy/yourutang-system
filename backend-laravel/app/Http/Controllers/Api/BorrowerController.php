@@ -12,9 +12,17 @@ class BorrowerController extends Controller
     public function index()
     {
         $borrowers = Borrower::where('user_id', Auth::id())
+            ->with(['loans.payments'])
             ->withSum('loans', 'amount')
             ->latest()
             ->get();
+
+        $borrowers->each(function ($borrower) {
+            $borrower->total_outstanding = $borrower->loans->sum('balance');
+            $borrower->active_loans_count = $borrower->loans->where('status', 'active')->count();
+        });
+
+        $borrowers->makeHidden('loans');
 
         return response()->json($borrowers);
     }

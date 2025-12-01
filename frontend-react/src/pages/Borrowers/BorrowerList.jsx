@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosClient from "../../api/axios";
-import { Plus, Search, Pencil, Trash2, Loader2, User, Download, Filter } from "lucide-react";
+import { Plus, Search, Pencil, Trash2, Loader2, User, Download, Filter, ChevronDown } from "lucide-react";
 
 import Modal from "../../components/Modal";
 import BorrowerForm from "./BorrowerForm";
@@ -11,6 +11,7 @@ export default function BorrowerList() {
     const [borrowers, setBorrowers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
+    const [filter, setFilter] = useState("all");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedBorrower, setSelectedBorrower] = useState(null);
 
@@ -64,9 +65,16 @@ export default function BorrowerList() {
         }
     };
 
-    const filteredBorrowers = borrowers.filter((borrower) =>
-        borrower.name.toLowerCase().includes(search.toLowerCase())
-    );
+    const filteredBorrowers = borrowers.filter((borrower) => {
+        const matchesSearch = borrower.name.toLowerCase().includes(search.toLowerCase());
+        const matchesFilter = filter === "all"
+            ? true
+            : filter === "active"
+                ? borrower.active_loans_count > 0
+                : borrower.active_loans_count === 0;
+
+        return matchesSearch && matchesFilter;
+    });
 
     if (loading) {
         return (
@@ -131,10 +139,19 @@ export default function BorrowerList() {
                     />
                 </div>
                 <div className="h-8 w-px bg-gray-200 hidden sm:block"></div>
-                <button className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-xl transition-colors text-sm font-medium">
-                    <Filter size={18} />
-                    <span>Filters</span>
-                </button>
+                <div className="relative w-full sm:w-56">
+                    <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <select
+                        value={filter}
+                        onChange={(e) => setFilter(e.target.value)}
+                        className="w-full pl-10 pr-10 py-3 bg-transparent border-none focus:ring-0 text-gray-700 font-medium cursor-pointer appearance-none"
+                    >
+                        <option value="all">All Borrowers</option>
+                        <option value="active">With Active Loans</option>
+                        <option value="inactive">No Active Loans</option>
+                    </select>
+                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
+                </div>
             </div>
 
             {/* List */}
@@ -179,9 +196,9 @@ export default function BorrowerList() {
 
                         <div className="space-y-3 bg-gray-50/50 p-4 rounded-xl border border-border/50 group-hover:bg-primary/5 group-hover:border-primary/10 transition-colors">
                             <div className="flex justify-between text-sm">
-                                <span className="text-gray-500 font-medium">Total Loans</span>
-                                <span className="font-bold text-gray-900">
-                                    ₱{Number(borrower.loans_sum_amount || 0).toLocaleString()}
+                                <span className="text-gray-500 font-medium">Outstanding</span>
+                                <span className="font-bold text-primary">
+                                    ₱{Number(borrower.total_outstanding || 0).toLocaleString()}
                                 </span>
                             </div>
                             {borrower.notes && (
