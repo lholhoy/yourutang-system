@@ -252,11 +252,11 @@ export default function Dashboard() {
                             </div>
                             <div className="mt-4">
                                 <div className="flex items-center justify-between text-xs text-gray-500 mb-1.5">
-                                    <span>Growth</span>
-                                    <span className="text-emerald-600">+2.5%</span>
+                                    <span>Active Users</span>
+                                    <span className="text-blue-600">{data.total_borrowers > 0 ? Math.round((data.active_borrowers / data.total_borrowers) * 100) : 0}%</span>
                                 </div>
                                 <div className="h-1.5 w-full bg-blue-50 rounded-full overflow-hidden">
-                                    <div className="h-full bg-blue-500 rounded-full" style={{ width: '30%' }}></div>
+                                    <div className="h-full bg-blue-500 rounded-full" style={{ width: `${data.total_borrowers > 0 ? (data.active_borrowers / data.total_borrowers) * 100 : 0}%` }}></div>
                                 </div>
                             </div>
                         </div>
@@ -279,11 +279,11 @@ export default function Dashboard() {
                             </div>
                             <div className="mt-4">
                                 <div className="flex items-center justify-between text-xs text-gray-500 mb-1.5">
-                                    <span>Active</span>
-                                    <span className="text-emerald-600">70%</span>
+                                    <span>Active Loans</span>
+                                    <span className="text-emerald-600">{data.total_loans > 0 ? Math.round((data.active_loans / data.total_loans) * 100) : 0}%</span>
                                 </div>
                                 <div className="h-1.5 w-full bg-emerald-50 rounded-full overflow-hidden">
-                                    <div className="h-full bg-emerald-500 rounded-full" style={{ width: '70%' }}></div>
+                                    <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${data.total_loans > 0 ? (data.active_loans / data.total_loans) * 100 : 0}%` }}></div>
                                 </div>
                             </div>
                         </div>
@@ -306,11 +306,11 @@ export default function Dashboard() {
                             </div>
                             <div className="mt-4">
                                 <div className="flex items-center justify-between text-xs text-gray-500 mb-1.5">
-                                    <span>Collected</span>
-                                    <span className="text-purple-600">45%</span>
+                                    <span>Collection Rate</span>
+                                    <span className="text-purple-600">{data.total_principal > 0 ? Math.round((data.total_collected / data.total_principal) * 100) : 0}%</span>
                                 </div>
                                 <div className="h-1.5 w-full bg-purple-50 rounded-full overflow-hidden">
-                                    <div className="h-full bg-purple-500 rounded-full" style={{ width: '45%' }}></div>
+                                    <div className="h-full bg-purple-500 rounded-full" style={{ width: `${data.total_principal > 0 ? (data.total_collected / data.total_principal) * 100 : 0}%` }}></div>
                                 </div>
                             </div>
                         </div>
@@ -324,7 +324,7 @@ export default function Dashboard() {
                         <div className="flex flex-col h-full justify-between">
                             <div className="flex justify-between items-start">
                                 <div>
-                                    <h3 className="text-lg font-bold text-gray-900 mb-1 truncate">₱{Number(data.total_interest).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+                                    <h3 className="text-lg font-bold text-gray-900 mb-1 truncate">₱{Number(data.total_interest || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
                                     <p className="text-xs font-medium text-gray-500">Total Interest</p>
                                 </div>
                                 <div className="bg-amber-50 p-2 rounded-lg text-amber-600">
@@ -333,11 +333,11 @@ export default function Dashboard() {
                             </div>
                             <div className="mt-4">
                                 <div className="flex items-center justify-between text-xs text-gray-500 mb-1.5">
-                                    <span>Earnings</span>
-                                    <span className="text-amber-600">Revenue</span>
+                                    <span>ROI (Yield)</span>
+                                    <span className="text-amber-600">{data.total_principal > 0 ? ((data.total_interest / data.total_principal) * 100).toFixed(1) : 0}%</span>
                                 </div>
                                 <div className="h-1.5 w-full bg-amber-50 rounded-full overflow-hidden">
-                                    <div className="h-full bg-amber-500 rounded-full" style={{ width: '100%' }}></div>
+                                    <div className="h-full bg-amber-500 rounded-full" style={{ width: `${data.total_principal > 0 ? Math.min((data.total_interest / data.total_principal) * 100, 100) : 0}%` }}></div>
                                 </div>
                             </div>
                         </div>

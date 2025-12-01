@@ -16,9 +16,26 @@ class AnalyticsController extends Controller
         $userId = Auth::id();
 
         $totalBorrowers = Borrower::where('user_id', $userId)->count();
+        
+        // Calculate active borrowers (those with outstanding loans)
+        // Workaround: Check balance > 0 instead of 'status' column to avoid migration issues
+        $activeBorrowers = Borrower::where('user_id', $userId)
+            ->whereHas('loans', function($q) {
+                $q->whereRaw('(amount - (SELECT COALESCE(SUM(amount), 0) FROM payments WHERE payments.loan_id = loans.id)) > 0');
+            })
+            ->count();
+
         $totalLoans = Loan::whereHas('borrower', fn($q) => $q->where('user_id', $userId))->count();
-        $totalOutstanding = Loan::whereHas('borrower', fn($q) => $q->where('user_id', $userId))->sum('amount') -
-            \App\Models\Payment::whereHas('loan.borrower', fn($q) => $q->where('user_id', $userId))->sum('amount');
+        
+        // Calculate active loans (balance > 0)
+        $activeLoans = Loan::whereHas('borrower', fn($q) => $q->where('user_id', $userId))
+            ->whereRaw('(amount - (SELECT COALESCE(SUM(amount), 0) FROM payments WHERE payments.loan_id = loans.id)) > 0')
+            ->count();
+
+        $totalPrincipal = Loan::whereHas('borrower', fn($q) => $q->where('user_id', $userId))->sum('amount');
+        $totalCollected = \App\Models\Payment::whereHas('loan.borrower', fn($q) => $q->where('user_id', $userId))->sum('amount');
+        
+        $totalOutstanding = $totalPrincipal - $totalCollected;
 
         // Calculate Total Interest (Earnings)
         // We need to iterate all loans to calculate interest based on their specific terms
@@ -131,8 +148,12 @@ class AnalyticsController extends Controller
 
         return response()->json([
             'total_borrowers' => $totalBorrowers,
+            'active_borrowers' => $activeBorrowers,
             'total_loans' => $totalLoans,
+            'active_loans' => $activeLoans,
             'total_outstanding' => $totalOutstanding,
+            'total_principal' => $totalPrincipal,
+            'total_collected' => $totalCollected,
             'total_interest' => $totalInterest,
             'monthly_loans' => $monthlyLoans,
             'monthly_interests' => $monthlyInterests,

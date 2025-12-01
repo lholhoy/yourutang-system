@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2025 at 05:37 AM
+-- Generation Time: Dec 01, 2025 at 06:59 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -83,7 +83,7 @@ CREATE TABLE `borrowers` (
 INSERT INTO `borrowers` (`id`, `user_id`, `name`, `contact`, `notes`, `created_at`, `updated_at`, `province`, `city`, `barangay`, `street`, `email`, `address`, `id_type`, `id_number`) VALUES
 (1, 6, 'chriselda', '09667010334', 'friend', '2025-11-27 02:20:56', '2025-11-27 02:20:56', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (2, 6, 'geno', '09533743437', 'silingan', '2025-11-27 03:25:09', '2025-11-27 03:25:09', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(4, 6, 'loloy', '09954235075', 'friend', '2025-11-28 21:53:03', '2025-11-30 20:07:59', 'Surigao Del Sur', 'Carrascal', 'Tag-Anito', 'Purok - 3', 'lholhoy143@gmail.com', NULL, NULL, NULL);
+(4, 6, 'Loloy Trugillo', '09954235075', 'friend', '2025-11-28 21:53:03', '2025-12-01 00:47:26', 'Surigao Del Sur', 'Carrascal', 'Tag-Anito', 'Purok - 3', 'lholhoy143@gmail.com', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -155,7 +155,8 @@ INSERT INTO `history_logs` (`id`, `user_id`, `action`, `description`, `subject_t
 (6, 6, 'Created Borrower', 'Added new borrower: keven', 'App\\Models\\Borrower', 3, '2025-11-27 08:08:08', '2025-11-27 08:08:08'),
 (7, 6, 'Deleted Borrower', 'Deleted borrower: keven', 'App\\Models\\Borrower', 3, '2025-11-28 21:51:05', '2025-11-28 21:51:05'),
 (8, 6, 'Created Borrower', 'Added new borrower: loloy', 'App\\Models\\Borrower', 4, '2025-11-28 21:53:03', '2025-11-28 21:53:03'),
-(9, 6, 'Updated Borrower', 'Updated borrower details: loloy', 'App\\Models\\Borrower', 4, '2025-11-30 20:07:59', '2025-11-30 20:07:59');
+(9, 6, 'Updated Borrower', 'Updated borrower details: loloy', 'App\\Models\\Borrower', 4, '2025-11-30 20:07:59', '2025-11-30 20:07:59'),
+(10, 6, 'Updated Borrower', 'Updated borrower details: Loloy Trugillo', 'App\\Models\\Borrower', 4, '2025-12-01 00:47:26', '2025-12-01 00:47:26');
 
 -- --------------------------------------------------------
 
@@ -244,7 +245,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (5, '2025_11_27_060000_create_borrowers_table', 2),
 (6, '2025_11_27_060001_create_loans_table', 2),
 (7, '2025_11_27_070000_create_history_logs_table', 2),
-(8, '2025_11_27_080000_create_payments_table', 3);
+(8, '2025_11_27_080000_create_payments_table', 3),
+(9, '2025_11_28_000000_add_terms_to_loans_table', 4);
 
 -- --------------------------------------------------------
 
@@ -313,19 +315,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('1PGBZcqFrcsb7fBKsd7xE7O3AaWqdySpzdfMVyqk', NULL, '127.0.0.1', 'Go-http-client/1.1', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoicFRVaVhFQVdSTXZhQVBqRXY1V1prSDRKRno5cWpyYndGcmxxd0NGayI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9maXgtc2NoZW1hIjtzOjU6InJvdXRlIjtOO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1764561922),
-('9OB7dcGrI1GLb7MUPECVpMsnOBnHQaTc9BIqw6SH', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoicHNGeXRQdTl3VXdQejA5dGpkV2w0ZXg1dUdPbDd3SjRlVHM2dG00NSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6NTI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hcGkvYW5hbHl0aWNzP2ZpbHRlcj10aGlzX3llYXIiO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1764555045),
-('a4tIu7HhdnBq0juhrGffb5ndZu7Af4ohazcBGUY1', NULL, '127.0.0.1', 'Go-http-client/1.1', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiQ2lyc3IzZUpGdjdpbmRUQTNvSm9Ea1hkVkYxQTd0S3JVVUpFSmxsRSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6NDA6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kZWJ1Zy1zY2hlbWEtY2hlY2siO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1764556480),
-('FBq7EKxsu30skxpeDXPcPz0Oy9s1GZyrjgk1OmEV', NULL, '127.0.0.1', 'Go-http-client/1.1', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiQ25FajBPSlpxZlZlM2o3S3RCMmRBVm1PTUgzQ1Y1dEN6YTIydHZwTyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9kZWJ1Zy1zY2hlbWEiO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1764561421),
-('gmwMdDlerWMFO63lIZqt9Fv8scMcnqM3oiSf1eM0', NULL, '127.0.0.1', 'Go-http-client/1.1', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiMkwzUmJ0OHpjaDN4UVRxVk5ScUxYbjJnWDZ6OFRONVAwUUxONXVtViI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9maXgtc2NoZW1hIjtzOjU6InJvdXRlIjtOO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1764561594),
-('HpYh8cZH4xHZzW4bhHRGDhjxNcZRPrXBMSYaRKsa', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoibHh5T2RsUGFQWW4xdXNGZ1pIR1ZqdDBMdDlxdE5BcHdidnROb0lQRyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hcGkvdXNlciI7czo1OiJyb3V0ZSI7Tjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1764555041),
-('myU9wkMrnEXd407Rp3Zy5uda4o9fPJEIOkqSFtjG', NULL, '127.0.0.1', 'Go-http-client/1.1', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiVUZZcVl1SlY2dnVOTEVMa1hnMm1XMWkzSXByU1A1alQ2b3BrTnNDdiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kZWJ1Zy1zY2hlbWEtZml4IjtzOjU6InJvdXRlIjtOO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1764556592),
-('nAyZUFEauBugOKHdeW5AYrCnn6TIEqFuJnTt1uhF', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiY0oyWFEyYTh2UVMzTmV5NGJoaFpjMmxCRGcxZFg5a29vdHZNeE13MyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6NDM6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hcGkvZXhwb3J0L2NvbnRyYWN0LzUiO3M6NToicm91dGUiO047fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjY7fQ==', 1764563490),
-('P3Gy4Di6Nn8IHgPsLfb0jMAxyN0BiQeCCorO8lxW', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiTTJFUGdMZlUyUktNUFA0bVUxNnU4a2dYRGFtRlRSckYxWm5IeTN0byI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hcGkvdXNlciI7czo1OiJyb3V0ZSI7Tjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1764555044),
-('qeRArHQaY4eBZug99oedK5qXbRKq4uJahbtZbb9w', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiSmhuVHVReHRPbTFvSVRNNUFuTzk3bDRmNzBCVmlNYnZJS2F2WHVMMyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hcGkvYWN0aXZpdHktbG9ncyI7czo1OiJyb3V0ZSI7Tjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1764555045),
-('RBcVPw50OqHKyXuWNis4xaXPHiLzJJLMB7FLPAwA', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiOEpmVUV5NWJ2RW5wY2tIazAyTjlYSDhZcTZOc3VUOFpyYmlZNFNFOSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hcGkvYWN0aXZpdHktbG9ncyI7czo1OiJyb3V0ZSI7Tjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1764555043),
-('WUhlgEMPloprQyc5Kj389IzwKfYEL2HFbDtNCssx', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiWlRCSldRQklqWm1nWW9wWWxEMHN4b1hJU2VzZ1ZhZWM0SnppQ0wyOSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6NTI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hcGkvYW5hbHl0aWNzP2ZpbHRlcj10aGlzX3llYXIiO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1764555044),
-('X1gzaUPNoNG2aFQhnvLbJ3QhaHvpklDf6Xc33X50', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoia3RKaGVOZlZBVEQ4V1pXWTR3YTZXaFhPSVl3bm5keFZVdmlJeEtRaSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6NDQ6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hcGkvbG9hbnMvdXBjb21pbmctZHVlIjtzOjU6InJvdXRlIjtOO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1764555043);
+('57JyzH408XphYAroL1DahjEj9c1QELnUSuYLYOhr', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiN2l3V3Jlc2JUQkNmOXVLMzB2VElKbzY5UjhvSXk4OHRhckxxU2V3ZiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hcGkvdXNlciI7czo1OiJyb3V0ZSI7Tjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Njt9', 1764611917);
 
 -- --------------------------------------------------------
 
@@ -352,7 +342,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `profile_image`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (4, 'Adrian T. Isarna', 'lholhoy143@gmail.com', NULL, NULL, '$2y$12$zSZ/Rr/JRkmkXJl.5u9ieuJYqVDQDkEiKeJKmU3F0msolYKnRPytu', NULL, '2025-11-27 01:38:39', '2025-11-27 01:38:39'),
 (5, 'test', 'finaltest@gmail.com', NULL, NULL, '$2y$12$Zp7aIv/OrGt2GC8DG3wtl.8jdaH38SvB/hewBxY.caZtW6UzpiZ0u', 'qMSQMPtKCUVdV6D3nM5Uj1RWY8qqkHvCszKpxiVoSfHNG0wy0THyuJgvU2G5', '2025-11-27 01:47:29', '2025-11-27 01:47:29'),
-(6, 'Adrian', 'isarnaadriantrugillo@gmail.com', 'profile/nSMiqeqocy4kXgupH2n4T40PvwBiE7hTZGxwyOCo.jpg', NULL, '$2y$12$K8tiUQeL1ZlIGZg98UPb1.flWBQ8c0PawNLZ1hLleuvNchbfEnR2u', 'Y6bYB7nnNbtjtrABYCx2r9aLVUAMUF0Yur6AIr0O6w6Dhu0KjPW8Wx4VsGIL', '2025-11-27 02:01:34', '2025-11-29 22:35:42');
+(6, 'Adrian T. Isarna', 'isarnaadriantrugillo@gmail.com', 'profile/nSMiqeqocy4kXgupH2n4T40PvwBiE7hTZGxwyOCo.jpg', NULL, '$2y$12$K8tiUQeL1ZlIGZg98UPb1.flWBQ8c0PawNLZ1hLleuvNchbfEnR2u', 'BXg89FAJpKamnKnESuZlTgfoaqaLA0vk7yueIXlEfZuyt4ku7IIN7kmXGnJP', '2025-11-27 02:01:34', '2025-12-01 00:34:30');
 
 --
 -- Indexes for dumped tables
@@ -488,7 +478,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `history_logs`
 --
 ALTER TABLE `history_logs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -506,7 +496,7 @@ ALTER TABLE `loans`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `payments`
