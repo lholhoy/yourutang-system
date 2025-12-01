@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosClient from "../../api/axios";
-import { Plus, Search, Pencil, Trash2, Loader2, User, Download } from "lucide-react";
+import { Plus, Search, Pencil, Trash2, Loader2, User, Download, Filter } from "lucide-react";
 
 import Modal from "../../components/Modal";
 import BorrowerForm from "./BorrowerForm";
@@ -70,36 +70,20 @@ export default function BorrowerList() {
 
     if (loading) {
         return (
-            <div className="space-y-8">
+            <div className="space-y-8 animate-pulse">
                 <div className="flex justify-between items-center">
                     <div>
-                        <Skeleton className="h-10 w-48 mb-2" />
-                        <Skeleton className="h-5 w-64" />
+                        <div className="h-8 w-48 bg-gray-200 rounded-lg mb-2"></div>
+                        <div className="h-4 w-64 bg-gray-200 rounded-lg"></div>
                     </div>
                     <div className="flex gap-3">
-                        <Skeleton className="h-10 w-32" />
-                        <Skeleton className="h-10 w-36" />
+                        <div className="h-10 w-32 bg-gray-200 rounded-lg"></div>
+                        <div className="h-10 w-36 bg-gray-200 rounded-lg"></div>
                     </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {[1, 2, 3, 4, 5, 6].map((i) => (
-                        <div key={i} className="card p-6">
-                            <div className="flex justify-between mb-6">
-                                <div className="flex gap-4">
-                                    <Skeleton className="h-12 w-12 rounded-full" />
-                                    <div>
-                                        <Skeleton className="h-6 w-32 mb-2" />
-                                        <Skeleton className="h-4 w-24" />
-                                    </div>
-                                </div>
-                                <div className="flex gap-1">
-                                    <Skeleton className="h-8 w-8 rounded-lg" />
-                                    <Skeleton className="h-8 w-8 rounded-lg" />
-                                </div>
-                            </div>
-                            <Skeleton className="h-16 w-full rounded-xl mb-6" />
-                            <Skeleton className="h-10 w-full" />
-                        </div>
+                        <div key={i} className="h-64 bg-gray-200 rounded-2xl"></div>
                     ))}
                 </div>
             </div>
@@ -107,7 +91,7 @@ export default function BorrowerList() {
     }
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-8 pb-12">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Borrowers</h1>
@@ -116,8 +100,9 @@ export default function BorrowerList() {
                 <div className="flex gap-3">
                     <button
                         onClick={handleExport}
-                        className="btn btn-secondary"
+                        className="btn btn-secondary flex items-center gap-2"
                     >
+                        <Download size={18} />
                         <span>Export CSV</span>
                     </button>
                     <button
@@ -125,23 +110,31 @@ export default function BorrowerList() {
                             setSelectedBorrower(null);
                             setIsModalOpen(true);
                         }}
-                        className="btn btn-primary shadow-lg shadow-primary/20"
+                        className="btn btn-primary shadow-lg shadow-primary/20 flex items-center gap-2 hover:translate-y-0.5 transition-transform"
                     >
+                        <Plus size={18} />
                         <span>Add Borrower</span>
                     </button>
                 </div>
             </div>
 
-            {/* Search */}
-            <div className="relative max-w-md">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                    type="text"
-                    placeholder="Search borrowers..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="input-field pl-11"
-                />
+            {/* Search and Filters */}
+            <div className="flex flex-col sm:flex-row gap-4 items-center bg-white p-2 rounded-2xl border border-border/50 shadow-sm">
+                <div className="relative flex-1 w-full">
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <input
+                        type="text"
+                        placeholder="Search borrowers by name..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        className="w-full pl-12 pr-4 py-3 bg-transparent border-none focus:ring-0 text-gray-900 placeholder:text-gray-400"
+                    />
+                </div>
+                <div className="h-8 w-px bg-gray-200 hidden sm:block"></div>
+                <button className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-xl transition-colors text-sm font-medium">
+                    <Filter size={18} />
+                    <span>Filters</span>
+                </button>
             </div>
 
             {/* List */}
@@ -149,11 +142,13 @@ export default function BorrowerList() {
                 {filteredBorrowers.map((borrower) => (
                     <div
                         key={borrower.id}
-                        className="card card-hover p-6 group"
+                        className="bg-white rounded-2xl p-6 border border-border/50 shadow-soft hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden"
                     >
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/50 to-primary-600/50 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+
                         <div className="flex items-start justify-between mb-6">
                             <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-lg ring-4 ring-primary/5">
+                                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center text-gray-700 font-bold text-xl shadow-inner border border-white ring-1 ring-gray-100">
                                     {borrower.name.charAt(0)}
                                 </div>
                                 <div>
@@ -161,13 +156,13 @@ export default function BorrowerList() {
                                     <p className="text-sm text-gray-500 font-medium">{borrower.contact || "No contact"}</p>
                                 </div>
                             </div>
-                            <div className="flex gap-1">
+                            <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                                 <button
                                     onClick={() => {
                                         setSelectedBorrower(borrower);
                                         setIsModalOpen(true);
                                     }}
-                                    className="p-2 text-primary hover:bg-primary/5 rounded-lg transition-colors"
+                                    className="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors"
                                     title="Edit"
                                 >
                                     <Pencil size={18} />
@@ -182,7 +177,7 @@ export default function BorrowerList() {
                             </div>
                         </div>
 
-                        <div className="space-y-3 bg-gray-50/50 p-4 rounded-xl border border-border/50">
+                        <div className="space-y-3 bg-gray-50/50 p-4 rounded-xl border border-border/50 group-hover:bg-primary/5 group-hover:border-primary/10 transition-colors">
                             <div className="flex justify-between text-sm">
                                 <span className="text-gray-500 font-medium">Total Loans</span>
                                 <span className="font-bold text-gray-900">
@@ -197,7 +192,7 @@ export default function BorrowerList() {
                         <div className="mt-6">
                             <Link
                                 to={`/borrowers/${borrower.id}`}
-                                className="w-full btn btn-secondary hover:border-primary hover:text-primary group-hover:shadow-md"
+                                className="w-full btn btn-secondary hover:border-primary hover:text-primary group-hover:shadow-md justify-center py-2.5"
                             >
                                 View Details
                             </Link>
@@ -206,12 +201,22 @@ export default function BorrowerList() {
                 ))}
 
                 {filteredBorrowers.length === 0 && (
-                    <div className="col-span-full flex flex-col items-center justify-center py-16 text-gray-500 bg-white rounded-2xl border border-dashed border-gray-300">
-                        <div className="bg-gray-50 p-4 rounded-full mb-4">
-                            <User className="w-8 h-8 text-gray-400" />
+                    <div className="col-span-full flex flex-col items-center justify-center py-20 text-gray-500 bg-white rounded-2xl border border-dashed border-gray-300">
+                        <div className="bg-gray-50 p-6 rounded-full mb-4 animate-bounce-slow">
+                            <User className="w-10 h-10 text-gray-400" />
                         </div>
-                        <p className="text-lg font-medium text-gray-900">No borrowers found</p>
-                        <p className="text-sm">Try adjusting your search or add a new borrower.</p>
+                        <p className="text-xl font-bold text-gray-900">No borrowers found</p>
+                        <p className="text-sm text-gray-500 mt-1">Try adjusting your search or add a new borrower.</p>
+                        <button
+                            onClick={() => {
+                                setSearch("");
+                                setSelectedBorrower(null);
+                                setIsModalOpen(true);
+                            }}
+                            className="mt-6 btn btn-primary"
+                        >
+                            Add New Borrower
+                        </button>
                     </div>
                 )}
             </div>

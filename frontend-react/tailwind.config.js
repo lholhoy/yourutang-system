@@ -22,7 +22,7 @@ export default {
                     900: '#03201F',
                 },
                 secondary: '#1F2937', // Gray 800
-                text: {
+                content: {
                     DEFAULT: '#1F2937', // Gray 800
                     muted: '#6B7280', // Gray 500
                     light: '#9CA3AF', // Gray 400

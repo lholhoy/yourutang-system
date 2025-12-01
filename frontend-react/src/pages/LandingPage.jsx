@@ -1,23 +1,23 @@
 import { Link } from "react-router-dom";
 import Logo from "../components/Logo";
-import { ArrowRight, CheckCircle, Shield, TrendingUp, Users, Wallet } from "lucide-react";
+import { ArrowRight, CheckCircle, Shield, TrendingUp, Users, Wallet, Star, ChevronRight } from "lucide-react";
 
 export default function LandingPage() {
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white font-sans selection:bg-primary/20 selection:text-primary">
             {/* Header */}
-            <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <header className="fixed top-0 w-full bg-white/80 backdrop-blur-xl border-b border-gray-100 z-50 transition-all duration-300">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <Logo className="w-8 h-8" textClassName="text-xl" />
+                        <Logo className="w-10 h-10" textClassName="text-2xl font-bold tracking-tight" />
                     </div>
-                    <div className="flex items-center gap-4">
-                        <Link to="/login" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+                    <div className="flex items-center gap-6">
+                        <Link to="/login" className="text-sm font-semibold text-gray-600 hover:text-primary transition-colors">
                             Sign In
                         </Link>
                         <Link
                             to="/register"
-                            className="btn btn-primary px-4 py-2 text-sm shadow-lg shadow-primary/20"
+                            className="btn btn-primary px-6 py-2.5 text-sm shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 transition-all duration-300"
                         >
                             Get Started
                         </Link>
@@ -26,132 +26,154 @@ export default function LandingPage() {
             </header>
 
             {/* Hero Section */}
-            <section className="pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden relative">
+            <section className="pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden relative">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full overflow-hidden pointer-events-none">
-                    <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl -translate-y-1/2" />
-                    <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-3xl translate-y-1/2" />
+                    <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-gradient-to-br from-primary/10 to-purple-500/10 rounded-full blur-3xl -translate-y-1/2 animate-pulse-slow" />
+                    <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-gradient-to-tr from-blue-500/10 to-teal-500/10 rounded-full blur-3xl translate-y-1/2 animate-pulse-slow delay-1000" />
                 </div>
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-gray-200 shadow-sm text-gray-600 text-sm font-medium mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500 hover:border-primary/30 hover:text-primary transition-colors cursor-default">
                         <span className="relative flex h-2 w-2">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
                         </span>
-                        Now with PDF Statements & Analytics
+                        New: Advanced Analytics & PDF Reports
                     </div>
-                    <h1 className="text-5xl md:text-7xl font-bold text-gray-900 tracking-tight mb-6 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
-                        Smart Debt Management <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">
-                            for Modern Lenders
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-gray-900 tracking-tight mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100 leading-[1.1]">
+                        Lending made <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-600 to-blue-600 animate-gradient-x">
+                            simple & smart
                         </span>
                     </h1>
-                    <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
-                        Track loans, manage borrowers, and generate insights with ease. The all-in-one platform designed to simplify your lending business.
+                    <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200 leading-relaxed">
+                        The all-in-one platform to track loans, manage borrowers, and grow your lending business with confidence.
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
                         <Link
                             to="/register"
-                            className="btn btn-primary px-8 py-3.5 text-lg shadow-xl shadow-primary/25 w-full sm:w-auto"
+                            className="btn btn-primary px-8 py-4 text-lg shadow-xl shadow-primary/25 w-full sm:w-auto hover:scale-105 transition-transform duration-300 group"
                         >
                             Start for Free
-                            <ArrowRight className="ml-2 w-5 h-5" />
+                            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </Link>
                         <Link
                             to="/login"
-                            className="px-8 py-3.5 text-lg font-medium text-gray-600 hover:text-gray-900 transition-colors w-full sm:w-auto"
+                            className="px-8 py-4 text-lg font-semibold text-gray-600 hover:text-gray-900 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md hover:border-gray-300 transition-all w-full sm:w-auto flex items-center justify-center gap-2"
                         >
-                            Live Demo
+                            View Demo
+                            <ChevronRight className="w-4 h-4 text-gray-400" />
                         </Link>
+                    </div>
+
+                    {/* Social Proof / Trust */}
+                    <div className="mt-16 pt-8 border-t border-gray-100 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500">
+                        <p className="text-sm text-gray-400 font-medium mb-4 uppercase tracking-wider">Trusted by modern lenders</p>
+                        <div className="flex justify-center items-center gap-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                            {/* Placeholders for partner logos or just icons for now */}
+                            <div className="flex items-center gap-2 font-bold text-xl text-gray-400"><Shield className="w-6 h-6" /> SecureLend</div>
+                            <div className="flex items-center gap-2 font-bold text-xl text-gray-400"><Wallet className="w-6 h-6" /> FastCash</div>
+                            <div className="flex items-center gap-2 font-bold text-xl text-gray-400"><TrendingUp className="w-6 h-6" /> GrowthFin</div>
+                        </div>
                     </div>
                 </div>
             </section>
 
             {/* Features Grid */}
-            <section className="py-20 bg-gray-50/50">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl font-bold text-gray-900 mb-4">Everything you need to succeed</h2>
-                        <p className="text-gray-500 max-w-2xl mx-auto">
-                            Powerful features built to help you track every peso and grow your lending operations.
+            <section className="py-24 bg-gray-50/50 relative overflow-hidden">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className="text-center mb-20">
+                        <h2 className="text-4xl font-bold text-gray-900 mb-6 tracking-tight">Everything you need to succeed</h2>
+                        <p className="text-xl text-gray-500 max-w-2xl mx-auto">
+                            Powerful features built to help you track every peso and automate your operations.
                         </p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                            <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-6">
-                                <Users className="w-6 h-6 text-blue-600" />
+                        {[
+                            {
+                                icon: Users,
+                                color: "blue",
+                                title: "Borrower Management",
+                                desc: "Keep detailed records of your borrowers, including contact info, loan history, and credit standing."
+                            },
+                            {
+                                icon: Wallet,
+                                color: "green",
+                                title: "Loan Tracking",
+                                desc: "Monitor active loans, calculate interest, and generate amortization schedules automatically."
+                            },
+                            {
+                                icon: TrendingUp,
+                                color: "purple",
+                                title: "Smart Analytics",
+                                desc: "Visualize your cash flow, track outstanding balances, and identify your top performers."
+                            }
+                        ].map((feature, i) => (
+                            <div key={i} className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+                                <div className={`w-14 h-14 bg-${feature.color}-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                                    <feature.icon className={`w-7 h-7 text-${feature.color}-600`} />
+                                </div>
+                                <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
+                                <p className="text-gray-500 leading-relaxed">
+                                    {feature.desc}
+                                </p>
                             </div>
-                            <h3 className="text-xl font-bold text-gray-900 mb-3">Borrower Management</h3>
-                            <p className="text-gray-500">
-                                Keep detailed records of your borrowers, including contact info, loan history, and credit standing.
-                            </p>
-                        </div>
-                        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                            <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center mb-6">
-                                <Wallet className="w-6 h-6 text-green-600" />
-                            </div>
-                            <h3 className="text-xl font-bold text-gray-900 mb-3">Loan Tracking</h3>
-                            <p className="text-gray-500">
-                                Monitor active loans, calculate interest, and generate amortization schedules automatically.
-                            </p>
-                        </div>
-                        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                            <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center mb-6">
-                                <TrendingUp className="w-6 h-6 text-purple-600" />
-                            </div>
-                            <h3 className="text-xl font-bold text-gray-900 mb-3">Smart Analytics</h3>
-                            <p className="text-gray-500">
-                                Visualize your cash flow, track outstanding balances, and identify your top performers.
-                            </p>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </section>
 
             {/* Security Section */}
-            <section className="py-20">
+            <section className="py-24">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="bg-primary/5 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-12">
-                        <div className="flex-1">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white text-primary text-sm font-medium mb-6 shadow-sm">
+                    <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-[2.5rem] p-8 md:p-16 flex flex-col md:flex-row items-center gap-16 text-white shadow-2xl relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/20 rounded-full blur-3xl -mr-32 -mt-32" />
+
+                        <div className="flex-1 relative z-10">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-white text-sm font-medium mb-8 border border-white/10">
                                 <Shield className="w-4 h-4" />
                                 Enterprise Grade Security
                             </div>
-                            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                            <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
                                 Your data is safe with us
                             </h2>
+                            <p className="text-gray-300 text-lg mb-8 max-w-lg">
+                                We use bank-level encryption and security practices to ensure your financial data remains private and protected.
+                            </p>
                             <ul className="space-y-4">
                                 {[
                                     "Secure Authentication & Session Management",
                                     "Daily Database Backups",
-                                    "Encrypted Data Transmission",
+                                    "Encrypted Data Transmission (SSL/TLS)",
                                     "Role-Based Access Control"
                                 ].map((item, i) => (
-                                    <li key={i} className="flex items-center gap-3 text-gray-600">
-                                        <CheckCircle className="w-5 h-5 text-primary shrink-0" />
+                                    <li key={i} className="flex items-center gap-3 text-gray-200">
+                                        <div className="p-1 rounded-full bg-green-500/20 text-green-400">
+                                            <CheckCircle className="w-4 h-4" />
+                                        </div>
                                         {item}
                                     </li>
                                 ))}
                             </ul>
                         </div>
-                        <div className="flex-1 w-full max-w-md">
-                            <div className="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 rotate-3 hover:rotate-0 transition-transform duration-500">
-                                <div className="flex items-center gap-4 mb-6">
-                                    <div className="w-12 h-12 rounded-full bg-gray-100" />
+                        <div className="flex-1 w-full max-w-md relative z-10">
+                            <div className="bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-white/10 rotate-3 hover:rotate-0 transition-transform duration-500 shadow-2xl">
+                                <div className="flex items-center gap-4 mb-8">
+                                    <div className="w-12 h-12 rounded-full bg-white/20" />
                                     <div>
-                                        <div className="h-4 w-32 bg-gray-100 rounded mb-2" />
-                                        <div className="h-3 w-20 bg-gray-100 rounded" />
+                                        <div className="h-4 w-32 bg-white/20 rounded mb-2" />
+                                        <div className="h-3 w-20 bg-white/10 rounded" />
                                     </div>
                                 </div>
-                                <div className="space-y-3">
-                                    <div className="h-3 w-full bg-gray-100 rounded" />
-                                    <div className="h-3 w-full bg-gray-100 rounded" />
-                                    <div className="h-3 w-2/3 bg-gray-100 rounded" />
+                                <div className="space-y-4">
+                                    <div className="h-3 w-full bg-white/10 rounded" />
+                                    <div className="h-3 w-full bg-white/10 rounded" />
+                                    <div className="h-3 w-2/3 bg-white/10 rounded" />
                                 </div>
-                                <div className="mt-6 pt-6 border-t border-gray-100 flex justify-between items-center">
-                                    <div className="h-8 w-24 bg-primary/10 rounded-lg" />
-                                    <div className="h-8 w-8 bg-gray-100 rounded-full" />
+                                <div className="mt-8 pt-8 border-t border-white/10 flex justify-between items-center">
+                                    <div className="h-10 w-28 bg-primary rounded-xl shadow-lg shadow-primary/20" />
+                                    <div className="h-8 w-8 bg-white/20 rounded-full" />
                                 </div>
                             </div>
                         </div>
@@ -160,16 +182,19 @@ export default function LandingPage() {
             </section>
 
             {/* Footer */}
-            <footer className="bg-white border-t border-gray-100 py-12">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-                    <div className="flex items-center gap-2">
-                        <Logo className="w-6 h-6" textClassName="text-lg" />
-                        <span className="text-gray-400 text-sm ml-4">© 2025 YourUtang. All rights reserved.</span>
-                    </div>
-                    <div className="flex gap-8 text-sm text-gray-500">
-                        <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
-                        <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
-                        <a href="#" className="hover:text-primary transition-colors">Contact Support</a>
+            <footer className="bg-white border-t border-gray-100 py-16">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+                        <div className="flex items-center gap-3">
+                            <Logo className="w-8 h-8" textClassName="text-xl font-bold" />
+                            <span className="text-gray-300 text-2xl font-light">|</span>
+                            <span className="text-gray-500 text-sm">© 2025 YourUtang. All rights reserved.</span>
+                        </div>
+                        <div className="flex gap-8 text-sm font-medium text-gray-500">
+                            <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
+                            <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
+                            <a href="#" className="hover:text-primary transition-colors">Contact Support</a>
+                        </div>
                     </div>
                 </div>
             </footer>

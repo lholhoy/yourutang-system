@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import axiosClient from "../../api/axios";
-import { ArrowLeft, Loader2, Save } from "lucide-react";
+import { ArrowLeft, Loader2, Save, User, MapPin, CreditCard, FileText } from "lucide-react";
 import usePhLocations from "../../hooks/usePhLocations";
 
 export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
@@ -156,7 +156,7 @@ export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
     const isModal = !!onCancel;
 
     return (
-        <div className={isModal ? "" : "max-w-2xl mx-auto"}>
+        <div className={isModal ? "" : "max-w-4xl mx-auto"}>
             {!isModal && (
                 <div className="flex items-center gap-4 mb-8">
                     <Link
@@ -174,177 +174,238 @@ export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
                 </div>
             )}
 
-            <div className={isModal ? "" : "card p-8"}>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-                            Full Name <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                            type="text"
-                            value={formData.name}
-                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                            className="input-field"
-                            placeholder="Enter borrower's name"
-                            required
-                            autoFocus={isModal}
-                        />
-                        {errors?.name && <p className="text-red-500 text-xs mt-1">{errors.name[0]}</p>}
-                    </div>
+            <div className={isModal ? "" : "bg-white rounded-2xl border border-border shadow-soft overflow-hidden"}>
+                {/* Header Gradient Line */}
+                <div className="h-1.5 bg-gradient-to-r from-primary to-primary-600 w-full"></div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-                                Contact Number
-                            </label>
-                            <input
-                                type="text"
-                                value={formData.contact}
-                                onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
-                                className="input-field"
-                                placeholder="Phone number"
-                            />
-                            {errors?.contact && <p className="text-red-500 text-xs mt-1">{errors.contact[0]}</p>}
+                <form onSubmit={handleSubmit} className="p-8 space-y-8">
+                    {/* Personal Information Section */}
+                    <div className="space-y-6">
+                        <div className="flex items-center gap-3 pb-2 border-b border-border/50">
+                            <div className="p-2 bg-primary-50 rounded-lg text-primary">
+                                <User size={20} />
+                            </div>
+                            <h3 className="text-lg font-semibold text-gray-900">Personal Information</h3>
                         </div>
 
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-                                Email Address
-                            </label>
-                            <input
-                                type="email"
-                                value={formData.email}
-                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                className="input-field"
-                                placeholder="email@example.com"
-                            />
-                            {errors?.email && <p className="text-red-500 text-xs mt-1">{errors.email[0]}</p>}
-                        </div>
-                    </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="md:col-span-2">
+                                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                    Full Name <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    value={formData.name}
+                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                    className="input-field transition-shadow focus:shadow-md"
+                                    placeholder="Enter borrower's full name"
+                                    required
+                                    autoFocus={isModal}
+                                />
+                                {errors?.name && <p className="text-red-500 text-xs mt-1">{errors.name[0]}</p>}
+                            </div>
 
-                    <div className="space-y-4">
-                        <label className="block text-sm font-semibold text-gray-700">Address</label>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
-                                <select
-                                    value={formData.province}
-                                    onChange={handleProvinceChange}
-                                    className="input-field"
-                                >
-                                    <option value="">Select Province</option>
-                                    {provinces.map(p => (
-                                        <option key={p.code} value={p.name}>{p.name}</option>
-                                    ))}
-                                </select>
+                                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                    Contact Number
+                                </label>
+                                <input
+                                    type="text"
+                                    value={formData.contact}
+                                    onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
+                                    className="input-field transition-shadow focus:shadow-md"
+                                    placeholder="e.g. 09123456789"
+                                />
+                                {errors?.contact && <p className="text-red-500 text-xs mt-1">{errors.contact[0]}</p>}
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                    Email Address
+                                </label>
+                                <input
+                                    type="email"
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                    className="input-field transition-shadow focus:shadow-md"
+                                    placeholder="email@example.com"
+                                />
+                                {errors?.email && <p className="text-red-500 text-xs mt-1">{errors.email[0]}</p>}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Address Section */}
+                    <div className="space-y-6">
+                        <div className="flex items-center gap-3 pb-2 border-b border-border/50">
+                            <div className="p-2 bg-primary-50 rounded-lg text-primary">
+                                <MapPin size={20} />
+                            </div>
+                            <h3 className="text-lg font-semibold text-gray-900">Address Details</h3>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1.5">Province</label>
+                                <div className="relative">
+                                    <select
+                                        value={formData.province}
+                                        onChange={handleProvinceChange}
+                                        className="input-field appearance-none"
+                                    >
+                                        <option value="">Select Province</option>
+                                        {provinces.map(p => (
+                                            <option key={p.code} value={p.name}>{p.name}</option>
+                                        ))}
+                                    </select>
+                                    <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-gray-500">
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </div>
+                                </div>
                                 {errors?.province && <p className="text-red-500 text-xs mt-1">{errors.province[0]}</p>}
                             </div>
 
                             <div>
-                                <select
-                                    value={formData.city}
-                                    onChange={handleCityChange}
-                                    className="input-field"
-                                    disabled={!formData.province}
-                                >
-                                    <option value="">Select City/Municipality</option>
-                                    {cities.map(c => (
-                                        <option key={c.code} value={c.name}>{c.name}</option>
-                                    ))}
-                                </select>
+                                <label className="block text-sm font-medium text-gray-700 mb-1.5">City/Municipality</label>
+                                <div className="relative">
+                                    <select
+                                        value={formData.city}
+                                        onChange={handleCityChange}
+                                        className="input-field appearance-none disabled:bg-gray-50 disabled:text-gray-400"
+                                        disabled={!formData.province}
+                                    >
+                                        <option value="">Select City</option>
+                                        {cities.map(c => (
+                                            <option key={c.code} value={c.name}>{c.name}</option>
+                                        ))}
+                                    </select>
+                                    <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-gray-500">
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </div>
+                                </div>
                                 {errors?.city && <p className="text-red-500 text-xs mt-1">{errors.city[0]}</p>}
                             </div>
 
                             <div>
-                                <select
-                                    value={formData.barangay}
-                                    onChange={(e) => setFormData({ ...formData, barangay: e.target.value })}
-                                    className="input-field"
-                                    disabled={!formData.city}
-                                >
-                                    <option value="">Select Barangay</option>
-                                    {barangays.map(b => (
-                                        <option key={b.code} value={b.name}>{b.name}</option>
-                                    ))}
-                                </select>
+                                <label className="block text-sm font-medium text-gray-700 mb-1.5">Barangay</label>
+                                <div className="relative">
+                                    <select
+                                        value={formData.barangay}
+                                        onChange={(e) => setFormData({ ...formData, barangay: e.target.value })}
+                                        className="input-field appearance-none disabled:bg-gray-50 disabled:text-gray-400"
+                                        disabled={!formData.city}
+                                    >
+                                        <option value="">Select Barangay</option>
+                                        {barangays.map(b => (
+                                            <option key={b.code} value={b.name}>{b.name}</option>
+                                        ))}
+                                    </select>
+                                    <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-gray-500">
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </div>
+                                </div>
                                 {errors?.barangay && <p className="text-red-500 text-xs mt-1">{errors.barangay[0]}</p>}
                             </div>
+
+                            <div className="md:col-span-3">
+                                <label className="block text-sm font-medium text-gray-700 mb-1.5">Street / House No.</label>
+                                <input
+                                    type="text"
+                                    value={formData.street}
+                                    onChange={(e) => setFormData({ ...formData, street: e.target.value })}
+                                    className="input-field transition-shadow focus:shadow-md"
+                                    placeholder="House No., Street, Subdivision"
+                                />
+                                {errors?.street && <p className="text-red-500 text-xs mt-1">{errors.street[0]}</p>}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Identification Section */}
+                    <div className="space-y-6">
+                        <div className="flex items-center gap-3 pb-2 border-b border-border/50">
+                            <div className="p-2 bg-primary-50 rounded-lg text-primary">
+                                <CreditCard size={20} />
+                            </div>
+                            <h3 className="text-lg font-semibold text-gray-900">Identification</h3>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                    ID Type
+                                </label>
+                                <div className="relative">
+                                    <select
+                                        value={formData.id_type}
+                                        onChange={(e) => setFormData({ ...formData, id_type: e.target.value })}
+                                        className="input-field appearance-none"
+                                    >
+                                        <option value="">Select ID Type</option>
+                                        <option value="Passport">Passport</option>
+                                        <option value="Driver's License">Driver's License</option>
+                                        <option value="National ID">National ID</option>
+                                        <option value="SSS/GSIS">SSS/GSIS</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-gray-500">
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </div>
+                                </div>
+                                {errors?.id_type && <p className="text-red-500 text-xs mt-1">{errors.id_type[0]}</p>}
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                    ID Number
+                                </label>
+                                <input
+                                    type="text"
+                                    value={formData.id_number}
+                                    onChange={(e) => setFormData({ ...formData, id_number: e.target.value })}
+                                    className="input-field transition-shadow focus:shadow-md"
+                                    placeholder="Enter ID Number"
+                                />
+                                {errors?.id_number && <p className="text-red-500 text-xs mt-1">{errors.id_number[0]}</p>}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Additional Notes Section */}
+                    <div className="space-y-6">
+                        <div className="flex items-center gap-3 pb-2 border-b border-border/50">
+                            <div className="p-2 bg-primary-50 rounded-lg text-primary">
+                                <FileText size={20} />
+                            </div>
+                            <h3 className="text-lg font-semibold text-gray-900">Additional Notes</h3>
                         </div>
 
                         <div>
-                            <input
-                                type="text"
-                                value={formData.street}
-                                onChange={(e) => setFormData({ ...formData, street: e.target.value })}
-                                className="input-field"
-                                placeholder="House No., Street, Subdivision"
+                            <textarea
+                                value={formData.notes}
+                                onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                                rows={4}
+                                className="input-field resize-none transition-shadow focus:shadow-md"
+                                placeholder="Any additional details or remarks about the borrower..."
                             />
-                            {errors?.street && <p className="text-red-500 text-xs mt-1">{errors.street[0]}</p>}
+                            {errors?.notes && <p className="text-red-500 text-xs mt-1">{errors.notes[0]}</p>}
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-                                ID Type
-                            </label>
-                            <select
-                                value={formData.id_type}
-                                onChange={(e) => setFormData({ ...formData, id_type: e.target.value })}
-                                className="input-field"
-                            >
-                                <option value="">Select ID Type</option>
-                                <option value="Passport">Passport</option>
-                                <option value="Driver's License">Driver's License</option>
-                                <option value="National ID">National ID</option>
-                                <option value="SSS/GSIS">SSS/GSIS</option>
-                                <option value="Other">Other</option>
-                            </select>
-                            {errors?.id_type && <p className="text-red-500 text-xs mt-1">{errors.id_type[0]}</p>}
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-                                ID Number
-                            </label>
-                            <input
-                                type="text"
-                                value={formData.id_number}
-                                onChange={(e) => setFormData({ ...formData, id_number: e.target.value })}
-                                className="input-field"
-                                placeholder="ID Number"
-                            />
-                            {errors?.id_number && <p className="text-red-500 text-xs mt-1">{errors.id_number[0]}</p>}
-                        </div>
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-                            Notes
-                        </label>
-                        <textarea
-                            value={formData.notes}
-                            onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                            rows={4}
-                            className="input-field resize-none"
-                            placeholder="Additional details about the borrower..."
-                        />
-                        {errors?.notes && <p className="text-red-500 text-xs mt-1">{errors.notes[0]}</p>}
-                    </div>
-
+                    {/* Action Buttons */}
                     <div className="flex justify-end gap-3 pt-6 border-t border-border">
                         {onCancel ? (
                             <button
                                 type="button"
                                 onClick={onCancel}
-                                className="btn btn-secondary"
+                                className="btn btn-secondary px-6"
                             >
                                 Cancel
                             </button>
                         ) : (
                             <Link
                                 to="/borrowers"
-                                className="btn btn-secondary"
+                                className="btn btn-secondary px-6"
                             >
                                 Cancel
                             </Link>
@@ -352,10 +413,10 @@ export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="btn btn-primary"
+                            className="btn btn-primary px-6 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all transform hover:-translate-y-0.5"
                         >
                             {loading && <Loader2 className="animate-spin" size={18} />}
-                            <Save size={18} />
+                            {!loading && <Save size={18} />}
                             Save Borrower
                         </button>
                     </div>

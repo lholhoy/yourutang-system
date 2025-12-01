@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-background text-text font-sans antialiased;
+    @apply bg-background text-content font-sans antialiased;
   }
 
   ::selection {
@@ -31,7 +31,7 @@
   }
 
   .btn-secondary {
-    @apply bg-white text-text border border-border hover:bg-gray-50 hover:border-gray-300 shadow-sm;
+    @apply bg-white text-content border border-border hover:bg-gray-50 hover:border-gray-300 shadow-sm;
   }
 
   .btn-danger {
@@ -47,14 +47,14 @@
   }
 
   .input-field {
-    @apply w-full px-4 py-2.5 bg-white border border-border rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all duration-200 placeholder:text-text-light;
+    @apply w-full px-4 py-2.5 bg-white border border-border rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all duration-200 placeholder:text-content-light;
   }
 
   .table-header {
-    @apply px-6 py-4 text-xs font-semibold text-text-muted uppercase tracking-wider bg-gray-50/50 border-b border-border;
+    @apply px-6 py-4 text-xs font-semibold text-content-muted uppercase tracking-wider bg-gray-50/50 border-b border-border;
   }
 
   .table-cell {
-    @apply px-6 py-4 text-sm text-text border-b border-border/50;
+    @apply px-6 py-4 text-sm text-content border-b border-border/50;
   }
 }

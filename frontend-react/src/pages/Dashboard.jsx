@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosClient from "../api/axios";
-import { Users, Wallet, TrendingUp, Loader2, Activity } from "lucide-react";
+import { Users, Wallet, TrendingUp, Loader2, Activity, ArrowUpRight, ArrowDownRight, Calendar, ChevronRight } from "lucide-react";
 import Skeleton from "../components/Skeleton";
 import {
     Chart as ChartJS,
@@ -67,56 +67,21 @@ export default function Dashboard() {
 
     if (loading) {
         return (
-            <div className="space-y-8">
+            <div className="space-y-8 animate-pulse">
                 <div className="flex items-center justify-between">
                     <div>
-                        <Skeleton className="h-10 w-48 mb-2" />
-                        <Skeleton className="h-5 w-64" />
+                        <div className="h-8 w-48 bg-gray-200 rounded-lg mb-2"></div>
+                        <div className="h-4 w-64 bg-gray-200 rounded-lg"></div>
                     </div>
-                    <Skeleton className="h-9 w-48 rounded-full" />
                 </div>
-
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {[1, 2, 3].map((i) => (
-                        <div key={i} className="card p-6">
-                            <div className="flex justify-between mb-4">
-                                <Skeleton className="h-12 w-12 rounded-xl" />
-                                <Skeleton className="h-6 w-24 rounded-full" />
-                            </div>
-                            <Skeleton className="h-10 w-32 mb-2" />
-                            <Skeleton className="h-4 w-40" />
-                        </div>
+                        <div key={i} className="h-40 bg-gray-200 rounded-2xl"></div>
                     ))}
                 </div>
-
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div className="lg:col-span-2 card p-6">
-                        <div className="flex justify-between mb-6">
-                            <Skeleton className="h-7 w-32" />
-                            <Skeleton className="h-9 w-24" />
-                        </div>
-                        <Skeleton className="h-80 w-full" />
-                    </div>
-                    <div className="card p-6">
-                        <Skeleton className="h-7 w-32 mb-6" />
-                        <div className="space-y-4">
-                            {[1, 2, 3, 4].map((i) => (
-                                <div key={i} className="flex items-center justify-between">
-                                    <div className="flex items-center gap-4">
-                                        <Skeleton className="h-10 w-10 rounded-full" />
-                                        <div>
-                                            <Skeleton className="h-4 w-32 mb-1" />
-                                            <Skeleton className="h-3 w-20" />
-                                        </div>
-                                    </div>
-                                    <div className="text-right">
-                                        <Skeleton className="h-4 w-20 mb-1" />
-                                        <Skeleton className="h-3 w-16" />
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                    <div className="lg:col-span-2 h-96 bg-gray-200 rounded-2xl"></div>
+                    <div className="h-96 bg-gray-200 rounded-2xl"></div>
                 </div>
             </div>
         );
@@ -124,14 +89,17 @@ export default function Dashboard() {
 
     if (error) {
         return (
-            <div className="flex flex-col items-center justify-center h-64 text-red-500">
-                <p className="text-lg font-bold">Error loading dashboard</p>
-                <p className="text-sm">{error}</p>
+            <div className="flex flex-col items-center justify-center h-[60vh] text-center">
+                <div className="bg-red-50 p-4 rounded-full mb-4">
+                    <Activity className="w-8 h-8 text-red-500" />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Error loading dashboard</h3>
+                <p className="text-gray-500 mb-6 max-w-md">{error}</p>
                 <button
                     onClick={() => window.location.reload()}
-                    className="mt-4 btn btn-secondary"
+                    className="btn btn-primary"
                 >
-                    Retry
+                    Retry Connection
                 </button>
             </div>
         );
@@ -147,7 +115,13 @@ export default function Dashboard() {
                 data: data.monthly_loans?.map((item) => Number(item.total)) || [],
                 fill: true,
                 borderColor: "#0F9E99",
-                backgroundColor: "rgba(15, 158, 153, 0.1)",
+                backgroundColor: (context) => {
+                    const ctx = context.chart.ctx;
+                    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                    gradient.addColorStop(0, "rgba(15, 158, 153, 0.2)");
+                    gradient.addColorStop(1, "rgba(15, 158, 153, 0)");
+                    return gradient;
+                },
                 tension: 0.4,
                 pointBackgroundColor: "#0F9E99",
                 pointBorderColor: "#fff",
@@ -160,59 +134,80 @@ export default function Dashboard() {
 
     const chartOptions = {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 display: false,
             },
-            title: {
-                display: false,
-            },
+            tooltip: {
+                backgroundColor: '#1f2937',
+                padding: 12,
+                titleFont: { size: 13 },
+                bodyFont: { size: 13 },
+                cornerRadius: 8,
+                displayColors: false,
+            }
         },
         scales: {
             y: {
                 beginAtZero: true,
                 grid: {
                     color: "#f3f4f6",
+                    borderDash: [4, 4],
                 },
+                ticks: {
+                    font: { size: 11 },
+                    color: '#9ca3af'
+                }
             },
             x: {
                 grid: {
                     display: false,
                 },
+                ticks: {
+                    font: { size: 11 },
+                    color: '#9ca3af'
+                }
             },
         },
     };
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-8 pb-8">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Dashboard</h1>
-                    <p className="text-gray-500 mt-1">Welcome back, here's what's happening today.</p>
+                    <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Dashboard Overview</h1>
+                    <p className="text-gray-500 mt-1">Welcome back! Here's your financial summary.</p>
                 </div>
-                <div className="text-sm text-gray-500 bg-white px-4 py-2 rounded-full shadow-sm border border-border">
+                <div className="hidden md:flex items-center gap-2 text-sm font-medium text-gray-600 bg-white px-4 py-2 rounded-full shadow-sm border border-border/50">
+                    <Calendar className="w-4 h-4 text-primary" />
                     {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
                 </div>
             </div>
 
             {upcomingDue.length > 0 && (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 flex items-start gap-3">
-                    <div className="bg-yellow-100 p-2 rounded-lg shrink-0">
-                        <TrendingUp className="w-5 h-5 text-yellow-700" />
+                <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-100 rounded-2xl p-5 flex items-start gap-4 shadow-sm">
+                    <div className="bg-white p-2.5 rounded-xl shadow-sm shrink-0 text-amber-500">
+                        <TrendingUp className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
-                        <h3 className="text-sm font-bold text-yellow-800">Upcoming Due Dates</h3>
-                        <p className="text-sm text-yellow-700 mt-1">
-                            You have {upcomingDue.length} loan(s) due within the next 7 days.
+                        <h3 className="text-base font-bold text-gray-900">Upcoming Due Dates</h3>
+                        <p className="text-sm text-gray-600 mt-1">
+                            You have <span className="font-bold text-amber-600">{upcomingDue.length} loan(s)</span> due within the next 7 days.
                         </p>
-                        <div className="mt-3 space-y-2">
+                        <div className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
                             {upcomingDue.map(loan => (
-                                <div key={loan.id} className="flex justify-between items-center bg-white/50 p-2 rounded-lg text-sm">
-                                    <span className="font-medium text-yellow-900">{loan.borrower.name}</span>
-                                    <div className="flex gap-4">
-                                        <span className="text-yellow-800">Due: {new Date(loan.due_date).toLocaleDateString()}</span>
-                                        <span className="font-bold text-yellow-900">₱{Number(loan.amount).toLocaleString()}</span>
+                                <div key={loan.id} className="flex justify-between items-center bg-white p-3 rounded-xl border border-amber-100 shadow-sm">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-700 font-bold text-xs">
+                                            {loan.borrower.name.charAt(0)}
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-semibold text-gray-900">{loan.borrower.name}</p>
+                                            <p className="text-xs text-gray-500">Due: {new Date(loan.due_date).toLocaleDateString()}</p>
+                                        </div>
                                     </div>
+                                    <span className="font-bold text-amber-600 text-sm">₱{Number(loan.amount).toLocaleString()}</span>
                                 </div>
                             ))}
                         </div>
@@ -222,92 +217,88 @@ export default function Dashboard() {
 
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="card p-6 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110" />
-                    <div className="relative">
+                <div className="bg-white rounded-2xl p-6 border border-border/50 shadow-soft hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110 opacity-50" />
+                    <div className="relative z-10">
                         <div className="flex items-center justify-between mb-4">
-                            <div className="bg-blue-100 p-3 rounded-xl">
-                                <Users className="w-6 h-6 text-blue-600" />
+                            <div className="bg-blue-50 p-3 rounded-xl text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                                <Users className="w-6 h-6" />
                             </div>
-                            <span className="text-sm font-medium text-gray-500 bg-blue-50 px-2.5 py-1 rounded-full">Total Borrowers</span>
-                        </div>
-                        <p className="text-4xl font-bold text-gray-900 tracking-tight">{data.total_borrowers}</p>
-                        <p className="text-sm text-gray-500 mt-2 flex items-center gap-1">
-                            <span className="text-green-600 font-medium flex items-center">
-                                <TrendingUp className="w-3 h-3 mr-1" /> +2.5%
+                            <span className="flex items-center gap-1 text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                                <ArrowUpRight className="w-3 h-3" /> +2.5%
                             </span>
-                            from last month
-                        </p>
+                        </div>
+                        <p className="text-sm font-medium text-gray-500">Total Borrowers</p>
+                        <h3 className="text-3xl font-bold text-gray-900 mt-1">{data.total_borrowers}</h3>
                     </div>
                 </div>
 
-                <div className="card p-6 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-green-50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110" />
-                    <div className="relative">
+                <div className="bg-white rounded-2xl p-6 border border-border/50 shadow-soft hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110 opacity-50" />
+                    <div className="relative z-10">
                         <div className="flex items-center justify-between mb-4">
-                            <div className="bg-green-100 p-3 rounded-xl">
-                                <Wallet className="w-6 h-6 text-green-600" />
+                            <div className="bg-emerald-50 p-3 rounded-xl text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                                <Wallet className="w-6 h-6" />
                             </div>
-                            <span className="text-sm font-medium text-gray-500 bg-green-50 px-2.5 py-1 rounded-full">Total Loans</span>
-                        </div>
-                        <p className="text-4xl font-bold text-gray-900 tracking-tight">{data.total_loans}</p>
-                        <p className="text-sm text-gray-500 mt-2 flex items-center gap-1">
-                            <span className="text-green-600 font-medium flex items-center">
-                                <TrendingUp className="w-3 h-3 mr-1" /> +12%
+                            <span className="flex items-center gap-1 text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                                <ArrowUpRight className="w-3 h-3" /> +12%
                             </span>
-                            from last month
-                        </p>
+                        </div>
+                        <p className="text-sm font-medium text-gray-500">Total Loans</p>
+                        <h3 className="text-3xl font-bold text-gray-900 mt-1">{data.total_loans}</h3>
                     </div>
                 </div>
 
-                <div className="card p-6 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-purple-50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110" />
-                    <div className="relative">
+                <div className="bg-white rounded-2xl p-6 border border-border/50 shadow-soft hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-purple-50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110 opacity-50" />
+                    <div className="relative z-10">
                         <div className="flex items-center justify-between mb-4">
-                            <div className="bg-purple-100 p-3 rounded-xl">
-                                <TrendingUp className="w-6 h-6 text-purple-600" />
+                            <div className="bg-purple-50 p-3 rounded-xl text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                                <TrendingUp className="w-6 h-6" />
                             </div>
-                            <span className="text-sm font-medium text-gray-500 bg-purple-50 px-2.5 py-1 rounded-full">Outstanding</span>
                         </div>
-                        <p className="text-4xl font-bold text-gray-900 tracking-tight">
-                            ₱{Number(data.total_outstanding).toLocaleString()}
-                        </p>
-                        <p className="text-sm text-gray-500 mt-2">Total unpaid amount</p>
+                        <p className="text-sm font-medium text-gray-500">Outstanding Balance</p>
+                        <h3 className="text-3xl font-bold text-gray-900 mt-1">₱{Number(data.total_outstanding).toLocaleString()}</h3>
                     </div>
                 </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Chart */}
-                <div className="lg:col-span-2 card p-6">
+                <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-border/50 shadow-soft">
                     <div className="flex items-center justify-between mb-6">
-                        <h2 className="text-lg font-bold text-gray-900">Loan Trends</h2>
+                        <div>
+                            <h2 className="text-lg font-bold text-gray-900">Loan Performance</h2>
+                            <p className="text-sm text-gray-500">Monthly loan disbursement overview</p>
+                        </div>
                         <select
                             value={filter}
                             onChange={(e) => setFilter(e.target.value)}
-                            className="text-sm border-gray-200 rounded-lg text-gray-500 focus:ring-primary focus:border-primary"
+                            className="text-sm border-gray-200 rounded-lg text-gray-600 focus:ring-primary focus:border-primary bg-gray-50 py-2 pl-3 pr-8 cursor-pointer hover:bg-gray-100 transition-colors"
                         >
                             <option value="this_year">This Year</option>
                             <option value="last_year">Last Year</option>
                             <option value="this_month">This Month</option>
                         </select>
                     </div>
-                    <div className="h-80">
+                    <div className="h-80 w-full">
                         <Line options={chartOptions} data={chartData} />
                     </div>
                 </div>
 
                 {/* Top Borrowers */}
-                <div className="card p-6 flex flex-col">
-                    <h2 className="text-lg font-bold text-gray-900 mb-6">Top Borrowers</h2>
-                    <div className="space-y-4 flex-1 overflow-y-auto pr-2 custom-scrollbar">
+                <div className="bg-white rounded-2xl p-6 border border-border/50 shadow-soft flex flex-col h-[450px]">
+                    <h2 className="text-lg font-bold text-gray-900 mb-1">Top Borrowers</h2>
+                    <p className="text-sm text-gray-500 mb-6">Highest outstanding balances</p>
+
+                    <div className="space-y-3 flex-1 overflow-y-auto pr-2 custom-scrollbar">
                         {data.top_borrowers.map((borrower, index) => (
-                            <div key={borrower.id} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-xl transition-colors group cursor-pointer border border-transparent hover:border-gray-100">
-                                <div className="flex items-center gap-4">
-                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shadow-sm ${index === 0 ? 'bg-yellow-100 text-yellow-700' :
-                                        index === 1 ? 'bg-gray-100 text-gray-700' :
-                                            index === 2 ? 'bg-orange-100 text-orange-700' :
-                                                'bg-blue-50 text-blue-600'
+                            <div key={borrower.id} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-xl transition-all group cursor-pointer border border-transparent hover:border-gray-100">
+                                <div className="flex items-center gap-3">
+                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shadow-sm transition-transform group-hover:scale-105 ${index === 0 ? 'bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-700' :
+                                            index === 1 ? 'bg-gradient-to-br from-gray-100 to-gray-200 text-gray-700' :
+                                                index === 2 ? 'bg-gradient-to-br from-orange-100 to-orange-200 text-orange-700' :
+                                                    'bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600'
                                         }`}>
                                         {borrower.name.charAt(0)}
                                     </div>
@@ -320,49 +311,56 @@ export default function Dashboard() {
                                     <p className="text-sm font-bold text-gray-900">
                                         ₱{Number(borrower.loans_sum_amount).toLocaleString()}
                                     </p>
-                                    <p className="text-xs text-gray-400">Outstanding</p>
                                 </div>
                             </div>
                         ))}
                         {data.top_borrowers.length === 0 && (
-                            <div className="flex flex-col items-center justify-center h-40 text-gray-400">
-                                <Users className="w-8 h-8 mb-2 opacity-20" />
+                            <div className="flex flex-col items-center justify-center h-full text-gray-400">
+                                <Users className="w-10 h-10 mb-3 opacity-20" />
                                 <p className="text-sm">No borrowers yet</p>
                             </div>
                         )}
                     </div>
-                    <button className="w-full mt-6 py-2.5 text-sm font-medium text-primary hover:text-primary-700 hover:bg-primary-50 rounded-lg transition-colors">
+                    <Link to="/borrowers" className="w-full mt-4 btn btn-secondary justify-center text-sm py-2.5">
                         View All Borrowers
-                    </button>
+                    </Link>
                 </div>
 
                 {/* Recent Activity */}
-                <div className="card p-6 flex flex-col lg:col-span-3">
-                    <div className="flex items-center gap-3 mb-6">
-                        <div className="bg-orange-100 p-2 rounded-lg">
-                            <Activity className="w-5 h-5 text-orange-600" />
+                <div className="lg:col-span-3 bg-white rounded-2xl p-6 border border-border/50 shadow-soft">
+                    <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center gap-3">
+                            <div className="bg-orange-50 p-2 rounded-lg text-orange-600">
+                                <Activity className="w-5 h-5" />
+                            </div>
+                            <div>
+                                <h2 className="text-lg font-bold text-gray-900">Recent Activity</h2>
+                                <p className="text-sm text-gray-500">Latest system events</p>
+                            </div>
                         </div>
-                        <h2 className="text-lg font-bold text-gray-900">Recent Activity</h2>
-                        <Link to="/history" className="ml-auto text-sm text-primary hover:underline">View All</Link>
+                        <Link to="/history" className="text-sm font-medium text-primary hover:text-primary-700 flex items-center gap-1 group">
+                            View All <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                        </Link>
                     </div>
 
-                    <div className="space-y-4">
-                        {activityLogs.map((log) => (
-                            <div key={log.id} className="flex items-start gap-4 p-3 hover:bg-gray-50 rounded-xl transition-colors border border-transparent hover:border-gray-100">
-                                <div className="mt-1 w-2 h-2 rounded-full bg-primary shrink-0" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {activityLogs.slice(0, 6).map((log) => (
+                            <div key={log.id} className="flex items-start gap-3 p-4 bg-gray-50/50 rounded-xl border border-gray-100 hover:bg-white hover:shadow-md transition-all duration-200 group">
+                                <div className="mt-1 w-2 h-2 rounded-full bg-primary shrink-0 group-hover:scale-125 transition-transform" />
                                 <div>
-                                    <p className="text-sm text-gray-900">
+                                    <p className="text-sm text-gray-900 line-clamp-2">
                                         <span className="font-semibold">{log.user?.name || 'System'}</span> {log.description}
                                     </p>
-                                    <p className="text-xs text-gray-500 mt-1">
+                                    <p className="text-xs text-gray-400 mt-1.5 flex items-center gap-1">
+                                        <Calendar className="w-3 h-3" />
                                         {new Date(log.created_at).toLocaleString()}
                                     </p>
                                 </div>
                             </div>
                         ))}
                         {activityLogs.length === 0 && (
-                            <div className="text-center py-8 text-gray-500 text-sm">
-                                No recent activity
+                            <div className="col-span-full text-center py-12 text-gray-500 text-sm">
+                                No recent activity found
                             </div>
                         )}
                     </div>
