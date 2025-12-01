@@ -20,6 +20,20 @@ class AnalyticsController extends Controller
         $totalOutstanding = Loan::whereHas('borrower', fn($q) => $q->where('user_id', $userId))->sum('amount') -
             \App\Models\Payment::whereHas('loan.borrower', fn($q) => $q->where('user_id', $userId))->sum('amount');
 
+        // Calculate Total Interest (Earnings)
+        // We need to iterate all loans to calculate interest based on their specific terms
+        $allLoans = Loan::whereHas('borrower', fn($q) => $q->where('user_id', $userId))->get();
+        $totalInterest = 0;
+        
+        foreach ($allLoans as $loan) {
+            $termInMonths = $loan->term_months;
+            if ($loan->term_unit === 'weeks') {
+                $termInMonths = $loan->term_months / 4;
+            }
+            $interest = $loan->amount * ($loan->interest_rate / 100) * $termInMonths;
+            $totalInterest += $interest;
+        }
+
         $filter = $request->query('filter', 'this_year');
         $query = Loan::whereHas('borrower', fn($q) => $q->where('user_id', $userId));
 
@@ -119,6 +133,7 @@ class AnalyticsController extends Controller
             'total_borrowers' => $totalBorrowers,
             'total_loans' => $totalLoans,
             'total_outstanding' => $totalOutstanding,
+            'total_interest' => $totalInterest,
             'monthly_loans' => $monthlyLoans,
             'monthly_interests' => $monthlyInterests,
             'top_borrowers' => $topBorrowers,

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosClient from "../api/axios";
-import { Users, Wallet, TrendingUp, Loader2, Activity, ArrowUpRight, ArrowDownRight, Calendar, ChevronRight } from "lucide-react";
+import { Users, Wallet, TrendingUp, Loader2, Activity, ArrowUpRight, ArrowDownRight, Calendar, ChevronRight, Coins } from "lucide-react";
 import Skeleton from "../components/Skeleton";
 import {
     Chart as ChartJS,
@@ -317,27 +317,27 @@ export default function Dashboard() {
                     </div>
                 </div>
 
-                {/* Card 4: Upcoming Due */}
+                {/* Card 4: Total Interest */}
                 <div className="bg-white rounded-2xl p-4 border border-border/50 shadow-sm relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-20 h-20 bg-amber-50 rounded-full -mr-8 -mt-8 opacity-50" />
                     <div className="relative z-10">
                         <div className="flex flex-col h-full justify-between">
                             <div className="flex justify-between items-start">
                                 <div>
-                                    <h3 className="text-3xl font-bold text-gray-900 mb-1">{upcomingDue.length}</h3>
-                                    <p className="text-xs font-medium text-gray-500">Upcoming Due</p>
+                                    <h3 className="text-lg font-bold text-gray-900 mb-1 truncate">₱{Number(data.total_interest).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+                                    <p className="text-xs font-medium text-gray-500">Total Interest</p>
                                 </div>
                                 <div className="bg-amber-50 p-2 rounded-lg text-amber-600">
-                                    <Calendar className="w-4 h-4" />
+                                    <Coins className="w-4 h-4" />
                                 </div>
                             </div>
                             <div className="mt-4">
                                 <div className="flex items-center justify-between text-xs text-gray-500 mb-1.5">
-                                    <span>Urgency</span>
-                                    <span className="text-amber-600">High</span>
+                                    <span>Earnings</span>
+                                    <span className="text-amber-600">Revenue</span>
                                 </div>
                                 <div className="h-1.5 w-full bg-amber-50 rounded-full overflow-hidden">
-                                    <div className="h-full bg-amber-500 rounded-full" style={{ width: '85%' }}></div>
+                                    <div className="h-full bg-amber-500 rounded-full" style={{ width: '100%' }}></div>
                                 </div>
                             </div>
                         </div>
