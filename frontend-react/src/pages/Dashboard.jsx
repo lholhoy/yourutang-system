@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axiosClient from "../api/axios";
 import { Users, Wallet, TrendingUp, Loader2, Activity } from "lucide-react";
 import Skeleton from "../components/Skeleton";
@@ -342,6 +343,7 @@ export default function Dashboard() {
                             <Activity className="w-5 h-5 text-orange-600" />
                         </div>
                         <h2 className="text-lg font-bold text-gray-900">Recent Activity</h2>
+                        <Link to="/history" className="ml-auto text-sm text-primary hover:underline">View All</Link>
                     </div>
 
                     <div className="space-y-4">

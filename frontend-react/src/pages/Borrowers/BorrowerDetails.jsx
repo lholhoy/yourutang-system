@@ -6,6 +6,7 @@ import { ArrowLeft, Pencil, Trash2, Plus, Banknote, CheckCircle, AlertCircle, Fi
 import Modal from "../../components/Modal";
 import LoanForm from "../Loans/LoanForm";
 import PaymentForm from "../Payments/PaymentForm";
+import BorrowerForm from "./BorrowerForm";
 import Skeleton from "../../components/Skeleton";
 
 export default function BorrowerDetails() {
@@ -15,6 +16,7 @@ export default function BorrowerDetails() {
     const [loading, setLoading] = useState(true);
     const [isLoanModalOpen, setIsLoanModalOpen] = useState(false);
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [selectedLoan, setSelectedLoan] = useState(null);
 
     useEffect(() => {
@@ -192,13 +194,13 @@ export default function BorrowerDetails() {
                         <Banknote size={18} />
                         <span>Statement</span>
                     </a>
-                    <Link
-                        to={`/borrowers/${id}/edit`}
+                    <button
+                        onClick={() => setIsEditModalOpen(true)}
                         className="btn btn-secondary"
                     >
                         <Pencil size={18} />
                         <span>Edit</span>
-                    </Link>
+                    </button>
                     <button
                         onClick={handleDelete}
                         className="btn btn-danger"
@@ -371,6 +373,23 @@ export default function BorrowerDetails() {
                     />
                 )}
             </Modal>
+
+            {/* Edit Borrower Modal */}
+            <Modal
+                isOpen={isEditModalOpen}
+                onClose={() => setIsEditModalOpen(false)}
+                title="Edit Borrower"
+            >
+                <BorrowerForm
+                    initialData={borrower}
+                    onSuccess={() => {
+                        setIsEditModalOpen(false);
+                        fetchBorrower();
+                    }}
+                    onCancel={() => setIsEditModalOpen(false)}
+                />
+            </Modal>
         </div>
+
     );
 }

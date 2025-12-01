@@ -52,7 +52,9 @@ export default function HistoryLogs() {
                         <div key={log.id} className="p-5 hover:bg-gray-50/50 transition-colors group">
                             <div className="flex items-start justify-between gap-4">
                                 <div>
-                                    <p className="font-semibold text-gray-900 group-hover:text-primary transition-colors">{log.action}</p>
+                                    <p className="font-semibold text-gray-900 group-hover:text-primary transition-colors">
+                                        {log.user?.name || 'System'}
+                                    </p>
                                     <p className="text-gray-600 mt-1 text-sm">{log.description}</p>
                                 </div>
                                 <span className="text-xs font-medium text-gray-400 whitespace-nowrap bg-gray-100 px-2 py-1 rounded-md">

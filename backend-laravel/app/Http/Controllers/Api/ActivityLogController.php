@@ -12,7 +12,7 @@ class ActivityLogController extends Controller
     {
         $logs = ActivityLog::with('user')
             ->latest()
-            ->take(10)
+            ->take(5)
             ->get();
 
         return response()->json($logs);
