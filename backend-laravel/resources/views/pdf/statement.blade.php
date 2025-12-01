@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Statement of Account</title>
     <style>
-        body { font-family: sans-serif; font-size: 12px; color: #333; }
+        body { font-family: 'DejaVu Sans', sans-serif; font-size: 12px; color: #333; }
         .header { text-align: center; margin-bottom: 30px; }
         .header h1 { margin: 0; color: #0F9E99; }
         .header p { margin: 5px 0; color: #666; }
@@ -31,14 +31,15 @@
             <td width="50%">
                 <strong>Borrower Details:</strong><br>
                 {{ $borrower->name }}<br>
+                {{ $borrower->full_address ?? $borrower->address ?? 'No Address' }}<br>
                 {{ $borrower->email ?? 'No Email' }}<br>
                 {{ $borrower->contact ?? 'No Contact' }}
             </td>
             <td width="50%" class="text-right">
                 <strong>Summary:</strong><br>
-                Total Borrowed: ₱{{ number_format($borrower->loans->sum('amount'), 2) }}<br>
-                Total Paid: ₱{{ number_format($borrower->loans->sum(fn($l) => $l->payments->sum('amount')), 2) }}<br>
-                <strong>Outstanding Balance: ₱{{ number_format($borrower->loans->sum('balance'), 2) }}</strong>
+                Total Borrowed: &#8369;{{ number_format($borrower->loans->sum('amount'), 2) }}<br>
+                Total Paid: &#8369;{{ number_format($borrower->loans->sum(fn($l) => $l->payments->sum('amount')), 2) }}<br>
+                <strong>Outstanding Balance: &#8369;{{ number_format($borrower->loans->sum('balance'), 2) }}</strong>
             </td>
         </tr>
     </table>
@@ -63,9 +64,9 @@
                     Loan #{{ $loan->id }}
                     @if($loan->description)<br><small>{{ $loan->description }}</small>@endif
                 </td>
-                <td class="text-right">₱{{ number_format($loan->amount, 2) }}</td>
-                <td class="text-right">₱{{ number_format($loan->payments->sum('amount'), 2) }}</td>
-                <td class="text-right">₱{{ number_format($loan->balance, 2) }}</td>
+                <td class="text-right">&#8369;{{ number_format($loan->amount, 2) }}</td>
+                <td class="text-right">&#8369;{{ number_format($loan->payments->sum('amount'), 2) }}</td>
+                <td class="text-right">&#8369;{{ number_format($loan->balance, 2) }}</td>
                 <td>{{ ucfirst($loan->status) }}</td>
             </tr>
             @endforeach
@@ -86,7 +87,7 @@
             <tr>
                 <td>{{ $payment->created_at->format('M d, Y') }}</td>
                 <td>Loan #{{ $payment->loan_id }}</td>
-                <td class="text-right">₱{{ number_format($payment->amount, 2) }}</td>
+                <td class="text-right">&#8369;{{ number_format($payment->amount, 2) }}</td>
             </tr>
             @endforeach
         </tbody>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import axiosClient from "../../api/axios";
 import { ArrowLeft, Loader2, Save } from "lucide-react";
+import usePhLocations from "../../hooks/usePhLocations";
 
 export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
     const navigate = useNavigate();
@@ -10,11 +11,16 @@ export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
     const borrowerId = initialData?.id || (!onCancel ? routeId : null);
     const isEditing = !!borrowerId;
 
+    const { provinces, cities, barangays, fetchCities, fetchBarangays, loading: locationLoading } = usePhLocations();
+
     const [formData, setFormData] = useState({
         name: "",
         contact: "",
         email: "",
-        address: "",
+        province: "",
+        city: "",
+        barangay: "",
+        street: "",
         id_type: "",
         id_number: "",
         notes: "",
@@ -29,7 +35,10 @@ export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
                 name: initialData.name,
                 contact: initialData.contact || "",
                 email: initialData.email || "",
-                address: initialData.address || "",
+                province: initialData.province || "",
+                city: initialData.city || "",
+                barangay: initialData.barangay || "",
+                street: initialData.street || "",
                 id_type: initialData.id_type || "",
                 id_number: initialData.id_number || "",
                 notes: initialData.notes || "",
@@ -39,6 +48,24 @@ export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
         }
     }, [borrowerId, initialData]);
 
+    // Effect to trigger fetches when initial data is loaded
+    useEffect(() => {
+        if (formData.province) {
+            // Find province code to fetch cities
+            const prov = provinces.find(p => p.name === formData.province);
+            if (prov) fetchCities(prov.code);
+        }
+    }, [formData.province, provinces]);
+
+    useEffect(() => {
+        if (formData.city && cities.length > 0) {
+            // Find city code to fetch barangays
+            const city = cities.find(c => c.name === formData.city);
+            if (city) fetchBarangays(city.code);
+        }
+    }, [formData.city, cities]);
+
+
     const fetchBorrower = async () => {
         try {
             const response = await axiosClient.get(`/borrowers/${borrowerId}`);
@@ -46,7 +73,10 @@ export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
                 name: response.data.name,
                 contact: response.data.contact || "",
                 email: response.data.email || "",
-                address: response.data.address || "",
+                province: response.data.province || "",
+                city: response.data.city || "",
+                barangay: response.data.barangay || "",
+                street: response.data.street || "",
                 id_type: response.data.id_type || "",
                 id_number: response.data.id_number || "",
                 notes: response.data.notes || "",
@@ -56,6 +86,31 @@ export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
             navigate("/borrowers");
         } finally {
             setInitialLoading(false);
+        }
+    };
+
+    const handleProvinceChange = (e) => {
+        const provinceName = e.target.value;
+        setFormData(prev => ({ ...prev, province: provinceName, city: "", barangay: "" }));
+
+        const prov = provinces.find(p => p.name === provinceName);
+        if (prov) {
+            fetchCities(prov.code);
+        } else {
+            // Clear cities if no province selected
+            fetchCities(null);
+        }
+    };
+
+    const handleCityChange = (e) => {
+        const cityName = e.target.value;
+        setFormData(prev => ({ ...prev, city: cityName, barangay: "" }));
+
+        const city = cities.find(c => c.name === cityName);
+        if (city) {
+            fetchBarangays(city.code);
+        } else {
+            fetchBarangays(null);
         }
     };
 
@@ -167,18 +222,65 @@ export default function BorrowerForm({ onSuccess, onCancel, initialData }) {
                         </div>
                     </div>
 
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-                            Address
-                        </label>
-                        <input
-                            type="text"
-                            value={formData.address}
-                            onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                            className="input-field"
-                            placeholder="Full address"
-                        />
-                        {errors?.address && <p className="text-red-500 text-xs mt-1">{errors.address[0]}</p>}
+                    <div className="space-y-4">
+                        <label className="block text-sm font-semibold text-gray-700">Address</label>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <select
+                                    value={formData.province}
+                                    onChange={handleProvinceChange}
+                                    className="input-field"
+                                >
+                                    <option value="">Select Province</option>
+                                    {provinces.map(p => (
+                                        <option key={p.code} value={p.name}>{p.name}</option>
+                                    ))}
+                                </select>
+                                {errors?.province && <p className="text-red-500 text-xs mt-1">{errors.province[0]}</p>}
+                            </div>
+
+                            <div>
+                                <select
+                                    value={formData.city}
+                                    onChange={handleCityChange}
+                                    className="input-field"
+                                    disabled={!formData.province}
+                                >
+                                    <option value="">Select City/Municipality</option>
+                                    {cities.map(c => (
+                                        <option key={c.code} value={c.name}>{c.name}</option>
+                                    ))}
+                                </select>
+                                {errors?.city && <p className="text-red-500 text-xs mt-1">{errors.city[0]}</p>}
+                            </div>
+
+                            <div>
+                                <select
+                                    value={formData.barangay}
+                                    onChange={(e) => setFormData({ ...formData, barangay: e.target.value })}
+                                    className="input-field"
+                                    disabled={!formData.city}
+                                >
+                                    <option value="">Select Barangay</option>
+                                    {barangays.map(b => (
+                                        <option key={b.code} value={b.name}>{b.name}</option>
+                                    ))}
+                                </select>
+                                {errors?.barangay && <p className="text-red-500 text-xs mt-1">{errors.barangay[0]}</p>}
+                            </div>
+                        </div>
+
+                        <div>
+                            <input
+                                type="text"
+                                value={formData.street}
+                                onChange={(e) => setFormData({ ...formData, street: e.target.value })}
+                                className="input-field"
+                                placeholder="House No., Street, Subdivision"
+                            />
+                            {errors?.street && <p className="text-red-500 text-xs mt-1">{errors.street[0]}</p>}
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

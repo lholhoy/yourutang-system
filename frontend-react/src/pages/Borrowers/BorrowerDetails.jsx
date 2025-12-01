@@ -170,9 +170,9 @@ export default function BorrowerDetails() {
                                     <span className="font-medium text-gray-700">Email:</span> {borrower.email}
                                 </p>
                             )}
-                            {borrower.address && (
+                            {(borrower.full_address || borrower.address) && (
                                 <p className="flex items-center gap-2">
-                                    <span className="font-medium text-gray-700">Address:</span> {borrower.address}
+                                    <span className="font-medium text-gray-700">Address:</span> {borrower.full_address || borrower.address}
                                 </p>
                             )}
                             {(borrower.id_type || borrower.id_number) && (

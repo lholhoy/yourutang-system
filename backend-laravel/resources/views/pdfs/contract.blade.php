@@ -3,20 +3,20 @@
 <head>
     <title>Loan Agreement</title>
     <style>
-        body { font-family: 'Times New Roman', Times, serif; line-height: 1.6; color: #000; }
-        .container { max-width: 800px; margin: 0 auto; padding: 40px; }
-        .header { text-align: center; margin-bottom: 40px; }
-        .title { font-size: 24px; font-weight: bold; text-transform: uppercase; margin-bottom: 10px; }
-        .subtitle { font-size: 16px; font-style: italic; }
-        .section { margin-bottom: 20px; }
-        .section-title { font-weight: bold; text-decoration: underline; margin-bottom: 10px; }
+        body { font-family: 'DejaVu Sans', sans-serif; line-height: 1.4; color: #000; font-size: 12px; }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .title { font-size: 20px; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; }
+        .subtitle { font-size: 14px; font-style: italic; }
+        .section { margin-bottom: 15px; }
+        .section-title { font-weight: bold; margin-bottom: 5px; }
         .row { display: flex; justify-content: space-between; margin-bottom: 5px; }
         .label { font-weight: bold; }
-        .signature-section { margin-top: 60px; display: flex; justify-content: space-between; }
+        .signature-section { margin-top: 30px; display: flex; justify-content: space-between; }
         .signature-block { width: 45%; text-align: center; }
-        .line { border-bottom: 1px solid #000; margin-bottom: 10px; margin-top: 40px; }
+        .line { border-bottom: 1px solid #000; margin-bottom: 10px; margin-top: 30px; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th, td { border: 1px solid #ddd; padding: 6px; text-align: left; }
         th { background-color: #f2f2f2; }
     </style>
 </head>
@@ -44,7 +44,7 @@
             <div class="section-title">2. LOAN DETAILS</div>
             <p>The Lender agrees to loan the Borrower the following amount under these terms:</p>
             <ul>
-                <li><strong>Principal Amount:</strong> ₱{{ number_format($loan->amount, 2) }}</li>
+                <li><strong>Principal Amount:</strong> &#8369;{{ number_format($loan->amount, 2) }}</li>
                 @if($loan->interest_rate)
                 <li><strong>Interest Rate:</strong> {{ $loan->interest_rate }}% per month</li>
                 @endif
@@ -70,14 +70,18 @@
         <table style="width: 100%; margin-top: 50px; border: none;">
             <tr>
                 <td style="width: 45%; border: none; text-align: center;">
-                    <div style="border-bottom: 1px solid black; margin-bottom: 10px; height: 40px;"></div>
-                    <strong>{{ $loan->borrower->user->name }}</strong><br>
+                    <div style="height: 40px;"></div>
+                    <strong>{{ strtoupper($loan->borrower->user->name) }}</strong><br>
+                    <div style="border-bottom: 1px solid black; margin-bottom: 5px;"></div>
+                    Signature over Printed Name<br>
                     (Lender)
                 </td>
                 <td style="width: 10%; border: none;"></td>
                 <td style="width: 45%; border: none; text-align: center;">
-                    <div style="border-bottom: 1px solid black; margin-bottom: 10px; height: 40px;"></div>
-                    <strong>{{ $loan->borrower->name }}</strong><br>
+                    <div style="height: 40px;"></div>
+                    <strong>{{ strtoupper($loan->borrower->name) }}</strong><br>
+                    <div style="border-bottom: 1px solid black; margin-bottom: 5px;"></div>
+                    Signature over Printed Name<br>
                     (Borrower)
                 </td>
             </tr>

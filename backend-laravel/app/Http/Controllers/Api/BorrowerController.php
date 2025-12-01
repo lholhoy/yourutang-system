@@ -24,6 +24,14 @@ class BorrowerController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'contact' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'address' => 'nullable|string|max:255',
+            'province' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'barangay' => 'nullable|string|max:255',
+            'street' => 'nullable|string|max:255',
+            'id_type' => 'nullable|string|max:255',
+            'id_number' => 'nullable|string|max:255',
             'notes' => 'nullable|string',
         ]);
 
@@ -49,6 +57,14 @@ class BorrowerController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'contact' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'address' => 'nullable|string|max:255',
+            'province' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'barangay' => 'nullable|string|max:255',
+            'street' => 'nullable|string|max:255',
+            'id_type' => 'nullable|string|max:255',
+            'id_number' => 'nullable|string|max:255',
             'notes' => 'nullable|string',
         ]);
 
