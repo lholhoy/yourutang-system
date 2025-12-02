@@ -27,16 +27,21 @@ class ExportController extends Controller
 
         $callback = function() use ($borrowers) {
             $file = fopen('php://output', 'w');
+            
+            // Add BOM for Excel UTF-8 compatibility
+            fputs($file, "\xEF\xBB\xBF");
+
             fputcsv($file, [
-                'ID', 
-                'Name', 
-                'Contact', 
+                'Borrower ID', 
+                'Full Name', 
+                'Contact Number', 
+                'Address',
                 'Notes', 
-                'Total Borrowed', 
-                'Total Paid', 
-                'Outstanding Balance', 
-                'Active Loans Count', 
-                'Status'
+                'Total Borrowed (PHP)', 
+                'Total Paid (PHP)', 
+                'Outstanding Balance (PHP)', 
+                'Active Loans', 
+                'Account Status'
             ]);
 
             foreach ($borrowers as $borrower) {
@@ -49,16 +54,18 @@ class ExportController extends Controller
                     return ($loan->amount - $loan->payments->sum('amount')) > 0;
                 })->count();
 
-                $status = $outstanding > 0 ? 'Active' : 'Paid';
+                $status = $outstanding > 0 ? 'Active' : 'Fully Paid';
+                $address = $borrower->full_address ?? $borrower->address ?? 'N/A';
 
                 fputcsv($file, [
                     $borrower->id,
                     $borrower->name,
-                    "\t" . $borrower->contact, // Force text format for Excel
+                    $borrower->contact,
+                    $address,
                     $borrower->notes,
-                    $totalBorrowed,
-                    $totalPaid,
-                    $outstanding,
+                    number_format($totalBorrowed, 2),
+                    number_format($totalPaid, 2),
+                    number_format($outstanding, 2),
                     $activeLoans,
                     $status
                 ]);

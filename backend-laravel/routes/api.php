@@ -41,6 +41,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/debug-users', function () {
-    return \App\Models\User::all();
-});
+

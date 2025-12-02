@@ -13,6 +13,10 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('contact')->nullable();
+            $table->string('email')->nullable();
+            $table->string('address')->nullable();
+            $table->string('id_type')->nullable();
+            $table->string('id_number')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
         });

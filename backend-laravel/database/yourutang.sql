@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2025 at 06:59 PM
+-- Generation Time: Dec 02, 2025 at 01:45 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -315,7 +315,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('57JyzH408XphYAroL1DahjEj9c1QELnUSuYLYOhr', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiN2l3V3Jlc2JUQkNmOXVLMzB2VElKbzY5UjhvSXk4OHRhckxxU2V3ZiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hcGkvdXNlciI7czo1OiJyb3V0ZSI7Tjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Njt9', 1764611917);
+('1RQJVV7N5ffc7R3zJhdCAqusNNLtiGuknwsLcKZd', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiemNudjlTUTFjYzVzYWtKOTRkUUZxQXpBSmY3bEpFRXBUbHJSc3ZndyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6NDQ6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hcGkvbG9hbnMvdXBjb21pbmctZHVlIjtzOjU6InJvdXRlIjtOO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo2O30=', 1764679259);
 
 -- --------------------------------------------------------
 
@@ -342,7 +342,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `profile_image`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (4, 'Adrian T. Isarna', 'lholhoy143@gmail.com', NULL, NULL, '$2y$12$zSZ/Rr/JRkmkXJl.5u9ieuJYqVDQDkEiKeJKmU3F0msolYKnRPytu', NULL, '2025-11-27 01:38:39', '2025-11-27 01:38:39'),
 (5, 'test', 'finaltest@gmail.com', NULL, NULL, '$2y$12$Zp7aIv/OrGt2GC8DG3wtl.8jdaH38SvB/hewBxY.caZtW6UzpiZ0u', 'qMSQMPtKCUVdV6D3nM5Uj1RWY8qqkHvCszKpxiVoSfHNG0wy0THyuJgvU2G5', '2025-11-27 01:47:29', '2025-11-27 01:47:29'),
-(6, 'Adrian T. Isarna', 'isarnaadriantrugillo@gmail.com', 'profile/nSMiqeqocy4kXgupH2n4T40PvwBiE7hTZGxwyOCo.jpg', NULL, '$2y$12$K8tiUQeL1ZlIGZg98UPb1.flWBQ8c0PawNLZ1hLleuvNchbfEnR2u', 'BXg89FAJpKamnKnESuZlTgfoaqaLA0vk7yueIXlEfZuyt4ku7IIN7kmXGnJP', '2025-11-27 02:01:34', '2025-12-01 00:34:30');
+(6, 'Adrian T. Isarna', 'isarnaadriantrugillo@gmail.com', 'profile/nSMiqeqocy4kXgupH2n4T40PvwBiE7hTZGxwyOCo.jpg', NULL, '$2y$12$K8tiUQeL1ZlIGZg98UPb1.flWBQ8c0PawNLZ1hLleuvNchbfEnR2u', 'iP67ux4jbq9Hkfk32apNTHTcdF6n1zUXW4BX6neGVtRC06AaMcPZZScLusK5', '2025-11-27 02:01:34', '2025-12-01 00:34:30');
 
 --
 -- Indexes for dumped tables
