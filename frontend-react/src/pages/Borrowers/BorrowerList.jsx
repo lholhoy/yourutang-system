@@ -79,14 +79,14 @@ export default function BorrowerList() {
     if (loading) {
         return (
             <div className="space-y-8 animate-pulse">
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
                         <div className="h-8 w-48 bg-gray-200 rounded-lg mb-2"></div>
                         <div className="h-4 w-64 bg-gray-200 rounded-lg"></div>
                     </div>
-                    <div className="flex gap-3">
-                        <div className="h-10 w-32 bg-gray-200 rounded-lg"></div>
-                        <div className="h-10 w-36 bg-gray-200 rounded-lg"></div>
+                    <div className="flex gap-3 w-full sm:w-auto">
+                        <div className="h-10 flex-1 sm:flex-none sm:w-32 bg-gray-200 rounded-lg"></div>
+                        <div className="h-10 flex-1 sm:flex-none sm:w-36 bg-gray-200 rounded-lg"></div>
                     </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -105,7 +105,7 @@ export default function BorrowerList() {
                     <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Borrowers</h1>
                     <p className="text-gray-500 mt-1">Manage your borrowers and their loan history.</p>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-3 w-auto">
+                <div className="flex flex-wrap gap-3 w-auto">
                     <button
                         onClick={handleExport}
                         className="btn btn-secondary flex items-center justify-center gap-2 w-auto"

@@ -198,10 +198,6 @@ export default function Dashboard() {
                     <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Dashboard Overview</h1>
                     <p className="text-gray-500 mt-1">Welcome back! Here's your financial summary.</p>
                 </div>
-                <div className="hidden md:flex items-center gap-2 text-sm font-medium text-gray-600 bg-white px-4 py-2 rounded-full shadow-sm border border-border/50">
-                    <Calendar className="w-4 h-4 text-primary" />
-                    {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
-                </div>
             </div>
 
             {upcomingDue.length > 0 && (

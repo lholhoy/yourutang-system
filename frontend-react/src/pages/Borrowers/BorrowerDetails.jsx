@@ -78,17 +78,17 @@ export default function BorrowerDetails() {
     if (loading) {
         return (
             <div className="space-y-8 animate-pulse">
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
                     <div className="flex items-center gap-4">
-                        <div className="h-14 w-14 bg-gray-200 rounded-full"></div>
+                        <div className="h-14 w-14 bg-gray-200 rounded-full shrink-0"></div>
                         <div>
                             <div className="h-8 w-48 bg-gray-200 rounded-lg mb-2"></div>
                             <div className="h-5 w-32 bg-gray-200 rounded-lg"></div>
                         </div>
                     </div>
-                    <div className="flex gap-3">
-                        <div className="h-10 w-28 bg-gray-200 rounded-lg"></div>
-                        <div className="h-10 w-24 bg-gray-200 rounded-lg"></div>
+                    <div className="flex gap-3 w-full sm:w-auto">
+                        <div className="h-10 flex-1 sm:flex-none sm:w-28 bg-gray-200 rounded-lg"></div>
+                        <div className="h-10 flex-1 sm:flex-none sm:w-24 bg-gray-200 rounded-lg"></div>
                     </div>
                 </div>
 
@@ -139,42 +139,42 @@ export default function BorrowerDetails() {
         <div className="space-y-8 pb-12">
             {/* Header */}
             <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
-                <div className="flex items-start gap-6">
+                <div className="flex items-center gap-4">
                     <Link
                         to="/borrowers"
-                        className="p-3 bg-white border border-border rounded-xl hover:bg-gray-50 transition-colors text-gray-500 shadow-sm group"
+                        className="p-2.5 bg-white border border-border rounded-xl hover:bg-gray-50 transition-colors text-gray-500 shadow-sm group shrink-0"
                     >
                         <ArrowLeft size={20} className="group-hover:-translate-x-0.5 transition-transform" />
                     </Link>
 
-                    <div className="flex flex-col sm:flex-row gap-6">
-                        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-primary-600 flex items-center justify-center text-white font-bold text-3xl shadow-lg ring-4 ring-white">
+                    <div className="flex items-center gap-4">
+                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary-600 flex items-center justify-center text-white font-bold text-2xl shadow-lg ring-4 ring-white shrink-0">
                             {borrower.name.charAt(0)}
                         </div>
                         <div>
-                            <h1 className="text-3xl font-bold text-gray-900 tracking-tight">{borrower.name}</h1>
-                            <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-500 mt-3">
+                            <h1 className="text-2xl font-bold text-gray-900 tracking-tight leading-tight">{borrower.name}</h1>
+                            <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-500 mt-1">
                                 {borrower.contact && (
                                     <div className="flex items-center gap-2">
-                                        <Phone size={16} className="text-primary" />
+                                        <Phone size={14} className="text-primary" />
                                         <span>{borrower.contact}</span>
                                     </div>
                                 )}
                                 {borrower.email && (
                                     <div className="flex items-center gap-2">
-                                        <Mail size={16} className="text-primary" />
+                                        <Mail size={14} className="text-primary" />
                                         <span>{borrower.email}</span>
                                     </div>
                                 )}
                                 {(borrower.full_address || borrower.address) && (
                                     <div className="flex items-center gap-2">
-                                        <MapPin size={16} className="text-primary" />
+                                        <MapPin size={14} className="text-primary" />
                                         <span>{borrower.full_address || borrower.address}</span>
                                     </div>
                                 )}
                                 {(borrower.id_type || borrower.id_number) && (
                                     <div className="flex items-center gap-2">
-                                        <CreditCard size={16} className="text-primary" />
+                                        <CreditCard size={14} className="text-primary" />
                                         <span>{borrower.id_type} {borrower.id_number ? `(${borrower.id_number})` : ""}</span>
                                     </div>
                                 )}
@@ -182,21 +182,21 @@ export default function BorrowerDetails() {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-3 self-end lg:self-start w-auto">
+                <div className="flex gap-3 w-full sm:w-auto">
                     <button
                         onClick={() => setIsEditModalOpen(true)}
-                        className="btn btn-secondary flex items-center justify-center gap-2 w-auto"
+                        className="btn btn-secondary flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2"
                     >
-                        <Pencil size={18} />
+                        <Pencil size={16} />
                         <span>Edit Profile</span>
                     </button>
                     <a
                         href={`http://localhost:8000/api/export/statement/${id}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn btn-primary shadow-lg shadow-primary/20 flex items-center justify-center gap-2 w-auto"
+                        className="btn btn-primary shadow-lg shadow-primary/20 flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2"
                     >
-                        <Banknote size={18} />
+                        <Banknote size={16} />
                         <span>Statement</span>
                     </a>
                 </div>
@@ -236,7 +236,7 @@ export default function BorrowerDetails() {
                     </div>
                     <button
                         onClick={() => setIsLoanModalOpen(true)}
-                        className="btn btn-primary text-sm py-2.5 px-4 flex items-center gap-2 shadow-md shadow-primary/20"
+                        className="btn btn-primary text-sm py-2.5 px-4 flex items-center gap-2 shadow-md shadow-primary/20 self-center sm:self-auto"
                     >
                         <Plus size={18} />
                         Add Loan

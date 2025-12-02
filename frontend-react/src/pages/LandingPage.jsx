@@ -4,7 +4,7 @@ import { ArrowRight, CheckCircle, Shield, TrendingUp, Users, Wallet, Star, Chevr
 
 export default function LandingPage() {
     return (
-        <div className="min-h-screen bg-white font-sans selection:bg-primary/20 selection:text-primary">
+        <div className="min-h-screen bg-white font-sans selection:bg-primary/20 selection:text-primary overflow-x-hidden">
             {/* Header */}
             <header className="fixed top-0 w-full bg-white/80 backdrop-blur-xl border-b border-gray-100 z-50 transition-all duration-300">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
@@ -12,57 +12,42 @@ export default function LandingPage() {
                         <Logo className="w-10 h-10" textClassName="text-2xl font-bold tracking-tight" />
                     </div>
                     <div className="flex items-center gap-6">
-                        <Link to="/login" className="text-sm font-semibold text-gray-600 hover:text-primary transition-colors">
-                            Sign In
-                        </Link>
-                        <Link
-                            to="/register"
-                            className="btn btn-primary px-6 py-2.5 text-sm shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 transition-all duration-300"
-                        >
-                            Get Started
-                        </Link>
+                        {/* Header actions removed */}
                     </div>
                 </div>
             </header>
 
             {/* Hero Section */}
-            <section className="pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden relative">
+            <section className="pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden relative bg-gradient-to-br from-teal-900 via-teal-800 to-teal-900">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full overflow-hidden pointer-events-none">
-                    <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-gradient-to-br from-primary/10 to-purple-500/10 rounded-full blur-3xl -translate-y-1/2 animate-pulse-slow" />
-                    <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-gradient-to-tr from-blue-500/10 to-teal-500/10 rounded-full blur-3xl translate-y-1/2 animate-pulse-slow delay-1000" />
+                    <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-teal-500/20 rounded-full blur-3xl -translate-y-1/2 animate-pulse-slow" />
+                    <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-cyan-500/20 rounded-full blur-3xl translate-y-1/2 animate-pulse-slow delay-1000" />
                 </div>
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-gray-200 shadow-sm text-gray-600 text-sm font-medium mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500 hover:border-primary/30 hover:text-primary transition-colors cursor-default">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-sm text-white text-sm font-medium mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500 hover:bg-white/20 transition-colors cursor-default">
                         <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-400"></span>
                         </span>
                         New: Advanced Analytics & PDF Reports
                     </div>
-                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-gray-900 tracking-tight mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100 leading-[1.1]">
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100 leading-[1.1]">
                         Lending made <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-600 to-blue-600 animate-gradient-x">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-200 via-cyan-200 to-teal-200 animate-gradient-x">
                             simple & smart
                         </span>
                     </h1>
-                    <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200 leading-relaxed">
+                    <p className="text-xl text-teal-100 max-w-2xl mx-auto mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200 leading-relaxed">
                         The all-in-one platform to track loans, manage borrowers, and grow your lending business with confidence.
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
                         <Link
                             to="/register"
-                            className="btn btn-primary px-8 py-4 text-lg shadow-xl shadow-primary/25 w-full sm:w-auto hover:scale-105 transition-transform duration-300 group"
+                            className="btn btn-primary px-8 py-4 text-lg shadow-xl shadow-primary/25 w-auto hover:scale-105 transition-transform duration-300 group"
                         >
-                            Start for Free
+                            Get Started
                             <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                        </Link>
-                        <Link
-                            to="/login"
-                            className="px-8 py-4 text-lg font-semibold text-gray-600 hover:text-gray-900 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md hover:border-gray-300 transition-all w-full sm:w-auto flex items-center justify-center gap-2"
-                        >
-                            View Demo
-                            <ChevronRight className="w-4 h-4 text-gray-400" />
                         </Link>
                     </div>
 
@@ -102,12 +87,12 @@ export default function LandingPage() {
                                 desc: "Visualize your cash flow, track outstanding balances, and identify your top performers."
                             }
                         ].map((feature, i) => (
-                            <div key={i} className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
-                                <div className={`w-14 h-14 bg-${feature.color}-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                                    <feature.icon className={`w-7 h-7 text-${feature.color}-600`} />
+                            <div key={i} className="relative p-8 rounded-3xl border border-transparent transition-all duration-300 group hover:-translate-y-1 hover:shadow-2xl bg-gradient-to-br from-teal-500 to-teal-700 text-white">
+                                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 bg-white/20 backdrop-blur-sm">
+                                    <feature.icon className="w-7 h-7 text-white" />
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
-                                <p className="text-gray-500 leading-relaxed">
+                                <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
+                                <p className="text-teal-50 leading-relaxed">
                                     {feature.desc}
                                 </p>
                             </div>
