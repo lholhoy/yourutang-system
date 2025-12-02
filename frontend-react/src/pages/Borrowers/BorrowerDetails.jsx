@@ -191,7 +191,7 @@ export default function BorrowerDetails() {
                         <span>Edit Profile</span>
                     </button>
                     <a
-                        href={`http://localhost:8000/api/export/statement/${id}`}
+                        href={`https://api.yourutang.online/api/export/statement/${id}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-primary shadow-lg shadow-primary/20 flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2"
@@ -293,7 +293,7 @@ export default function BorrowerDetails() {
                                                             <Banknote size={16} />
                                                         </button>
                                                         <a
-                                                            href={`http://localhost:8000/api/export/contract/${loan.id}`}
+                                                            href={`https://api.yourutang.online/api/export/contract/${loan.id}`}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
                                                             className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"

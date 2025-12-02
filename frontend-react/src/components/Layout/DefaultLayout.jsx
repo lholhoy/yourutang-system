@@ -66,7 +66,7 @@ export default function DefaultLayout() {
                     <div className="bg-white border border-border/50 rounded-2xl p-4 shadow-sm">
                         <Link to="/profile" className="flex items-center gap-3 mb-4 hover:bg-gray-50 p-2 -mx-2 rounded-xl transition-colors group">
                             {user?.profile_image ? (
-                                <img src={`http://localhost:8000/storage/${user.profile_image}`} alt={user.name} className="w-10 h-10 rounded-full object-cover ring-2 ring-primary/10 group-hover:ring-primary/30 transition-all" />
+                                <img src={`https://api.yourutang.online/storage/${user.profile_image}`} alt={user.name} className="w-10 h-10 rounded-full object-cover ring-2 ring-primary/10 group-hover:ring-primary/30 transition-all" />
                             ) : (
                                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary-600 flex items-center justify-center text-white font-bold shadow-md group-hover:shadow-lg transition-all">
                                     {user?.name?.charAt(0)}

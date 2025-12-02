@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const csrf = () => axios.get("http://localhost:8000/sanctum/csrf-cookie", { withCredentials: true });
+    const csrf = () => axiosClient.get("https://api.yourutang.online/sanctum/csrf-cookie");
 
     const getUser = async () => {
         try {

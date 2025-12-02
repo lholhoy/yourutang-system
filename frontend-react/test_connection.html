@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Connection Test</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>YourUtang API Test</h1>
+    <p>Click the button to test the connection to <strong>https://api.yourutang.online</strong></p>
+
+    <button onclick="testConnection()">Test Connection</button>
+
+    <div id="status"></div>
+    <pre id="output"></pre>
+
+    <script>
+        async function testConnection() {
+            const statusDiv = document.getElementById('status');
+            const outputPre = document.getElementById('output');
+
+            statusDiv.innerHTML = "Testing...";
+            outputPre.innerHTML = "";
+
+            try {
+                // 1. Test CSRF Cookie Endpoint
+                statusDiv.innerHTML += "<br>Step 1: Fetching CSRF Cookie...";
+                await fetch('https://api.yourutang.online/sanctum/csrf-cookie', {
+                    headers: { 'Accept': 'application/json' }
+                });
+                statusDiv.innerHTML += " <span class='success'>OK</span>";
+
+                // 2. Test User Endpoint (Expect 401 Unauthenticated)
+                statusDiv.innerHTML += "<br>Step 2: Fetching User API...";
+                const response = await fetch('https://api.yourutang.online/api/user', {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.status === 401 || response.status === 200) {
+                    statusDiv.innerHTML += " <span class='success'>SUCCESS! Backend is reachable.</span>";
+                    outputPre.innerHTML = JSON.stringify(data, null, 2);
+                } else {
+                    statusDiv.innerHTML += " <span class='error'>Backend returned error " + response.status + "</span>";
+                    outputPre.innerHTML = JSON.stringify(data, null, 2);
+                }
+
+            } catch (error) {
+                statusDiv.innerHTML += " <span class='error'>FAILED</span>";
+                outputPre.innerHTML = "Network Error: " + error.message + "\n\nPossible causes:\n1. CORS is blocking the request.\n2. SSL certificate is invalid.\n3. The URL is wrong.";
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+
+</html>

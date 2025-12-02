@@ -96,7 +96,7 @@ export default function Profile() {
                             <div className="w-32 h-32 rounded-full overflow-hidden bg-white border-4 border-white shadow-lg ring-1 ring-gray-200 transition-transform group-hover:scale-105 duration-300">
                                 {user?.profile_image ? (
                                     <img
-                                        src={`http://localhost:8000/storage/${user.profile_image}`}
+                                        src={`https://api.yourutang.online/storage/${user.profile_image}`}
                                         alt={user.name}
                                         className="w-full h-full object-cover"
                                     />
