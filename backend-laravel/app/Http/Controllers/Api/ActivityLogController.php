@@ -11,6 +11,7 @@ class ActivityLogController extends Controller
     public function index()
     {
         $logs = ActivityLog::where('user_id', auth()->id())
+            ->with('user')
             ->latest()
             ->take(5)
             ->get();

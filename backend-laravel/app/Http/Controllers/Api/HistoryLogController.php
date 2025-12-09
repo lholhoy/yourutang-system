@@ -12,6 +12,7 @@ class HistoryLogController extends Controller
     public function index()
     {
         $logs = ActivityLog::where('user_id', Auth::id())
+            ->with('user')
             ->latest()
             ->paginate(20);
 
