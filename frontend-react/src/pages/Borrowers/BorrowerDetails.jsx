@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axiosClient from "../../api/axios";
-import { ArrowLeft, Pencil, Trash2, Plus, Banknote, CheckCircle, AlertCircle, FileText, Mail, MapPin, Phone, CreditCard, User, Calendar } from "lucide-react";
+import { ArrowLeft, Pencil, Trash2, Plus, Banknote, CheckCircle, AlertCircle, FileText, Mail, MapPin, Phone, CreditCard, User, Calendar, Wallet } from "lucide-react";
 
 import Modal from "../../components/Modal";
 import LoanForm from "../Loans/LoanForm";
@@ -206,21 +206,36 @@ export default function BorrowerDetails() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="bg-white rounded-2xl p-6 border border-border/50 shadow-soft relative overflow-hidden group">
                     <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-110" />
-                    <h3 className="text-sm font-semibold text-gray-500 mb-2 uppercase tracking-wide">Total Outstanding</h3>
+                    <div className="flex items-center gap-4 mb-2">
+                        <div className="p-3 bg-primary/10 rounded-xl">
+                            <Wallet className="w-6 h-6 text-primary" />
+                        </div>
+                        <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Total Outstanding</h3>
+                    </div>
                     <p className="text-3xl font-bold text-primary tracking-tight">
                         ₱{totalOutstanding.toLocaleString()}
                     </p>
                 </div>
                 <div className="bg-white rounded-2xl p-6 border border-border/50 shadow-soft relative overflow-hidden group">
                     <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-110" />
-                    <h3 className="text-sm font-semibold text-gray-500 mb-2 uppercase tracking-wide">Active Loans</h3>
+                    <div className="flex items-center gap-4 mb-2">
+                        <div className="p-3 bg-blue-50 rounded-xl">
+                            <CreditCard className="w-6 h-6 text-blue-600" />
+                        </div>
+                        <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Active Loans</h3>
+                    </div>
                     <p className="text-3xl font-bold text-gray-900 tracking-tight">
                         {activeLoansCount}
                     </p>
                 </div>
                 <div className="bg-white rounded-2xl p-6 border border-border/50 shadow-soft relative overflow-hidden group">
                     <div className="absolute top-0 right-0 w-24 h-24 bg-green-50 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-110" />
-                    <h3 className="text-sm font-semibold text-gray-500 mb-2 uppercase tracking-wide">Total Borrowed</h3>
+                    <div className="flex items-center gap-4 mb-2">
+                        <div className="p-3 bg-green-50 rounded-xl">
+                            <Banknote className="w-6 h-6 text-green-600" />
+                        </div>
+                        <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Total Borrowed</h3>
+                    </div>
                     <p className="text-3xl font-bold text-gray-900 tracking-tight">
                         ₱{Number(borrower.loans_sum_amount || 0).toLocaleString()}
                     </p>

@@ -10,7 +10,7 @@ class ActivityLogController extends Controller
 {
     public function index()
     {
-        $logs = ActivityLog::with('user')
+        $logs = ActivityLog::where('user_id', auth()->id())
             ->latest()
             ->take(5)
             ->get();

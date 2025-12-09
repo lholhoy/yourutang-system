@@ -222,7 +222,7 @@ export default function Dashboard() {
                                             <p className="text-xs text-gray-500">Due: {new Date(loan.due_date).toLocaleDateString()}</p>
                                         </div>
                                     </div>
-                                    <span className="font-bold text-amber-600 text-sm">₱{Number(loan.amount).toLocaleString()}</span>
+                                    <span className="font-bold text-amber-600 text-sm">₱{Number(loan.balance).toLocaleString()}</span>
                                 </div>
                             ))}
                         </div>

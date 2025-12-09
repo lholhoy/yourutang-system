@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
@@ -37,6 +37,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // History
     Route::get('/history', [App\Http\Controllers\Api\HistoryLogController::class, 'index']);
     Route::get('/activity-logs', [App\Http\Controllers\Api\ActivityLogController::class, 'index']);
+
+    // Admin Routes
+    Route::middleware([\App\Http\Middleware\AdminMiddleware::class])->group(function () {
+        Route::get('/admin/dashboard', [\App\Http\Controllers\Api\UserController::class, 'dashboard']);
+        Route::apiResource('users', \App\Http\Controllers\Api\UserController::class);
+    });
 });
 
 require __DIR__.'/auth.php';

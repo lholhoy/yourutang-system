@@ -165,7 +165,7 @@ export default function BorrowerList() {
 
                         <div className="flex items-start justify-between mb-6">
                             <div className="flex items-center gap-4 min-w-0 flex-1">
-                                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center text-gray-700 font-bold text-xl shadow-inner border border-white ring-1 ring-gray-100 shrink-0">
+                                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary-600 flex items-center justify-center text-white font-bold text-xl shadow-lg ring-2 ring-white shrink-0">
                                     {borrower.name.charAt(0)}
                                 </div>
                                 <div className="min-w-0 flex-1">

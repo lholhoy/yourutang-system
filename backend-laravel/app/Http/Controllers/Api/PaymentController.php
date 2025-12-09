@@ -11,6 +11,11 @@ class PaymentController extends Controller
 {
     public function index(Loan $loan)
     {
+        // Verify loan belongs to user
+        if ($loan->borrower->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
         return $loan->payments()->orderBy('payment_date', 'desc')->get();
     }
 
@@ -23,7 +28,10 @@ class PaymentController extends Controller
             'notes' => 'nullable|string',
         ]);
 
-        $loan = Loan::findOrFail($validated['loan_id']);
+        // Verify loan belongs to user
+        $loan = Loan::whereHas('borrower', function ($q) {
+            $q->where('user_id', auth()->id());
+        })->findOrFail($validated['loan_id']);
         
         // Optional: Check if payment exceeds balance
         if ($validated['amount'] > $loan->balance) {
@@ -31,7 +39,7 @@ class PaymentController extends Controller
             // For now, we'll allow it but maybe warn in frontend.
         }
 
-        $payment = Payment::create($validated);
+        $payment = $loan->payments()->create($validated);
 
         return response()->json($payment, 201);
     }

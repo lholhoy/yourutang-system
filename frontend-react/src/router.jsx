@@ -13,10 +13,10 @@ import LoanList from "./pages/Loans/LoanList";
 import LoanForm from "./pages/Loans/LoanForm";
 import Profile from "./pages/Profile";
 import HistoryLogs from "./pages/HistoryLogs";
-
 import LandingPage from "./pages/LandingPage";
-
 import ErrorPage from "./pages/ErrorPage";
+import UserList from "./pages/Admin/UserList";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
 
 const router = createBrowserRouter([
     {
@@ -70,6 +70,14 @@ const router = createBrowserRouter([
                     {
                         path: "history",
                         element: <HistoryLogs />,
+                    },
+                    {
+                        path: "admin/users",
+                        element: <UserList />,
+                    },
+                    {
+                        path: "admin/dashboard",
+                        element: <AdminDashboard />,
                     }
                 ],
             },

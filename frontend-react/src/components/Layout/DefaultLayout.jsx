@@ -1,6 +1,6 @@
 import { Navigate, Outlet, Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { LayoutDashboard, Users, Wallet, History, LogOut, Menu, X, ChevronRight } from "lucide-react";
+import { LayoutDashboard, Users, Wallet, History, LogOut, Menu, X, ChevronRight, Shield } from "lucide-react";
 import { useState } from "react";
 import clsx from "clsx";
 import { Toaster } from "react-hot-toast";
@@ -15,12 +15,22 @@ export default function DefaultLayout() {
         return <Navigate to="/login" />;
     }
 
-    const navigation = [
-        { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-        { name: 'Borrowers', href: '/borrowers', icon: Users },
-        { name: 'Loans', href: '/loans', icon: Wallet },
-        { name: 'History', href: '/history', icon: History },
-    ];
+    const navigation = user?.is_admin
+        ? [
+            { name: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
+            { name: 'User Management', href: '/admin/users', icon: Shield }
+        ]
+        : [
+            { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+            { name: 'Borrowers', href: '/borrowers', icon: Users },
+            { name: 'Loans', href: '/loans', icon: Wallet },
+            { name: 'History', href: '/history', icon: History },
+        ];
+
+    // Redirect Admin to /admin/dashboard if they try to go elsewhere (except profile)
+    if (user?.is_admin && !location.pathname.startsWith('/admin') && location.pathname !== '/profile') {
+        return <Navigate to="/admin/dashboard" />;
+    }
 
     return (
         <div className="min-h-screen bg-gray-50 flex font-sans overflow-x-hidden">
@@ -143,7 +153,7 @@ export default function DefaultLayout() {
                         className="flex items-center gap-3 mb-4 hover:bg-white p-2 -mx-2 rounded-xl transition-colors group"
                     >
                         {user?.profile_image ? (
-                            <img src={`http://localhost:8000/storage/${user.profile_image}`} alt={user.name} className="w-10 h-10 rounded-full object-cover ring-2 ring-white shadow-sm" />
+                            <img src={`https://api.yourutang.online/storage/${user.profile_image}`} alt={user.name} className="w-10 h-10 rounded-full object-cover ring-2 ring-white shadow-sm" />
                         ) : (
                             <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold ring-2 ring-white shadow-sm">
                                 {user?.name?.charAt(0)}
